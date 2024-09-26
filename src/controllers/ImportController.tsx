@@ -1,48 +1,155 @@
-import { useState } from "react";
-import { Import } from "../views/Import"
+// import { useState } from "react";
+// import { axiosInstance } from "../services/axios";
 
-const acceptedFileTypes = ["text/csv", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"]; // CSV and Excel MIME types
-const maxRows = 35000;
+// interface PickFile {
+//   id: number;
+//   value: string;
+//   api: string;
+// }
+
+// const pickFiles: PickFile[] = [
+//   { id: 1, value: "Sales", api: "api/Sales/upload/sales" },
+//   { id: 2, value: "Demand", api: "api/Demand/upload/demand" },
+// ];
+
+// export const ImportController = () => {
+//   const [selectedFile, setSelectedFile] = useState<PickFile | null>(null);
+//   const [file, setFile] = useState<File | null>(null);
+//   const [isUploading, setIsUploading] = useState(false);
+
+//   const handlePickFileChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+//     const selectedId = parseInt(event.target.value, 10);
+//     const selectedOption = pickFiles.find((option) => option.id === selectedId);
+//     if (selectedOption) {
+//       setSelectedFile(selectedOption);
+//       document.getElementById("fileInput")?.click();
+//     }
+//   };
+
+//   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+//     if (event.target.files && event.target.files.length > 0) {
+//       setFile(event.target.files[0]);
+//     }
+//   };
+
+//   const handleUpload = async () => {
+//     if (!file || !selectedFile) return;
+
+//     setIsUploading(true);
+//     const username = localStorage.getItem("username") || "";
+
+//     const formData = new FormData();
+//     formData.append("username", username);
+//     formData.append("file", file);
+
+//     try {
+//       const response = await axiosInstance.post(selectedFile.api, formData, {
+//         headers: {
+//           "Content-Type": "multipart/form-data",
+//         },
+//       });
+//       console.log("Upload successful:", response.data);
+//     } catch (error) {
+//       console.error("Error uploading file:", error);
+//     } finally {
+//       setIsUploading(false);
+//       setFile(null);
+//       setSelectedFile(null);
+//     }
+//   };
+
+//   return {
+//     pickFiles,
+//     selectedFile,
+//     file,
+//     isUploading,
+//     handlePickFileChange,
+//     handleFileChange,
+//     handleUpload,
+//   };
+// };
+
+
+import { useState } from "react";
+import { axiosInstance } from "../services/axios";
+import { toast } from "../hooks/use-toast"; // Import the toast function
+import { useNavigate } from "react-router-dom"; // Import useNavigate
+
+interface PickFile {
+  id: number;
+  value: string;
+  api: string;
+}
+
+const pickFiles: PickFile[] = [
+  { id: 1, value: "Sales", api: "api/Sales/upload/sales" },
+  { id: 2, value: "Demand", api: "api/Demand/upload/demand" },
+];
 
 export const ImportController = () => {
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [selectedFile, setSelectedFile] = useState<PickFile | null>(null);
+  const [file, setFile] = useState<File | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
+  const navigate = useNavigate(); // Initialize the navigate function
 
-  // Handle file selection
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0] || null;
-    if (file) {
-      const isValidType = acceptedFileTypes.includes(file.type);
-      if (!isValidType) {
-        setErrorMessage("Unsupported file type. Please select a CSV or Excel file.");
-        setSelectedFile(null);
-        return;
-      }
-      setSelectedFile(file);
-      setErrorMessage(null);
+  const handlePickFileChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedId = parseInt(event.target.value, 10);
+    const selectedOption = pickFiles.find((option) => option.id === selectedId);
+    if (selectedOption) {
+      setSelectedFile(selectedOption);
+      document.getElementById("fileInput")?.click();
     }
   };
 
-  // Handle file input click
-  const handleBrowseClick = () => {
-    document.getElementById("file-input")?.click();
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      setFile(event.target.files[0]);
+    }
   };
 
-  return (
-    <div className="flex flex-col items-center">
-      <Import  />
-      <input
-        id="file-input"
-        type="file"
-        accept=".csv, .xlsx"
-        className="hidden"
-        onChange={handleFileChange}
-      />
-      {selectedFile && <p className="text-sm text-primary mt-4">Selected file: {selectedFile.name}</p>}
-      {errorMessage && <p className="text-sm text-red-500 mt-2">{errorMessage}</p>}
-    </div>
-  );
+  const handleUpload = async () => {
+    if (!file || !selectedFile) return;
+
+    setIsUploading(true);
+    const username = localStorage.getItem("username") || "";
+
+    const formData = new FormData();
+    formData.append("username", username);
+    formData.append("file", file);
+
+    try {
+      const response = await axiosInstance.post(selectedFile.api, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      // success toast
+      toast({
+        description: "File uploaded successfully!",
+      });
+
+      setTimeout(() => {
+        navigate("/sales-forecast");
+      }, 2000);
+      
+      console.log("Upload successful:", response.data);
+    } catch (error) {
+      console.error("Error uploading file:", error);
+    } finally {
+      setIsUploading(false);
+      setFile(null);
+      setSelectedFile(null);
+    }
+  };
+
+  return {
+    pickFiles,
+    selectedFile,
+    file,
+    isUploading,
+    handlePickFileChange,
+    handleFileChange,
+    handleUpload,
+  };
 };
-
-
-
