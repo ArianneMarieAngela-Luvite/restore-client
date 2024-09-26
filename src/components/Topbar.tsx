@@ -9,19 +9,19 @@ const Topbar = () => {
    return (
     <div className="border-b-2 container inline-flex justify-between w-full items-center py-4 px-10 my-3 md:pt-4">
       <div className="mx-12" >
-        <Link to="/home">
+        <Link to="/">
           <img src={restore}  />
         </Link>
       </div>
       <div className="hidden md:block mr-10 ">
         <ul className="text-customTextColor flex gap-6">
-          <li className="inline-block px-2 font-lato">
-            Hello, {username}!
+          <li className="inline-block px-2 font-lato ">
+            Hello, <span className="text-primary font-bold">{username}</span>!
           </li>
           <li>
             <Separator orientation="vertical"/>
           </li>
-          <li className="hover:border-b-2">
+          <li className="hover:border-b-2 hover:font-bold">
             <button 
              onClick={ handleLogout }
             className="bg-transparent border-none text-customTextColor font-lato p-0">
