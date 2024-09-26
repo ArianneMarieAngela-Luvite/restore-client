@@ -5,9 +5,9 @@ export function Pricing() {
     <motion.div
       id="pricing"
       className="container min-h-[650px] relative font-lato p-12 bg-customGreen"
-      initial={{ opacity: 0, y: 50 }} // Starts off hidden and down 50px
-      animate={{ opacity: 1, y: 0 }} // Animates to fully visible and original position
-      transition={{ duration: 0.8 }} // Animation duration
+      initial={{ opacity: 0, y: 50 }} 
+      animate={{ opacity: 1, y: 0 }} 
+      transition={{ duration: 0.8 }} 
     >
       <motion.div
         className="flex flex-col justify-center py-5 md:py-0 text-customTextColor"

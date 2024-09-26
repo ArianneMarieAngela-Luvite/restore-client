@@ -23,13 +23,12 @@ import { motion } from "framer-motion"
 
 export const description = "A sales trend line chart with selectable time range"
 
-// Define the structure for monthly data
 type MonthlyData = {
   month: string;
-  [year: number]: number; // Use number keys for years
+  [year: number]: number; 
 }
 
-// Generates sales data for the given years
+// generates sales data for the given years
 const generateSalesData = (years: number) => {
   const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
   const currentYear = new Date().getFullYear()
@@ -38,11 +37,11 @@ const generateSalesData = (years: number) => {
   for (let i = 0; i < years; i++) {
     const year = currentYear - i
     
-    // Generate sales data for each month in the current year
+    // generate sales data for each month in the current year
     months.forEach(month => {
       const existingMonth = data.find(d => d.month === month)
       if (existingMonth) {
-        existingMonth[year] = Math.floor(1000000 + Math.random() * 500000) // Random sales data
+        existingMonth[year] = Math.floor(1000000 + Math.random() * 500000) // random sales data
       } else {
         const newMonthData: MonthlyData = { month, [year]: Math.floor(1000000 + Math.random() * 500000) }
         data.push(newMonthData)

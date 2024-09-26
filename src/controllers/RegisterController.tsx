@@ -11,7 +11,7 @@ export function RegisterController() {
     email: "",
     name: "",
     username: "",
-    phoneNumber: "",  // Correct field name here
+    phoneNumber: "",  
     password: "",
   });
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -23,22 +23,22 @@ export function RegisterController() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setErrorMessage(null); // Reset the error
+    setErrorMessage(null); 
 
     try {
-      console.log("Sending payload:", formData); // Log the payload for debugging
+      console.log("Sending payload:", formData); 
 
       const response = await axiosInstance.post<RegisterResponse>("/signup", {
         email: formData.email,
         name: formData.name,
         username: formData.username,
-        phoneNumber: formData.phoneNumber,  // Correct field name here
+        phoneNumber: formData.phoneNumber,  
         password: formData.password,
       });
 
       if (response.status === 200) {
-        console.log(response.data.message); // Success message from backend
-        navigate("/login"); // Redirect after successful registration
+        console.log(response.data.message); // success message from backend
+        navigate("/login"); // redirect after successful registration
       } else {
         throw new Error("Registration failed.");
       }

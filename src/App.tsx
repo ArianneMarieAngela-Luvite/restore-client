@@ -12,13 +12,12 @@ import Topbar from "./components/Topbar";
 import { Import } from "./views/Import";
 import { ImportController } from "./controllers/ImportController";
 import SalesGraph from "./views/SalesGraph";
-import { Toaster } from "@/components/ui/toaster"; // Import the Toaster component
+import { Toaster } from "@/components/ui/toaster"; 
 
 function App() {
   return (
     <div className="h-fit">
       <BrowserRouter>
-        {/* Include Toaster at the root level */}
         <Toaster /> 
 
         <Routes>
