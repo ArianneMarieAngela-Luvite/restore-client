@@ -45,11 +45,14 @@ export function LoginController() {
         console.log(response.data.username);
         localStorage.setItem("username", response.data.username);
         navigate("/import");
-      } else {
-        throw new Error("Login failed. Please check your credentials.");
       }
     } catch (err: any) {
-      setErrorMessage(err.response?.data?.error || err.message || "An unknown error occurred.");
+      if(err.response) {
+        const errMessage = err.response.data?.message || err.response.data.message || "Unknown error";
+        console.log(errMessage);
+      }
+      console.log("Error: ", err.message);
+      setErrorMessage("Login failed. Please check your credentials.");
     } finally {
       setLoading(false);
     }

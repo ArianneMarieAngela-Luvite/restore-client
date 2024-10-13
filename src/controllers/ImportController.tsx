@@ -10,8 +10,8 @@ interface PickFile {
 }
 
 const pickFiles: PickFile[] = [
-  { id: 1, value: "Sales", api: "api/Sales/upload/sales" },
-  { id: 2, value: "Demand", api: "api/Demand/upload/demand" },
+  { id: 1, value: "Sales", api: "/api/Sales/upload/sales" },
+  { id: 2, value: "Demand", api: "/api/Demand/upload/demand" },
 ];
 
 export const ImportController = () => {
@@ -57,9 +57,16 @@ export const ImportController = () => {
         description: "File uploaded successfully!",
       });
 
-      setTimeout(() => {
-        navigate("/sales-forecast");
-      }, 2000);
+      if(selectedFile.value === "Sales") {
+        setTimeout(() => {
+          navigate("/sales-forecast");
+        }, 2000);
+      } else {
+        setTimeout(() => {
+          navigate("/products-forecast");
+        }, 2000);
+      }
+      
       
       console.log("Upload successful:", response.data);
     } catch (error) {

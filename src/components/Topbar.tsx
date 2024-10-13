@@ -1,39 +1,287 @@
+// import restore from "../assets/logo_restore.png";
+// import { Separator } from "./ui/separator";
+// import LogoutController from "../controllers/LogoutController";
+// import { Link } from "react-router-dom";
+// import { useState } from "react";
+// import { Button } from "./ui/button";
+
+// const Topbar = () => {
+//   const username = localStorage.getItem("username");
+//   const { handleLogout } = LogoutController();
+//   const currentPath = location.pathname
+//   const isActive = (path: string) => currentPath === path
+//   const [openMenu, setOpenMenu] = useState(false);
+
+//    return (
+//     <nav className="shadow-md">
+//     <div className="flex justify-between w-full items-center py-4 px-10 my-3 md:pt-4">
+//       <div className="flex items-center font-lato">
+//         <div className="ml-1 mr-12 md:mx-12 lg:mx-12 xl:mx-12" >
+//             <img src={restore} alt="Restore Logo" />
+//         </div>
+//         <div className="hidden md:block mr-10">
+//             <ul className="text-customTextColor flex gap-6">
+//               <li className={`inline-block py-1 px-3 font-base transition-colors duration-300
+//                 ${isActive("/import") ? "text-primary shadow-[0_3px_0_-1px_hsl(var(--primary))] font-bold" : "text-customTextColor hover:text-primary hover:shadow-[0_3px_0_-1px_hsl(var(--primary))]"}
+//               `}>
+//                 <Link to="/import">Forecast</Link>
+//               </li>
+//               <li className={`inline-block py-1 px-3 font-base transition-colors duration-300
+//                 ${isActive("/sales-forecast") ? "text-primary shadow-[0_3px_0_-1px_hsl(var(--primary))] font-bold" : "text-customTextColor hover:text-primary hover:shadow-[0_3px_0_-1px_hsl(var(--primary))]"}
+//               `}>
+//                 <Link to="/sales-forecast">Sales</Link>
+//               </li>
+//               <li className={`inline-block py-1 px-3 font-base transition-colors duration-300
+//                 ${isActive("/products-forecast") ? "text-primary shadow-[0_3px_0_-1px_hsl(var(--primary))] font-bold" : "text-customTextColor hover:text-primary hover:shadow-[0_3px_0_-1px_hsl(var(--primary))]"}
+//               `}>
+//                 <Link to="/products-forecast">Products</Link>
+//               </li>
+//               <li className={`inline-block py-1 px-3 font-base transition-colors duration-300
+//                 ${isActive("/insights") ? "text-primary shadow-[0_3px_0_-1px_hsl(var(--primary))] font-bold" : "text-customTextColor hover:text-primary hover:shadow-[0_3px_0_-1px_hsl(var(--primary))]"}
+//               `}>
+//                 <Link to="/insights">Insights</Link>
+//               </li>
+//             </ul>
+//           </div>
+//       </div>
+//       <div className="items-center hidden md:block mr-1 lg:mr-10 xl:mr-10 ">
+//         <ul className="text-customTextColor flex gap-6">
+//           <li className={`tracking-wide font-lato inline-block py-1 px-3 font-base transition-colors duration-300`}>
+//             Hello
+//             <span className="text-primary font-bold "> {username}</span>!
+//           </li>
+//           <li>
+//             <Separator orientation="vertical" className="bg-gray-300"/>
+//           </li>
+//           <li className={`inline-block py-1 px-3 font-base transition-colors duration-300
+//                 ${isActive("/") ? "text-primary shadow-[0_3px_0_-1px_hsl(var(--primary))] font-bold" : "text-customTextColor hover:text-primary hover:shadow-[0_3px_0_-1px_hsl(var(--primary))]"}
+//               `}>
+//                 <Link to="/" onClick={handleLogout}>Log out</Link>
+//               </li>
+//         </ul>
+        
+        
+//       </div>
+            
+
+//       <button
+//         onClick={() => setOpenMenu(!openMenu)} 
+//         className="md:hidden focus:outline-none mr-1 md:mr-10 lg:mr-10 xl:mr-10"
+//         >
+//           <span className="block w-6 h-1 bg-gray-800 mb-1"></span>
+//           <span className="block w-6 h-1 bg-gray-800 mb-1"></span>
+//           <span className="block w-6 h-1 bg-gray-800"></span>
+//         </button>
+      
+     
+//     </div>
+//     {openMenu && (
+//         <div className="md:hidden">
+//           <ul className="flex flex-col text-center gap-4 bg-white py-2 shadow-lg">
+//             <li >
+//               <Link to="/import" className="cursor-pointer py-2 px-4 hover:bg-customGreen rounded-md">
+//                 Forecast
+//               </Link>
+//             </li>
+//             <li >
+//               <Link to="/sales-forecast" className="cursor-pointer py-2 px-4 hover:bg-customGreen rounded-md              ">
+//                 Sales
+//               </Link>
+//             </li>
+//             <li >
+//               <Link to="/products-forecast" className="cursor-pointer py-2 px-4 hover:bg-customGreen rounded-md              ">
+//                 Products
+//               </Link>
+//             </li>
+//             <li >
+//               <Link to="/sales" className="cursor-pointer py-2 px-4 hover:bg-customGreen rounded-md              ">
+//                 Insights
+//               </Link>
+//             </li>
+//             <li >
+//               <Link to="/" onClick={handleLogout}>Log out</Link>
+//             </li>
+//           </ul>
+//         </div>
+//       )}
+//     </nav>
+//   )
+// }
+
+// export default Topbar;
+
 import restore from "../assets/logo_restore.png";
-import { Link } from "react-router-dom";
 import { Separator } from "./ui/separator";
 import LogoutController from "../controllers/LogoutController";
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Button } from "./ui/button";
 
 const Topbar = () => {
   const username = localStorage.getItem("username");
   const { handleLogout } = LogoutController();
-   return (
-    <div className="border-b-2 container inline-flex justify-between w-full items-center py-4 px-10 my-3 md:pt-4">
-      <div className="mx-12" >
-        <Link to="/">
-          <img src={restore}  />
-        </Link>
-      </div>
-      <div className="hidden md:block mr-10 ">
-        <ul className="text-customTextColor flex gap-6">
-          <li className="inline-block px-2 font-lato ">
-            Hello, <span className="text-primary font-bold">{username}</span>!
-          </li>
-          <li>
-            <Separator orientation="vertical"/>
-          </li>
-          <li className="hover:border-b-2 hover:font-bold">
-            <button 
-             onClick={ handleLogout }
-            className="bg-transparent border-none text-customTextColor font-lato p-0">
-              Log out
-            </button>
-          </li>
-        </ul>
-        
-      </div>
-      
-    </div>
-  )
-}
+  const currentPath = location.pathname;
+  const isActive = (path: string) => currentPath === path;
+  const [openMenu, setOpenMenu] = useState(false);
+
+  const toggleMenu = () => {
+    setOpenMenu(!openMenu);
+  };
+
+  return (
+    <nav className="shadow-md z-10 relative">
+      <div className="flex justify-between w-full items-center py-4 px-10 my-3 md:pt-4">
+        <div className="flex items-center font-lato">
+          <div className="ml-1 mr-12 md:mx-12 lg:mx-12 xl:mx-12">
+            <img src={restore} alt="Restore Logo" />
+          </div>
+          <div className="hidden md:block mr-10">
+            <ul className="text-customTextColor flex gap-6">
+              <li
+                className={`inline-block py-1 px-3 font-base transition-colors duration-300
+                  ${isActive("/import") ? "text-primary shadow-[0_3px_0_-1px_hsl(var(--primary))] font-bold" : "text-customTextColor hover:text-primary hover:shadow-[0_3px_0_-1px_hsl(var(--primary))]"}
+                `}
+              >
+                <Link to="/import">Forecast</Link>
+              </li>
+              <li
+                className={`inline-block py-1 px-3 font-base transition-colors duration-300
+                  ${
+                    isActive("/sales-forecast")
+                      ? "text-primary shadow-[0_3px_0_-1px_hsl(var(--primary))] font-bold"
+                      : "text-customTextColor hover:text-primary hover:shadow-[0_3px_0_-1px_hsl(var(--primary))]"
+                  }`}
+              >
+                <Link to="/sales-forecast">Sales</Link>
+              </li>
+              <li
+                className={`inline-block py-1 px-3 font-base transition-colors duration-300
+                  ${
+                    isActive("/products-forecast")
+                      ? "text-primary shadow-[0_3px_0_-1px_hsl(var(--primary))] font-bold"
+                      : "text-customTextColor hover:text-primary hover:shadow-[0_3px_0_-1px_hsl(var(--primary))]"
+                  }`}
+              >
+                <Link to="/products-forecast">Products</Link>
+              </li>
+              <li
+                className={`inline-block py-1 px-3 font-base transition-colors duration-300
+                  ${
+                    isActive("/insights")
+                      ? "text-primary shadow-[0_3px_0_-1px_hsl(var(--primary))] font-bold"
+                      : "text-customTextColor hover:text-primary hover:shadow-[0_3px_0_-1px_hsl(var(--primary))]"
+                  }`}
+              >
+                <Link to="/insights">Insights</Link>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div className="items-center hidden md:block mr-1 lg:mr-10 xl:mr-10">
+          <ul className="text-customTextColor flex gap-6">
+            <li className="tracking-wide font-lato inline-block py-1 px-3 font-base transition-colors duration-300">
+              Hello
+              <span className="text-primary font-bold"> {username}</span>!
+            </li>
+            <li>
+              <Separator orientation="vertical" className="bg-gray-300" />
+            </li>
+            <li
+              className={`inline-block py-1 px-3 font-base transition-colors duration-300
+                ${
+                  isActive("/")
+                    ? "text-primary shadow-[0_3px_0_-1px_hsl(var(--primary))] font-bold"
+                    : "text-customTextColor hover:text-primary hover:shadow-[0_3px_0_-1px_hsl(var(--primary))]"
+                }`}
+            >
+              <Link to="/" onClick={handleLogout}>
+                Log out
+              </Link>
+            </li>
+            </ul>
+          </div>
+
+          <button
+          onClick={toggleMenu}
+          className={`md:hidden focus:outline-none mr-1 z-30`} // z-30 ensures it's above menu
+        >
+          <span className="block w-6 h-1 bg-gray-800 mb-1"></span>
+          <span className="block w-6 h-1 bg-gray-800 mb-1"></span>
+          <span className="block w-6 h-1 bg-gray-800"></span>
+        </button>
+        </div>
+
+        {openMenu && (
+        <div
+          className="fixed inset-0 top-10 z-20"
+          onClick={toggleMenu} // Close menu when clicking outside
+        >
+          <div
+            className="absolute top-16 left-0 w-full bg-white shadow-lg z-20"
+            onClick={(e) => e.stopPropagation()} // Prevent menu close when clicking inside
+          >
+            <ul className="flex flex-col text-center gap-4 py-2">
+              <li>
+                <Link
+                  to="/import"
+                  className="cursor-pointer py-2 px-4 hover:bg-customGreen rounded-md"
+                  onClick={toggleMenu}
+                >
+                  Forecast
+                </Link>
+              </li>
+              {/* Other Links */}
+              <li>
+                <Link
+                  to="/"
+                  onClick={handleLogout}
+                  className="cursor-pointer py-2 px-4 hover:bg-customGreen rounded-md"
+                >
+                  Log out
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/sales-forecast"
+                  className="cursor-pointer py-2 px-4 hover:bg-customGreen rounded-md"
+                  onClick={() => setOpenMenu(false)}
+                >
+                  Sales
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/products-forecast"
+                  className="cursor-pointer py-2 px-4 hover:bg-customGreen rounded-md"
+                  onClick={() => setOpenMenu(false)}
+                >
+                  Products
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/insights"
+                  className="cursor-pointer py-2 px-4 hover:bg-customGreen rounded-md"
+                  onClick={() => setOpenMenu(false)}
+                >
+                  Insights
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/"
+                  onClick={handleLogout}
+                  className="cursor-pointer py-2 px-4 hover:bg-customGreen rounded-md"
+                >
+                  Log out
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </div>
+      )}
+    </nav>
+  );
+};
 
 export default Topbar;

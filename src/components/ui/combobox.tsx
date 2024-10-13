@@ -18,80 +18,95 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+import axios from 'axios'; // Make sure to install axios if not already installed
+import { axiosInstance } from "@/services/axios"
 
-const frameworks = [
-  {
-    value: "magic sarap",
-    label: "Magic Sarap",
-  },
-  {
-    value: "ariel",
-    label: "Ariel",
-  },
-  {
-    value: "keratin",
-    label: "Keratin",
-  },
-  {
-    value: "egg",
-    label: "Egg",
-  },
-  {
-    value: "hotdog",
-    label: "Hotdog",
-  },
-]
+export function ComboboxDemo({ onSelect }) {
+  const [open, setOpen] = React.useState(false);
+  const [value, setValue] = React.useState("");
+  const [items, setItems] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
 
-export function ComboboxDemo() {
-  const [open, setOpen] = React.useState(false)
-  const [value, setValue] = React.useState("")
+  React.useEffect(() => {
+    const fetchProducts = async () => {
+      const username = localStorage.getItem("username");
+      setLoading(true);
+      try {
+        const response = await axiosInstance.get(`/api/Demand/demand/${username}`);
+        if (response.data && Array.isArray(response.data)) {
+          // Use a Set to track unique product names
+          const seenProducts = new Set();
+          const uniqueProducts = response.data.filter(product => {
+            const productName = product.Records[0]?.Product;
+            if (productName && !seenProducts.has(productName)) {
+              seenProducts.add(productName);
+              return true;
+            }
+            return false;
+          }).map(product => ({
+            value: product.ProductID,
+            label: product.Records[0]?.Product,
+          }));
+          
+          setItems(uniqueProducts);
+        } else {
+          console.error("Unexpected response structure:", response.data);
+        }
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   return (
-    <div className="">
-        <Popover open={open} onOpenChange={setOpen}>
-            <PopoverTrigger asChild>
-                <Button
-                variant="outline"
-                role="combobox"
-                aria-expanded={open}
-                className="w-[200px] justify-between bg-white"
-                >
-                {value
-                    ? frameworks.find((framework) => framework.value === value)?.label
-                    : "Select product..."}
-                <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-[200px] p-0">
-                <Command>
-                <CommandInput placeholder="Search product..." className="h-9" />
-                <CommandList>
-                    <CommandEmpty>No framework found.</CommandEmpty>
-                    <CommandGroup>
-                    {frameworks.map((framework) => (
-                        <CommandItem
-                        key={framework.value}
-                        value={framework.value}
-                        onSelect={(currentValue) => {
-                            setValue(currentValue === value ? "" : currentValue)
-                            setOpen(false)
-                        }}
-                        >
-                        {framework.label}
-                        <CheckIcon
-                            className={cn(
-                            "ml-auto h-4 w-4",
-                            value === framework.value ? "opacity-100" : "opacity-0"
-                            )}
-                        />
-                        </CommandItem>
-                    ))}
-                    </CommandGroup>
-                </CommandList>
-                </Command>
-            </PopoverContent>
-        </Popover>
+    <div>
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger asChild>
+          <Button
+            variant="outline"
+            role="combobox"
+            aria-expanded={open}
+            className="w-[250px] xs:w-[300px] justify-between bg-white"
+          >
+            {value ? items.find((item) => item.value === value)?.label : "Select product..."}
+            <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-[250px] xs:w-[300px] p-0">
+          <Command>
+            <CommandInput placeholder="Search product..." className="h-9" />
+            {loading ? (
+              <div>Loading products...</div>
+            ) : (
+              <CommandList>
+                <CommandEmpty>No product found.</CommandEmpty>
+                <CommandGroup>
+                  {items.map((item) => (
+                    <CommandItem
+                      key={item.value}
+                      value={item.value}
+                      onSelect={(currentValue) => {
+                        setValue(currentValue === value ? "" : currentValue);
+                        setOpen(false);
+                        onSelect(currentValue);
+                      }}
+                    >
+                      {item.label} {/* This displays the product name */}
+                      <CheckIcon
+                        className={`ml-auto h-4 w-4 ${value === item.value ? "opacity-100" : "opacity-0"}`}
+                      />
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              </CommandList>
+            )}
+          </Command>
+        </PopoverContent>
+      </Popover>
     </div>
-    
-  )
+  );
 }
