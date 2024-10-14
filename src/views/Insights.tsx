@@ -258,40 +258,88 @@ export default function Insights() {
     }
   }, [username]);
 
-  const exportToExcel = () => {
-      // Create a new workbook
-    const workbook = XLSX.utils.book_new();
+const exportToExcel = () => {
+  // Create a new workbook
+  const workbook = XLSX.utils.book_new();
 
-    // Prepare Sales Prediction Data
-    const salesSheetData = [["Prediction", "Next Month", "Percentage Increase"]];
-    salesPredictionData.forEach(item => {
-      salesSheetData.push([item.prediction, item.next_month, item.percentage_increase]);
-    });
-    const salesSheet = XLSX.utils.aoa_to_sheet(salesSheetData);
-    XLSX.utils.book_append_sheet(workbook, salesSheet, "Sales Prediction");
+  // Prepare Sales Prediction Data
+  const salesSheetData = [["Prediction", "Next Month", "Percentage Increase"]];
+  salesPredictionData.forEach(item => {
+    salesSheetData.push([item.prediction, item.next_month, item.percentage_increase]);
+  });
+  const salesSheet = XLSX.utils.aoa_to_sheet(salesSheetData);
 
-    // Prepare Product Demand Prediction Data
-    const productDemandSheetData = [["Product ID", "Product Name", "Projected Demand"]];
-    productDemandPredictionData.forEach(item => {
-      productDemandSheetData.push([item.ProductID, item.Product, item.PredictedDemand]);
-    });
-    const productDemandSheet = XLSX.utils.aoa_to_sheet(productDemandSheetData);
-    XLSX.utils.book_append_sheet(workbook, productDemandSheet, "Product Demand Prediction");
+  // Apply text wrapping to Sales Prediction sheet
+  Object.keys(salesSheet).forEach(key => {
+    if (key[0] === '!') return; // Skip metadata keys
+    salesSheet[key].s = {
+      alignment: { wrapText: true }
+    };
+  });
 
-    // Prepare Insights Data
-    const insightsSheetData = [["Insight Data"]];
-    if (insights) {
-      insightsSheetData.push([insights]);
-    } else {
-      insightsSheetData.push(["No insights available"]);
-    }
-    const insightsSheet = XLSX.utils.aoa_to_sheet(insightsSheetData);
-    XLSX.utils.book_append_sheet(workbook, insightsSheet, "Insights");
+  // Adjust column widths for Sales Prediction sheet
+  const salesColumnWidths = [
+    { wpx: Math.max(...salesSheetData.map(row => row[0].toString().length)) * 7 }, // Prediction
+    { wpx: Math.max(...salesSheetData.map(row => row[1].toString().length)) * 7 }, // Next Month
+    { wpx: Math.max(...salesSheetData.map(row => row[2].toString().length)) * 7 }  // Percentage Increase
+  ];
+  salesSheet['!cols'] = salesColumnWidths;
 
-    // Export the Excel file
-    const excelFileName = "insights_data.xlsx";
-    XLSX.writeFile(workbook, excelFileName);
+  XLSX.utils.book_append_sheet(workbook, salesSheet, "Sales Prediction");
+
+  // Prepare Product Demand Prediction Data
+  const productDemandSheetData = [["Product ID", "Product Name", "Projected Demand"]];
+  productDemandPredictionData.forEach(item => {
+    productDemandSheetData.push([item.ProductID, item.Product, item.PredictedDemand]);
+  });
+  const productDemandSheet = XLSX.utils.aoa_to_sheet(productDemandSheetData);
+
+  // Apply text wrapping to Product Demand Prediction sheet
+  Object.keys(productDemandSheet).forEach(key => {
+    if (key[0] === '!') return; // Skip metadata keys
+    productDemandSheet[key].s = {
+      alignment: { wrapText: true }
+    };
+  });
+
+  // Adjust column widths for Product Demand Prediction sheet
+  const productDemandColumnWidths = [
+    { wpx: Math.max(...productDemandSheetData.map(row => row[0].toString().length)) * 7 }, // Product ID
+    { wpx: Math.max(...productDemandSheetData.map(row => row[1].toString().length)) * 7 }, // Product Name
+    { wpx: Math.max(...productDemandSheetData.map(row => row[2].toString().length)) * 7 }  // Projected Demand
+  ];
+  productDemandSheet['!cols'] = productDemandColumnWidths;
+
+  XLSX.utils.book_append_sheet(workbook, productDemandSheet, "Product Demand Prediction");
+
+  // Prepare Insights Data
+  const insightsSheetData = [["Insight Data"]];
+  if (insights) {
+    insightsSheetData.push([insights]);
+  } else {
+    insightsSheetData.push(["No insights available"]);
+  }
+  const insightsSheet = XLSX.utils.aoa_to_sheet(insightsSheetData);
+
+  // Apply text wrapping to Insights sheet
+  Object.keys(insightsSheet).forEach(key => {
+    if (key[0] === '!') return; // Skip metadata keys
+    insightsSheet[key].s = {
+      alignment: { wrapText: true }
+    };
+  });
+
+  // Adjust column widths for Insights sheet
+  const insightsColumnWidths = insights ? [{ wpx: Math.max(insights.length, 20) * 7 }] : [{ wpx: 150 }]; // Default width if no insights
+  insightsSheet['!cols'] = insightsColumnWidths;
+
+  XLSX.utils.book_append_sheet(workbook, insightsSheet, "Insights");
+
+  // Export the Excel file
+  const excelFileName = "insights_data.xlsx";
+  XLSX.writeFile(workbook, excelFileName);
 };
+
 
   return (
     <div className="px-5 md:px-20 lg:px-20 xl:px-20 mb-8">
