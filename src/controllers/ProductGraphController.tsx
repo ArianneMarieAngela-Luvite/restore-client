@@ -41,10 +41,10 @@ interface MonthData {
 type MonthNames = "January" | "February" | "March" | "April" | "May" | "June" | 
                   "July" | "August" | "September" | "October" | "November" | "December";
 
-type Item = {
-  value: string; // Assuming ProductID is a string
-  label: string; // Assuming Product is a string or whatever the appropriate type is
-};
+// type Item = {
+//   value: string; // Assuming ProductID is a string
+//   label: string; // Assuming Product is a string or whatever the appropriate type is
+// };
 
 export const ProductGraphController = () => {
   const username = localStorage.getItem("username");
