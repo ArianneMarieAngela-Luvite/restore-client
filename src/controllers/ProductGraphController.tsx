@@ -1,13 +1,53 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, SetStateAction } from "react";
 import { axiosInstance } from "../services/axios";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
 
+
+interface Record {
+  Month: string; // Assuming this is the format "MM/DD/YYYY"
+  UnitsSold: number; // Assuming this is the number of units sold
+}
+
+interface Product {
+  ProductID: number;
+  Records: Record[]; // Updated to use the specific Record type
+  Product: string;
+  Month: string;
+}
+
+interface ParsedData {
+  month: number;
+  [key: string]: number | string; // Assuming year keys will be strings
+}
+
+interface SalesDataByMonth {
+  [monthIndex: number]: number; // Array of units sold for each month
+}
+
+interface SalesDataByYear {
+  [year: string]: SalesDataByMonth; // Object with year as key and sales data as value
+}
+
+interface MonthData {
+  month: string;
+  [year: string]: number | string; // Index signature for dynamic year properties
+}
+
+interface ComboboxDemoProps {
+  items: Product[]; // Ensure this type matches your product data
+  onSelect: (selectedID: number | string) => void; // Adjust based on your implementation
+}
+type MonthNames = "January" | "February" | "March" | "April" | "May" | "June" | 
+                  "July" | "August" | "September" | "October" | "November" | "December";
+
+
 export const ProductGraphController = () => {
   const username = localStorage.getItem("username");
-  const [products, setProducts] = useState([]);
-  const [parsedData, setParsedData] = useState([]);
-  const [selectedProductID, setSelectedProductID] = useState("");
+  const [products, setProducts] = useState<Product[]>([]);
+  const [parsedData, setParsedData] = useState<ParsedData[]>([]);
+  const [selectedProductID, setSelectedProductID] = useState<number | undefined>(undefined);
+  const [selectedProductName, setSelectedProductName] = useState("");
   const [selectedYears, setSelectedYears] = useState(1);
   const [isLoading, setIsLoading] = useState(true); 
   const [predictedDemandData, setPredictedDemandData] = useState([]);
@@ -70,24 +110,26 @@ export const ProductGraphController = () => {
     "hsl(180, 80%, 60%)", // Teal
   ];
 
-  const [tickFormatter, setTickFormatter] = useState(() => (month) => monthsShort[month] || month);
+  const [tickFormatter, setTickFormatter] = useState(() => (month: MonthNames) => monthsShort[month]);
+
   useEffect(() => {
     const handleResize = () => {
       if (window.matchMedia("(min-width: 1024px)").matches) {
-        setTickFormatter(() => (month) => monthsFull[month] || month); // Full name for lg and up
+        setTickFormatter(() => (month: MonthNames) => monthsFull[month]); // Full name for lg and up
       } else if (window.matchMedia("(min-width: 768px)").matches) {
-        setTickFormatter(() => (month) => monthsShort[month] || month); // First 3 letters for md
+        setTickFormatter(() => (month: MonthNames) => monthsShort[month]); // First 3 letters for md
       } else {
-        setTickFormatter(() => (month) => monthsInitial[month] || month); // First letter for sm and below
+        setTickFormatter(() => (month: MonthNames) => monthsInitial[month]); // First letter for sm and below
       }
     };
-
+  
     // Initial check and add event listener
     handleResize();
     window.addEventListener("resize", handleResize);
-
+  
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
 
   // GET PRODUCT SALES DATA
   useEffect(() => {
@@ -96,11 +138,14 @@ export const ProductGraphController = () => {
       if(username) {
         try {
           const response = await axiosInstance.get(`/api/Demand/demand/${username}`);
-          const data = response.data;
+          // const data = response.data;
+          const data: Product[] = response.data;
           setProducts(data);
           console.log(data[0].Records, "real");
           if (data.length > 0) {
             setSelectedProductID(data[0].ProductID);
+            setSelectedProductName(data[0].Product);
+            console.log(setSelectedProductName, "huhu");
             updateParsedData(data[0].Records);
           }
         } catch (error) {
@@ -113,84 +158,57 @@ export const ProductGraphController = () => {
     fetchProductData();
   }, []);
 
-   // Fetch Demand Prediction and parse data
-   useEffect(() => {
-    const fetchDemandPrediction = async () => {
-      try {
-        const response = await fetch(`/api/Demand/DemandPrediction/prediction/${username}`);
-        const data = await response.json();
 
-        // Parse the data into the desired format
-        const formattedData = data.map(item => {
-          const [year, monthIndex] = item.Month.split("-"); // Split month to get year and month index
-          const monthNames = [
-            "January", "February", "March", "April", "May",
-            "June", "July", "August", "September", "October",
-            "November", "December"
-          ];
-          const monthName = monthNames[parseInt(monthIndex) - 1]; // Convert index to month name
+  const updateParsedData = (records: any[]) => {
+    const salesDataByMonthAndYear: { [year: string]: number[] } = {}; // This will hold the sales data indexed by year
 
-          // Construct the object in the required format
-          return {
-            [item.ProductID]: item.PredictedDemand, // Dynamic key for ProductID
-            month: monthName,
-            year: parseInt(year) // Parse year as an integer
-          };
-        });
+  records.forEach((record: { Month: string; UnitsSold: string }) => {
+    const [month, , year] = record.Month.split("/");
+    const monthIndex = parseInt(month) - 1;
 
-        // Log the formatted data for debugging
-        console.log("Parsed Demand Prediction Data:", formattedData);
-        setPredictedDemandData(formattedData);
-      } catch (error) {
-        console.error("Error fetching demand prediction data:", error);
-      }
-    };
+    // Initialize the year array if it doesn't exist
+    if (!salesDataByMonthAndYear[year]) {
+      salesDataByMonthAndYear[year] = Array(12).fill(0);
+    }
 
-    fetchDemandPrediction();
-  }, [username]);
+    // Sum the units sold for the given month and year
+    salesDataByMonthAndYear[year][monthIndex] += parseInt(record.UnitsSold);
+  });
 
+  const months = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December",
+  ];
 
+  const formattedData: MonthData[] = months.map((monthName, index) => {
+    const monthData: MonthData = { month: monthName }; // Create monthData with the month property
 
-  const updateParsedData = (records) => {
-    const salesDataByMonthAndYear = {};
-
-    records.forEach((record) => {
-      const [month, , year] = record.Month.split("/");
-      const monthIndex = parseInt(month) - 1;
-
-      if (!salesDataByMonthAndYear[year]) {
-        salesDataByMonthAndYear[year] = Array(12).fill(0);
-      }
-      salesDataByMonthAndYear[year][monthIndex] += parseInt(record.UnitsSold);
+    // Populate the monthData object with sales data for each year
+    Object.keys(salesDataByMonthAndYear).forEach((year) => {
+      monthData[year] = salesDataByMonthAndYear[year][index] || 0; // Use year as a dynamic key
     });
 
-    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    const formattedData = months.map((monthName, index) => {
-      const monthData = { month: monthName };
+    return monthData; // Return the monthData object
+  });
 
-      Object.keys(salesDataByMonthAndYear).forEach((year) => {
-        monthData[year] = salesDataByMonthAndYear[year][index] || 0;
-      });
+  const allYears = Object.keys(salesDataByMonthAndYear).sort();
+  const latestYears = allYears.slice(-selectedYears); // Get the latest years based on the selectedYears state
 
-      return monthData;
+  const finalData = formattedData.map((dataPoint, index) => {
+    const filteredPoint: ParsedData = { month: index + 1 }; // Assign month as a number (1-12)
+  
+    latestYears.forEach((year) => {
+      filteredPoint[year] = dataPoint[year] || 0; // Assign sales data by year
     });
+  
+    return filteredPoint;  // Return the filtered data point
+  });
 
-    const allYears = Object.keys(salesDataByMonthAndYear).sort();
-    const latestYears = allYears.slice(-selectedYears);
-
-    const finalData = formattedData.map((dataPoint) => {
-      const filteredPoint = { month: dataPoint.month };
-      latestYears.forEach((year) => {
-        filteredPoint[year] = dataPoint[year] || 0;
-      });
-      return filteredPoint;
-    });
-
-    setParsedData(finalData);
-    console.log("final", finalData);
+  setParsedData(finalData); // Update state with the final data
+  console.log("final", finalData); // Log the final data
   };
 
-  const handleProductChange = (selectedID) => {
+  const handleProductChange = (selectedID: SetStateAction<number | undefined>) => {
     const selectedProduct = products.find((product) => product.ProductID === selectedID);
     if (selectedProduct) {
       updateParsedData(selectedProduct.Records);
@@ -226,10 +244,11 @@ export const ProductGraphController = () => {
 
       const textX = margin;
       const textY = margin;
-      pdf.setFontSize(16);
-      pdf.text(`${selectedYears} Trend`, textX, textY);
+      pdf.setFontSize(8);
+      pdf.text(`Exported by: ${username}`, textX + 15, textY)
+      pdf.text(`${selectedYears} Year/s Trend for`, textX + 15 , + 56);
 
-      pdf.addImage(imgData, "PNG", margin, textY + 20, imgWidth, imgHeight);
+      pdf.addImage(imgData, "PNG", margin, textY + 30, imgWidth, imgHeight);
       pdf.save("product_graph_forecast.pdf");
     }
   };

@@ -154,23 +154,35 @@ import { useEffect, useState } from "react";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { axiosInstance } from "../services/axios";
-import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import * as XLSX from "xlsx";
 import timeline from "../assets/Vertical Timeline.png";
 import { ClipLoader } from "react-spinners";
 
+
+type PredictedDemand = {
+  Month: string;
+  ProductID: string;
+  Product: string;
+  PredictedDemand: string;
+}
+
+interface SalesPrediction {
+  prediction: string;
+  next_month: string;
+  percentage_increase: string;
+}
 export default function Insights() {
-  const [productDemandPredictionData, setProductDemandPredictionData] = useState([]);
+  const [productDemandPredictionData, setProductDemandPredictionData] = useState<PredictedDemand[]>([]);
   const [insights, setInsights] = useState("");
   const username = localStorage.getItem("username");
-  const [salesPredictionData, setSalesPredictionData] = useState([]);
+  const [salesPredictionData, setSalesPredictionData] = useState<SalesPrediction[]>([]);
+  const [nextMonthName, setNextMonthName] = useState("");
+  
   const [loading, setLoading] = useState(false);
 
-  // Mock Sales data for now
-  const sales = "₱14,324.53";
-
+  const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   useEffect(() => {
     if (username) {
       axiosInstance.get(`/api/SalesPrediction/prediction`, {
@@ -179,8 +191,17 @@ export default function Insights() {
         }
       })
         .then(response => {
-          setSalesPredictionData(response.data);
-          
+          const salesData = response.data;
+  
+          // Assuming salesData contains a field like "next_month" in the format "1972-10"
+          if (salesData && salesData.length > 0) {
+            const monthNumber = salesData[0].next_month.split("-")[1]; // Extract the month number
+            const monthIndex = parseInt(monthNumber, 10) - 1; // Convert month to 0-based index
+            const monthName = monthNames[monthIndex]; // Get the month name
+            
+            setSalesPredictionData(salesData);
+            setNextMonthName(monthName); // Save the month name in a useState
+          }
         })
         .catch(error => {
           console.error("Error fetching sales prediction data: ", error);
@@ -188,27 +209,30 @@ export default function Insights() {
     }
   }, [username]);
   
+
   useEffect(() => {
     const fetchProductDemandPredictionData = async () => {
-      if (username) {// Start loading
+      if (username) {
+        setLoading(true);
         try {
           const response = await axiosInstance.get(`/api/DemandPrediction/prediction/${username}`);
+          
           if (response.data) {
-            // setProductDemandPredictionData(response.data);
-            const sortedData = response.data.sort((a, b) => b.PredictedDemand - a.PredictedDemand);
+            const sortedData: PredictedDemand[] = response.data.sort((a: { PredictedDemand: number; }, b: { PredictedDemand: number; }) => b.PredictedDemand - a.PredictedDemand);
             setProductDemandPredictionData(sortedData);
           } else {
             console.error("No data received");
           }
         } catch (error) {
           console.error("Error fetching product demand prediction data:", error);
-        } 
+        } finally {
+          setLoading(false);
+        }
       }
     };
-
+  
     fetchProductDemandPredictionData();
   }, [username]);
-
   
 
   useEffect(() => {
@@ -235,38 +259,42 @@ export default function Insights() {
   }, [username]);
 
   const exportToExcel = () => {
+      // Create a new workbook
     const workbook = XLSX.utils.book_new();
 
-    // 1. Create Product Demand Data Sheet
-    const productDemandSheetData = [["Product ID", "Product Name", "Units Sold"]];
-    productDemandData.forEach(product => {
-      product.Records.forEach(record => {
-        productDemandSheetData.push([product.ProductID, record.Product, record.UnitsSold]);
-      });
+    // Prepare Sales Prediction Data
+    const salesSheetData = [["Prediction", "Next Month", "Percentage Increase"]];
+    salesPredictionData.forEach(item => {
+      salesSheetData.push([item.prediction, item.next_month, item.percentage_increase]);
+    });
+    const salesSheet = XLSX.utils.aoa_to_sheet(salesSheetData);
+    XLSX.utils.book_append_sheet(workbook, salesSheet, "Sales Prediction");
+
+    // Prepare Product Demand Prediction Data
+    const productDemandSheetData = [["Product ID", "Product Name", "Projected Demand"]];
+    productDemandPredictionData.forEach(item => {
+      productDemandSheetData.push([item.ProductID, item.Product, item.PredictedDemand]);
     });
     const productDemandSheet = XLSX.utils.aoa_to_sheet(productDemandSheetData);
-    XLSX.utils.book_append_sheet(workbook, productDemandSheet, "Product Demand");
+    XLSX.utils.book_append_sheet(workbook, productDemandSheet, "Product Demand Prediction");
 
-    // 2. Create Forecast Insight Sheet
-    const insightSheetData = [["Insight"]];
-    insightSheetData.push([insights]);
-    const insightSheet = XLSX.utils.aoa_to_sheet(insightSheetData);
-    XLSX.utils.book_append_sheet(workbook, insightSheet, "Forecast Insights");
+    // Prepare Insights Data
+    const insightsSheetData = [["Insight Data"]];
+    if (insights) {
+      insightsSheetData.push([insights]);
+    } else {
+      insightsSheetData.push(["No insights available"]);
+    }
+    const insightsSheet = XLSX.utils.aoa_to_sheet(insightsSheetData);
+    XLSX.utils.book_append_sheet(workbook, insightsSheet, "Insights");
 
-    // 3. Create Mock Data for Next Monthly Forecast Sheet (Replace with actual data if available)
-    const forecastSheetData = [
-      ["Invoice", "Status", "Method", "Amount"],
-      ["INV001", "Paid", "Credit Card", "$250.00"],
-    ];
-    const forecastSheet = XLSX.utils.aoa_to_sheet(forecastSheetData);
-    XLSX.utils.book_append_sheet(workbook, forecastSheet, "Next Monthly Forecast");
-
-    // Export the file
-    XLSX.writeFile(workbook, "Insights_Data.xlsx");
-  };
+    // Export the Excel file
+    const excelFileName = "insights_data.xlsx";
+    XLSX.writeFile(workbook, excelFileName);
+};
 
   return (
-    <div className="px-10 md:px-20 lg:px-20 xl:px-20 mb-8">
+    <div className="px-5 md:px-20 lg:px-20 xl:px-20 mb-8">
       <div className="flex my-5">
         <Button className="ml-auto" onClick={exportToExcel}>Export to Excel</Button>
       </div>
@@ -290,7 +318,6 @@ export default function Insights() {
             <h1 className="font-lato text-[14px] lg:text-base xl:text-base font-semibold text-gray-700 mx-2 mt-2 border-slate-300 border-b-[1px] pb-2">
               Next Month Forecast
             </h1>
-            {/* <Separator orientation="horizontal" className="bg-gray-300 h-[1px] mb-2 mx-2 w-[97%]" /> */}
             <div className="px-2 ">
               <Table>
                 <TableHeader>
@@ -304,7 +331,7 @@ export default function Insights() {
                     {salesPredictionData.length > 0 ? (
                       salesPredictionData.map((salesData, index) => (
                         <TableRow key={index}>
-                          <TableCell className="text-sm md:text-base">{salesData.next_month}</TableCell>
+                          <TableCell className="text-sm md:text-base">{nextMonthName}</TableCell>
                           <TableCell className="text-sm md:text-base">{salesData.prediction}</TableCell>
                           <TableCell className="text-sm md:text-base">{salesData.percentage_increase}%</TableCell>
                         </TableRow>
@@ -323,16 +350,26 @@ export default function Insights() {
 
           <div className="bg-customCardColor rounded-lg h-96 font-lato">
             <h1 className="font-lato text-base font-semibold text-gray-700 border-slate-300 border-b-[1px] mt-4 mx-7 mb-1 pb-1 w-auto">Forecast Insight</h1>
-            {/* <Separator orientation="horizontal" className="bg-gray-300 mb-2 w-[94%] mx-4 h-[1px]" /> */}
+            
             <ScrollArea className="h-[85%] px-4">
-              {insights ? (
-                <div className="leading-7 md:leading-8  px-4 text-justify py-1 text-base font-lato">
-                  {insights}
+              {loading ? (
+                <div className="flex justify-center items-center h-[85%]">
+                  <ClipLoader size={50} color="black" />
                 </div>
               ) : (
-                <p className="text-sm lg:text-base text-gray-500 mx-4">No insights available at the moment.</p>
+                insights ? (
+                  <div className="leading-7 md:leading-8 px-4 text-justify py-1 text-base font-lato">
+                    {insights}
+                  </div>
+                ) : (
+                  <p className="text-sm lg:text-base text-gray-500 mx-4">
+                    No insights available at the moment.
+                  </p>
+                )
               )}
             </ScrollArea>
+            
+            
           </div>
         </div>
 
@@ -342,41 +379,41 @@ export default function Insights() {
               Product Demand
             </h1>
           </div>
-          {/* <Separator orientation="horizontal" className="bg-gray-300 mb-2 lg:w-[92%] w-[85%] ml-6  lg:ml-8 h-[1px] items-center " /> */}
           <ScrollArea className="h-[90%] px-8">
-          <Table id="productDemand" className="h-[85%] text-base font-lato">
-      <TableHeader>
-        <TableRow className="font-bold">
-          <TableHead className="text-sm md:text-base font-semibold text-gray-500">Product ID</TableHead>
-          <TableHead className="text-sm md:text-base font-semibold text-gray-500">Product Name</TableHead>
-          <TableHead className="text-sm md:text-base font-semibold text-gray-500">Projected Demand</TableHead>
+  <Table id="productDemand" className="h-[85%] text-base font-lato">
+    <TableHeader>
+      <TableRow className="font-bold">
+        <TableHead className="text-sm md:text-base font-semibold text-gray-500">Product ID</TableHead>
+        <TableHead className="text-sm md:text-base font-semibold text-gray-500">Product Name</TableHead>
+        <TableHead className="text-sm md:text-base font-semibold text-gray-500">Projected Demand</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody className="text-base">
+      {loading ? (
+        <TableRow>
+          <TableCell colSpan={3} className="text-center">
+            <ClipLoader size={50} color="black" />
+          </TableCell>
         </TableRow>
-      </TableHeader>
-      <TableBody className="text-base">
-        {loading ? ( // Show spinner while loading
-          <TableRow>
-            <TableCell colSpan={3} className="text-center">
-              <ClipLoader size={50} color="black" />
-            </TableCell>
+      ) : productDemandPredictionData.length > 0 ? (
+        productDemandPredictionData.map((product, index) => (
+          <TableRow key={`${product.ProductID}-${index}`}>
+            <TableCell className="text-sm md:text-base">{product.ProductID}</TableCell>
+            <TableCell className="text-sm md:text-base">{product.Product}</TableCell>
+            <TableCell className="text-sm md:text-base">{product.PredictedDemand}</TableCell>
           </TableRow>
-        ) : productDemandPredictionData.length > 0 ? (
-          productDemandPredictionData.map((product, index) => (
-            <TableRow key={`${product.ProductID}-${index}`}>
-              <TableCell className="text-sm md:text-base">{product.ProductID}</TableCell>
-              <TableCell className="text-sm md:text-base">{product.Product}</TableCell>
-              <TableCell className="text-sm md:text-base">{product.PredictedDemand}</TableCell>
-            </TableRow>
-          ))
-        ) : (
-          <TableRow>
-            <TableCell colSpan={3} className="text-gray-500 text-center text-[14px] lg:text-base xl:text-base">
-              No data available
-            </TableCell>
-          </TableRow>
-        )}
-      </TableBody>
-    </Table>
-          </ScrollArea>
+        ))
+      ) : (
+        <TableRow>
+          <TableCell colSpan={3} className="text-gray-500 text-center text-[14px] lg:text-base xl:text-base">
+            No data available
+          </TableCell>
+        </TableRow>
+      )}
+    </TableBody>
+  </Table>
+</ScrollArea>
+
         </div>
       </div>
     </div>

@@ -24,7 +24,7 @@ const Header = () => {
   const isActive = (path: string) => currentPath === path
 
   return (
-    <nav className="fixed top-0 w-full bg-white z-50 shadow-md">
+    <nav className="fixed top-0 w-full bg-white z-50 shadow-md border">
       <div className="flex justify-between w-full items-center py-4 px-10 my-3 md:pt-4">
         <div className="lg:mx-10 xl:mx-10 md:mx-10 cursor-pointer">
           <Link to="/">
@@ -33,7 +33,7 @@ const Header = () => {
         </div>
         <div className="hidden md:block mr-10">
           <ul className="text-customTextColor flex gap-6">
-            <li className={`inline-block py-1 px-3 font-semibold transition-colors duration-300
+            <li className={`inline-block py-1 px-3 font-semibold text-base transition-colors duration-300
               ${isActive("") ? "text-primary shadow-[0_3px_0_-1px_hsl(var(--primary))]" : "text-customTextColor hover:text-primary hover:shadow-[0_3px_0_-1px_hsl(var(--primary))]"}
             `}>
               <Link to="">About</Link>

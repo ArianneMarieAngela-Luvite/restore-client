@@ -250,7 +250,6 @@ import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { ClipLoader } from "react-spinners";
 import { ProductGraphController } from "../controllers/ProductGraphController";
-import { useEffect, useState } from "react";
 
 export default function ProductGraph() {
   const {
