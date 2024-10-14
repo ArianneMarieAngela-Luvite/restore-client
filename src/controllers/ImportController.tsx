@@ -46,7 +46,7 @@ export const ImportController = () => {
     formData.append("file", file);
 
     try {
-      const response = await axiosInstance.post(selectedFile.api, formData, {
+      await axiosInstance.post(selectedFile.api, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
