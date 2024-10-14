@@ -1,8 +1,12 @@
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
 const Landing = () => {
+  const navigate = useNavigate();
+  const handleLoginButton = () => {
+    navigate("/login");
+  };
   return (
    <div
     id="hero"
@@ -36,7 +40,7 @@ const Landing = () => {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.7, duration: 0.8 }}
         >
-            <Button className="my-5 mr-5 rounded-lg">Start Now</Button>
+            <Button onClick={handleLoginButton} className="my-5 mr-5 rounded-lg" >Start Now</Button>
             <Link to="/home" className="font-lato">Learn more</Link>
         </motion.div>
       </div>  
