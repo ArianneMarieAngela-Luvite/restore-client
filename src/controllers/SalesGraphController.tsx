@@ -214,7 +214,7 @@ interface ParsedData {
 
 type MonthNames = "January" | "February" | "March" | "April" | "May" | "June" | 
                   "July" | "August" | "September" | "October" | "November" | "December";
-                  
+
 export function SalesGraphController() {
   const username = localStorage.getItem("username");
   const [parsedData, setParsedData] = useState<ParsedData[]>([]);
@@ -274,9 +274,9 @@ export function SalesGraphController() {
   });
   useEffect(() => {
     const handleResize = () => {
-      if (window.matchMedia("(min-width: 1024px)").matches) {
+      if (window.matchMedia("(min-width: 1280px)").matches) {
         setTickFormatter(() => (month: MonthNames) => monthsFull[month]); // Full name for lg and up
-      } else if (window.matchMedia("(min-width: 768px)").matches) {
+      } else if (window.matchMedia("(min-width: 1024px)").matches) {
         setTickFormatter(() => (month: MonthNames) => monthsShort[month]); // First 3 letters for md
       } else {
         setTickFormatter(() => (month: MonthNames) => monthsInitial[month]); // First letter for sm and below
@@ -442,10 +442,10 @@ export function SalesGraphController() {
       const textX = margin;
       const textY = margin;
       pdf.setFontSize(8);
-      pdf.text(`Exported by: ${username}`, textX + 15, textY);
-      pdf.text(`${selectedYears} Year/s Trend`, textX + 15, textY + 56);
+      pdf.text(`Exported by: ${username}`, textX + 20, textY + 40);
+      pdf.text(`${selectedYears} Year/s Trend`, textX + 20, textY + 56);
 
-      pdf.addImage(imgData, "PNG", margin, textY + 30, imgWidth, imgHeight);
+      pdf.addImage(imgData, "PNG", margin, textY + 60, imgWidth, imgHeight);
 
       pdf.save("sales_graph_forecast.pdf");
     }

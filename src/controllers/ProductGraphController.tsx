@@ -102,9 +102,9 @@ export const ProductGraphController = () => {
 
   useEffect(() => {
     const updateTickFormatter = () => {
-      if (window.matchMedia("(min-width: 1024px)").matches) {
+      if (window.matchMedia("(min-width: 1280px)").matches) {
         setTickFormatter(() => (month: MonthNames) => monthsFull[month] || month);
-      } else if (window.matchMedia("(min-width: 768px)").matches) {
+      } else if (window.matchMedia("(min-width: 1024px)").matches) {
         setTickFormatter(() => (month: MonthNames) => monthsShort[month] || month);
       } else {
         setTickFormatter(() => (month: MonthNames) => monthsInitial[month] || month);
@@ -145,17 +145,134 @@ export const ProductGraphController = () => {
     fetchProductData();
   }, []);
 
+
+  
+
+  // useEffect(() => {
+  //   const fetchDemandPrediction = async () => {
+  //     if (username) {
+  //       try {
+  //         const response = await axiosInstance.get(`/api/DemandPrediction/prediction/${username}`);
+  //         const data = response.data; // Axios automatically parses the JSON response
+  
+  //         console.log(response.data, "hmm");
+  
+  //         // Parse the data into the desired format
+  //         const formattedData = data.map((item: { Month: string; ProductID: any; PredictedDemand: any; }) => {
+  //           const [year, monthIndex] = item.Month.split("-"); // Split month to get year and month index
+  //           return {
+  //             [item.ProductID]: item.PredictedDemand, // Dynamic key for ProductID
+  //             month: getMonthName(parseInt(monthIndex) - 1), // Use the helper function
+  //             year: parseInt(year), // Parse year as an integer
+  //           };
+  //         });
+  
+  //         // Log the formatted data for debugging
+  //         console.log("Parsed Demand Prediction Data:", response.data);
+  //         setPredictedDemandData(formattedData);
+  //       } catch (error) {
+  //         console.error("Error fetching demand prediction data:", error);
+  //       }
+  //     }
+  //   };
+    
+  //   fetchDemandPrediction();
+  // }, [username]);
+  
+  const updateParsedData = (records: any[]) => {
+    const salesDataByMonthAndYear: { [year: string]: number[] } = {}; // This will hold the sales data indexed by year
+
+  records.forEach((record: { Month: string; UnitsSold: string }) => {
+    const [month, , year] = record.Month.split("/");
+    const monthIndex = parseInt(month) - 1;
+
+    // Initialize the year array if it doesn't exist
+    if (!salesDataByMonthAndYear[year]) {
+      salesDataByMonthAndYear[year] = Array(12).fill(0);
+    }
+
+    // Sum the units sold for the given month and year
+    salesDataByMonthAndYear[year][monthIndex] += parseInt(record.UnitsSold);
+  });
+
+  const months = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December",
+  ];
+
+  const formattedData: MonthData[] = months.map((monthName, index) => {
+    const monthData: MonthData = { month: monthName }; // Create monthData with the month property
+
+    // Populate the monthData object with sales data for each year
+    Object.keys(salesDataByMonthAndYear).forEach((year) => {
+      monthData[year] = salesDataByMonthAndYear[year][index] || 0; // Use year as a dynamic key
+    });
+
+    return monthData; // Return the monthData object
+  });
+
+  const allYears = Object.keys(salesDataByMonthAndYear).sort();
+  const latestYears = allYears.slice(-selectedYears); // Get the latest years based on the selectedYears state
+
+  const finalData = formattedData.map((dataPoint) => {
+    const filteredPoint: ParsedData = { month: dataPoint.month }; // Assign month as a number (1-12)
+  
+    latestYears.forEach((year) => {
+      filteredPoint[year] = dataPoint[year] || 0; // Assign sales data by year
+    });
+  
+    return filteredPoint;  // Return the filtered data point
+  });
+
+  setParsedData(finalData); // Update state with the final data
+  console.log("final", finalData); // Log the final data
+};
+      
+const combineParsedData = (parsedData: ParsedData[], predictedDemandData: any[]): ParsedData[] => {
+  // Create a map for quick access to predicted demand values
+  const predictedMap: { [key: string]: number } = {};
+
+  // Populate the predictedMap with data from predictedDemandData
+  predictedDemandData.forEach(item => {
+    const [year, monthIndex] = item.month.split("-");
+    const monthName = getMonthName(parseInt(monthIndex) - 1); // Convert index to month name
+    const key = `${monthName}-${year}`; // Create a unique key for mapping
+    predictedMap[key] = item.PredictedDemand; // Store predicted demand
+  });
+
+  // Combine parsedData with predicted data
+  const combinedData: ParsedData[] = parsedData.map(data => {
+    const combinedPoint: ParsedData = { month: data.month }; // Start with the existing month data
+
+    const yearKeys = Object.keys(data).filter(key => key !== "month");
+    yearKeys.forEach(year => {
+      // Get the existing value, defaulting to 0 if not present
+      const existingValue = data[year] as number || 0; // Ensure existing value is treated as a number
+      const key = `${data.month}-${year}`; // Create the key for mapping
+      
+      // Add predicted demand if available
+      combinedPoint[year] = existingValue + (predictedMap[key] || 0); // Ensure we are adding numbers only
+    });
+
+    return combinedPoint; // Return the combined data point
+  });
+
+  return combinedData; // Return the new combined data array
+};
+
+
+  // Use this function inside your useEffect that fetches the predicted demand data
   useEffect(() => {
     const fetchDemandPrediction = async () => {
       if (username) {
         try {
           const response = await axiosInstance.get(`/api/DemandPrediction/prediction/${username}`);
           const data = response.data; // Axios automatically parses the JSON response
-  
+
           console.log(response.data, "hmm");
-  
+
           // Parse the data into the desired format
-          const formattedData = data.map((item: { Month: string; ProductID: any; PredictedDemand: any; }) => {
+          const formattedData = data.map((item: { Month: string; ProductID: string; PredictedDemand: number; }) => {
             const [year, monthIndex] = item.Month.split("-"); // Split month to get year and month index
             return {
               [item.ProductID]: item.PredictedDemand, // Dynamic key for ProductID
@@ -163,68 +280,21 @@ export const ProductGraphController = () => {
               year: parseInt(year), // Parse year as an integer
             };
           });
-  
+
+          // Combine with parsedData
+          const updatedParsedData = combineParsedData(parsedData, formattedData);
+          setParsedData(updatedParsedData);
+
           // Log the formatted data for debugging
-          console.log("Parsed Demand Prediction Data:", response.data);
-          setPredictedDemandData(formattedData);
+          console.log("Combined Data:", updatedParsedData);
         } catch (error) {
           console.error("Error fetching demand prediction data:", error);
         }
       }
     };
-    
+
     fetchDemandPrediction();
-  }, [username]);
-  
-  const updateParsedData = (records: any[]) => {
-        const salesDataByMonthAndYear: { [year: string]: number[] } = {}; // This will hold the sales data indexed by year
-    
-      records.forEach((record: { Month: string; UnitsSold: string }) => {
-        const [month, , year] = record.Month.split("/");
-        const monthIndex = parseInt(month) - 1;
-    
-        // Initialize the year array if it doesn't exist
-        if (!salesDataByMonthAndYear[year]) {
-          salesDataByMonthAndYear[year] = Array(12).fill(0);
-        }
-    
-        // Sum the units sold for the given month and year
-        salesDataByMonthAndYear[year][monthIndex] += parseInt(record.UnitsSold);
-      });
-    
-      const months = [
-        "January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December",
-      ];
-    
-      const formattedData: MonthData[] = months.map((monthName, index) => {
-        const monthData: MonthData = { month: monthName }; // Create monthData with the month property
-    
-        // Populate the monthData object with sales data for each year
-        Object.keys(salesDataByMonthAndYear).forEach((year) => {
-          monthData[year] = salesDataByMonthAndYear[year][index] || 0; // Use year as a dynamic key
-        });
-    
-        return monthData; // Return the monthData object
-      });
-    
-      const allYears = Object.keys(salesDataByMonthAndYear).sort();
-      const latestYears = allYears.slice(-selectedYears); // Get the latest years based on the selectedYears state
-    
-      const finalData = formattedData.map((dataPoint) => {
-        const filteredPoint: ParsedData = { month: dataPoint.month }; // Assign month as a number (1-12)
-      
-        latestYears.forEach((year) => {
-          filteredPoint[year] = dataPoint[year] || 0; // Assign sales data by year
-        });
-      
-        return filteredPoint;  // Return the filtered data point
-      });
-    
-      setParsedData(finalData); // Update state with the final data
-      console.log("final", finalData); // Log the final data
-      };
-    
+}, [username, parsedData]);
 
   const handleProductChange = (selectedID: string) => {
     const selectedProduct = products.find((product) => product.ProductID === selectedID);
@@ -259,10 +329,14 @@ export const ProductGraphController = () => {
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
       const textX = margin;
       const textY = margin;
-      pdf.setFontSize(16);
-      pdf.text(`${selectedYears} Trend`, textX, textY);
-      pdf.addImage(imgData, "PNG", margin, textY + 20, imgWidth, imgHeight);
-      pdf.save("product_graph_forecast.pdf");
+
+      
+        pdf.setFontSize(8);
+        pdf.text(`Exported by: ${username}`, textX + 20, textY + 40);
+        pdf.text(`${selectedYears} Year/s Trend `, textX + 20, textY + 65);
+        pdf.addImage(imgData, "PNG", margin, textY + 80, imgWidth, imgHeight);
+        pdf.save("product_graph_forecast.pdf");
+            
     }
   };
   return {

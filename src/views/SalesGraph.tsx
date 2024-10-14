@@ -36,23 +36,23 @@ export default function SalesGraph() {
   ];
 
   const formatYAxis = (value: number) => {
-    if (value >= 1000000) return `$${(value / 1000000).toFixed(1)}M`;
-    if (value >= 1000) return `$${(value / 1000).toFixed(1)}K`;
-    return `$${value}`;
+    if (value >= 1000000) return `P${(value / 1000000).toFixed(1)}M`;
+    if (value >= 1000) return `P${(value / 1000).toFixed(1)}K`;
+    return `P${value}`;
   };
 
   return (
     <>
       <motion.div
-        className="flex flex-col sm:flex-row items-center px-24 pt-8 gap-6"
+        className="flex flex-col sm:flex-row items-center px-24 pt-8 gap-4"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.2, delay: 0.2 }}
       >
-        <div className="flex justify-end font-lato w-screen px-10 sm:hidden">
+        <div className="flex justify-end font-lato w-screen px-5 sm:hidden">
           <Button onClick={exportToPDF}>Export to PDF</Button>
         </div>
-        <div className="flex gap-4 items-center justify-center font-lato px-10 md:justify-start xs:w-screen">
+        <div className="flex gap-4 items-center justify-center font-lato px-5 lg:px-10 lg:justify-start w-screen md:w-50%">
           <p className="mr-5 font-lato">Year/s</p>
           {[1, 3, 5, 10].map((year) => (
             <button
@@ -65,7 +65,7 @@ export default function SalesGraph() {
             </button>
           ))}
         </div>
-        <div className="hidden justify-end px-10 md:ml-auto md:justify-end sm:flex sm:visible xs:w-screen xs:justify-center">
+        <div className="hidden justify-end px-5 md:px-10 lg:ml-auto lg:justify-end sm:flex md:visible xs:w-screen xs:justify-center">
           <Button onClick={exportToPDF}>Export to PDF</Button>
         </div>
       </motion.div>
@@ -75,7 +75,7 @@ export default function SalesGraph() {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.2, delay: 0.2 }}
       >
-        <Card className="sm:mx-20 sm:mt-5 sm:mb-20" ref={chartRef}>
+        <Card className="p-0 lg:mx-20 lg:mt-5 lg:mb-20" ref={chartRef}>
           <CardHeader className="p-4">
             <h2 className="md:text-lg text-base font-semibold px-6 py-3">Sales Data</h2>
           </CardHeader>
@@ -95,7 +95,7 @@ export default function SalesGraph() {
                     <XAxis dataKey="month" className="md:text-sm text-xs" tickFormatter={tickFormatter} tickMargin={10} />
                     <YAxis tickFormatter={formatYAxis} tickMargin={10}  className="md:text-sm text-xs" />
                     <Tooltip
-                      formatter={(value) => [`$${Number(value).toLocaleString()}`, "Sales"]}
+                      formatter={(value) => [`P${Number(value).toLocaleString()}`, "Sales"]}
                       labelFormatter={(label) => `Month: ${label}`}
                     />
                     {getLatestYears().map((year, index) => (

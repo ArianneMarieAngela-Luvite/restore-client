@@ -38,7 +38,7 @@ export default function ProductGraph() {
       transition={{ duration: 0.2, delay: 0.2 }}
     >
       <div className="flex gap-4 items-center justify-center md:justify-start font-lato xs:w-screen">
-          <p className="mr-5 font-lato">Year</p>
+          <p className="mr-5 font-lato">Year/s</p>
           {[1, 3, 5].map((year) => (
             <button
               key={year}
