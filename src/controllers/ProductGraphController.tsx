@@ -41,6 +41,10 @@ interface MonthData {
 type MonthNames = "January" | "February" | "March" | "April" | "May" | "June" | 
                   "July" | "August" | "September" | "October" | "November" | "December";
 
+type Item = {
+  value: string; // Assuming ProductID is a string
+  label: string; // Assuming Product is a string or whatever the appropriate type is
+};
 
 export const ProductGraphController = () => {
   const username = localStorage.getItem("username");
@@ -155,6 +159,12 @@ export const ProductGraphController = () => {
     fetchProductData();
   }, []);
 
+  // const itemList: Item[] = products.map(product => ({
+  //   value: product.ProductID.toString(), // Ensure this is a string
+  //   label: product.Product // or appropriate property
+  // }));
+
+
 
   const updateParsedData = (records: any[]) => {
     const salesDataByMonthAndYear: { [year: string]: number[] } = {}; // This will hold the sales data indexed by year
@@ -212,6 +222,24 @@ export const ProductGraphController = () => {
       setSelectedProductID(selectedID);
     }
   };
+
+  // const handleProductChange = (selectedID: number) => {
+  //   const selectedProduct = products.find((product) => product.ProductID === selectedID);
+  //   if (selectedProduct) {
+  //     updateParsedData(selectedProduct.Records);
+  //     setSelectedProductID(selectedID);
+  //   }
+  // };
+
+
+//   const handleProductChange = (selectedID: string) => {
+//   const id = parseInt(selectedID); // Convert the string to a number
+//   const selectedProduct = products.find((product) => product.ProductID === id);
+//   if (selectedProduct) {
+//     updateParsedData(selectedProduct.Records);
+//     setSelectedProductID(id); // Update the selected product ID
+//   }
+// };
 
   useEffect(() => {
     const selectedProduct = products.find((product) => product.ProductID === selectedProductID);

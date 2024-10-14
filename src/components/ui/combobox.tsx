@@ -129,9 +129,21 @@ import {
 } from "@/components/ui/popover"
 import { axiosInstance } from "@/services/axios"
 
+interface Record {
+  Month: string; // Assuming this is the format "MM/DD/YYYY"
+  UnitsSold: number; // Assuming this is the number of units sold
+}
+
+interface Product {
+  ProductID: number;
+  Records: Record[]; // Updated to use the specific Record type
+  Product: string;
+  Month: string;
+}
 // Define the type for the props
 interface ComboboxDemoProps {
-  onSelect: (value: string) => void; // Define onSelect as a function that accepts a string
+  items: Product[];
+  onSelect: (value: number) => void; // Define onSelect as a function that accepts a string
 }
 
 export function ComboboxDemo({ onSelect }: ComboboxDemoProps) {
@@ -149,6 +161,17 @@ export function ComboboxDemo({ onSelect }: ComboboxDemoProps) {
         if (response.data && Array.isArray(response.data)) {
           // Use a Set to track unique product names
           const seenProducts = new Set();
+          // const uniqueProducts = response.data.filter(product => {
+          //   const productName = product.Records[0]?.Product;
+          //   if (productName && !seenProducts.has(productName)) {
+          //     seenProducts.add(productName);
+          //     return true;
+          //   }
+          //   return false;
+          // }).map(product => ({
+          //   value: product.ProductID,
+          //   label: product.Records[0]?.Product,
+          // }));
           const uniqueProducts = response.data.filter(product => {
             const productName = product.Records[0]?.Product;
             if (productName && !seenProducts.has(productName)) {
@@ -157,7 +180,7 @@ export function ComboboxDemo({ onSelect }: ComboboxDemoProps) {
             }
             return false;
           }).map(product => ({
-            value: product.ProductID,
+            value: product.ProductID.toString(), // Ensure this is a string
             label: product.Records[0]?.Product,
           }));
           
@@ -205,7 +228,8 @@ export function ComboboxDemo({ onSelect }: ComboboxDemoProps) {
                       onSelect={(currentValue) => {
                         setValue(currentValue === value ? "" : currentValue);
                         setOpen(false);
-                        onSelect(currentValue);
+                        onSelect(Number(currentValue));
+                        
                       }}
                     >
                       {item.label} 
