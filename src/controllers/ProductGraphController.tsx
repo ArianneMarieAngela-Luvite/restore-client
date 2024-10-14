@@ -21,23 +21,23 @@ interface ParsedData {
   [key: string]: number | string; // Assuming year keys will be strings
 }
 
-interface SalesDataByMonth {
-  [monthIndex: number]: number; // Array of units sold for each month
-}
+// interface SalesDataByMonth {
+//   [monthIndex: number]: number; // Array of units sold for each month
+// }
 
-interface SalesDataByYear {
-  [year: string]: SalesDataByMonth; // Object with year as key and sales data as value
-}
+// interface SalesDataByYear {
+//   [year: string]: SalesDataByMonth; // Object with year as key and sales data as value
+// }
 
 interface MonthData {
   month: string;
   [year: string]: number | string; // Index signature for dynamic year properties
 }
 
-interface ComboboxDemoProps {
-  items: Product[]; // Ensure this type matches your product data
-  onSelect: (selectedID: number | string) => void; // Adjust based on your implementation
-}
+// interface ComboboxDemoProps {
+//   items: Product[]; // Ensure this type matches your product data
+//   onSelect: (selectedID: number | string) => void; // Adjust based on your implementation
+// }
 type MonthNames = "January" | "February" | "March" | "April" | "May" | "June" | 
                   "July" | "August" | "September" | "October" | "November" | "December";
 
@@ -47,10 +47,8 @@ export const ProductGraphController = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [parsedData, setParsedData] = useState<ParsedData[]>([]);
   const [selectedProductID, setSelectedProductID] = useState<number | undefined>(undefined);
-  const [selectedProductName, setSelectedProductName] = useState("");
   const [selectedYears, setSelectedYears] = useState(1);
-  const [isLoading, setIsLoading] = useState(true); 
-  const [predictedDemandData, setPredictedDemandData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const chartRef = useRef<HTMLDivElement>(null);
 
   const monthsFull = {
@@ -112,6 +110,7 @@ export const ProductGraphController = () => {
 
   const [tickFormatter, setTickFormatter] = useState(() => (month: MonthNames) => monthsShort[month]);
 
+  
   useEffect(() => {
     const handleResize = () => {
       if (window.matchMedia("(min-width: 1024px)").matches) {
@@ -144,8 +143,6 @@ export const ProductGraphController = () => {
           console.log(data[0].Records, "real");
           if (data.length > 0) {
             setSelectedProductID(data[0].ProductID);
-            setSelectedProductName(data[0].Product);
-            console.log(setSelectedProductName, "huhu");
             updateParsedData(data[0].Records);
           }
         } catch (error) {

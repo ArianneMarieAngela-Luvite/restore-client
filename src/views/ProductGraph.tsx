@@ -244,7 +244,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { Card, CardContent, CardFooter, CardHeader } from "../components/ui/card"; 
+import { Card, CardContent, CardHeader } from "../components/ui/card"; 
 import { ComboboxDemo } from "@/components/ui/combobox";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
@@ -256,7 +256,6 @@ export default function ProductGraph() {
     products,
     parsedData,
     selectedYears,
-    selectedProductID,
     isLoading,
     yearColors,
     chartRef,

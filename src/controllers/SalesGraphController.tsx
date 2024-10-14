@@ -220,7 +220,6 @@ export function SalesGraphController() {
   const [isLoading, setIsLoading] = useState(true);
   const [salesPredictionData, setSalesPredictionData] = useState<SalesPrediction[]>([]);
   const chartRef = useRef<HTMLDivElement>(null);
-  const [isDataCombined, setIsDataCombined] = useState(false);
 
   useEffect(() => {
     const fetchSalesData = async () => {

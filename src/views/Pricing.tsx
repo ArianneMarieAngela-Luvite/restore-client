@@ -33,16 +33,14 @@ export function Pricing() {
               Used by freelancers, startups, companies, and enterprise-level corporations all over the world
             </motion.p>
             <div className="flex flex-col lg:flex-row xl:flex-row md:flex-row gap-8 mt-8 justify-center items-center">
-              {["Option 1", "Option 2", "Option 3"].map((item, index) => (
                 <motion.div
-                  key={index}
                   className="sm:inline-block border h-96 w-[350px] rounded-xl border-gray-500"
                   initial={{ opacity: 0, y: 100 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.8 + index * 0.2, duration: 0.7 }}
+                  transition={{ delay: 0.8, duration: 0.7 }}
                 >
                 </motion.div>
-              ))}
+
             </div>
           </div>
         </motion.div>
