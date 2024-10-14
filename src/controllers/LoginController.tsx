@@ -42,16 +42,16 @@ export function LoginController() {
   
       if (response.status === 200) {
         localStorage.setItem("authToken", response.data.token);
-        console.log(response.data.username);
+        // console.log(response.data.username);
         localStorage.setItem("username", response.data.username);
         navigate("/import");
       }
     } catch (err: any) {
       if(err.response) {
-        const errMessage = err.response.data?.message || err.response.data.message || "Unknown error";
-        console.log(errMessage);
+        // const errMessage = err.response.data?.message || err.response.data.message || "Unknown error";
+        // // console.log(errMessage);
       }
-      console.log("Error: ", err.message);
+      // console.log("Error: ", err.message);
       setErrorMessage("Login failed. Please check your credentials.");
     } finally {
       setLoading(false);

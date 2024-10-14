@@ -14,20 +14,20 @@ const monthNames: MonthNames[] = [
 ];
 interface ParsedData {
   month: string;
-  [key: string]: number | string; // Assuming year keys will be strings
+  [key: string]: number | string; 
 }
 interface MonthData {
   month: string;
-  [year: string]: number | string; // Index signature for dynamic year properties
+  [year: string]: number | string; 
 }
 
 interface Record {
-  Month: string; // Assuming this is the format "MM/DD/YYYY"
-  UnitsSold: number; // Assuming this is the number of units sold
+  Month: string; 
+  UnitsSold: number; 
 }
 interface Product {
   ProductID: string;
-  Records: Record[]; // Updated to use the specific Record type
+  Records: Record[]; 
   Product: string;
   Month: string;
 }
@@ -111,17 +111,17 @@ export const ProductGraphController = () => {
       }
     };
   
-    // Call it initially to set the correct formatter on first render
+    
     updateTickFormatter();
   
-    // Use the resize event to update formatter based on screen size
+    
     window.addEventListener("resize", updateTickFormatter);
   
-    // Clean up the event listener on unmount
+    
     return () => window.removeEventListener("resize", updateTickFormatter);
   }, []);
 
-  // GET PRODUCT SALES DATA
+  
   useEffect(() => {
     const fetchProductData = async () => {
       setIsLoading(true);
@@ -130,7 +130,7 @@ export const ProductGraphController = () => {
           const response = await axiosInstance.get(`/api/Demand/demand/${username}`);
           const data = response.data;
           setProducts(data);
-          console.log(data[0].Records, "real");
+          // console.log(data[0].Records, "real");
           if (data.length > 0) {
             setSelectedProductID(data[0].ProductID);
             updateParsedData(data[0].Records);
@@ -144,43 +144,9 @@ export const ProductGraphController = () => {
     }
     fetchProductData();
   }, []);
-
-
-  
-
-  // useEffect(() => {
-  //   const fetchDemandPrediction = async () => {
-  //     if (username) {
-  //       try {
-  //         const response = await axiosInstance.get(`/api/DemandPrediction/prediction/${username}`);
-  //         const data = response.data; // Axios automatically parses the JSON response
-  
-  //         console.log(response.data, "hmm");
-  
-  //         // Parse the data into the desired format
-  //         const formattedData = data.map((item: { Month: string; ProductID: any; PredictedDemand: any; }) => {
-  //           const [year, monthIndex] = item.Month.split("-"); // Split month to get year and month index
-  //           return {
-  //             [item.ProductID]: item.PredictedDemand, // Dynamic key for ProductID
-  //             month: getMonthName(parseInt(monthIndex) - 1), // Use the helper function
-  //             year: parseInt(year), // Parse year as an integer
-  //           };
-  //         });
-  
-  //         // Log the formatted data for debugging
-  //         console.log("Parsed Demand Prediction Data:", response.data);
-  //         setPredictedDemandData(formattedData);
-  //       } catch (error) {
-  //         console.error("Error fetching demand prediction data:", error);
-  //       }
-  //     }
-  //   };
-    
-  //   fetchDemandPrediction();
-  // }, [username]);
   
   const updateParsedData = (records: any[]) => {
-    const salesDataByMonthAndYear: { [year: string]: number[] } = {}; // This will hold the sales data indexed by year
+    const salesDataByMonthAndYear: { [year: string]: number[] } = {}; 
 
   records.forEach((record: { Month: string; UnitsSold: string }) => {
     const [month, , year] = record.Month.split("/");
@@ -201,92 +167,92 @@ export const ProductGraphController = () => {
   ];
 
   const formattedData: MonthData[] = months.map((monthName, index) => {
-    const monthData: MonthData = { month: monthName }; // Create monthData with the month property
+    const monthData: MonthData = { month: monthName }; 
 
-    // Populate the monthData object with sales data for each year
+    
     Object.keys(salesDataByMonthAndYear).forEach((year) => {
-      monthData[year] = salesDataByMonthAndYear[year][index] || 0; // Use year as a dynamic key
+      monthData[year] = salesDataByMonthAndYear[year][index] || 0;
     });
 
-    return monthData; // Return the monthData object
+    return monthData; 
   });
 
   const allYears = Object.keys(salesDataByMonthAndYear).sort();
-  const latestYears = allYears.slice(-selectedYears); // Get the latest years based on the selectedYears state
+  const latestYears = allYears.slice(-selectedYears); 
 
   const finalData = formattedData.map((dataPoint) => {
-    const filteredPoint: ParsedData = { month: dataPoint.month }; // Assign month as a number (1-12)
+    const filteredPoint: ParsedData = { month: dataPoint.month }; 
   
     latestYears.forEach((year) => {
-      filteredPoint[year] = dataPoint[year] || 0; // Assign sales data by year
+      filteredPoint[year] = dataPoint[year] || 0; 
     });
   
-    return filteredPoint;  // Return the filtered data point
+    return filteredPoint;  
   });
 
-  setParsedData(finalData); // Update state with the final data
-  console.log("final", finalData); // Log the final data
+  setParsedData(finalData); 
+  // console.log("final", finalData);
 };
       
 const combineParsedData = (parsedData: ParsedData[], predictedDemandData: any[]): ParsedData[] => {
-  // Create a map for quick access to predicted demand values
+  
   const predictedMap: { [key: string]: number } = {};
 
-  // Populate the predictedMap with data from predictedDemandData
+  
   predictedDemandData.forEach(item => {
     const [year, monthIndex] = item.month.split("-");
-    const monthName = getMonthName(parseInt(monthIndex) - 1); // Convert index to month name
-    const key = `${monthName}-${year}`; // Create a unique key for mapping
-    predictedMap[key] = item.PredictedDemand; // Store predicted demand
+    const monthName = getMonthName(parseInt(monthIndex) - 1); 
+    const key = `${monthName}-${year}`; 
+    predictedMap[key] = item.PredictedDemand; 
   });
 
-  // Combine parsedData with predicted data
+  
   const combinedData: ParsedData[] = parsedData.map(data => {
-    const combinedPoint: ParsedData = { month: data.month }; // Start with the existing month data
+    const combinedPoint: ParsedData = { month: data.month }; 
 
     const yearKeys = Object.keys(data).filter(key => key !== "month");
     yearKeys.forEach(year => {
-      // Get the existing value, defaulting to 0 if not present
-      const existingValue = data[year] as number || 0; // Ensure existing value is treated as a number
-      const key = `${data.month}-${year}`; // Create the key for mapping
       
-      // Add predicted demand if available
-      combinedPoint[year] = existingValue + (predictedMap[key] || 0); // Ensure we are adding numbers only
+      const existingValue = data[year] as number || 0; 
+      const key = `${data.month}-${year}`; 
+      
+      
+      combinedPoint[year] = existingValue + (predictedMap[key] || 0); 
     });
 
-    return combinedPoint; // Return the combined data point
+    return combinedPoint; 
   });
 
-  return combinedData; // Return the new combined data array
+  return combinedData; 
 };
 
 
-  // Use this function inside your useEffect that fetches the predicted demand data
+
   useEffect(() => {
     const fetchDemandPrediction = async () => {
       if (username) {
         try {
           const response = await axiosInstance.get(`/api/DemandPrediction/prediction/${username}`);
-          const data = response.data; // Axios automatically parses the JSON response
+          const data = response.data; 
 
-          console.log(response.data, "hmm");
+          // console.log(response.data, "hmm");
 
-          // Parse the data into the desired format
+          
           const formattedData = data.map((item: { Month: string; ProductID: string; PredictedDemand: number; }) => {
-            const [year, monthIndex] = item.Month.split("-"); // Split month to get year and month index
+            const [year, monthIndex] = item.Month.split("-"); 
             return {
-              [item.ProductID]: item.PredictedDemand, // Dynamic key for ProductID
-              month: getMonthName(parseInt(monthIndex) - 1), // Use the helper function
-              year: parseInt(year), // Parse year as an integer
+              [item.ProductID]: item.PredictedDemand, 
+              month: getMonthName(parseInt(monthIndex) - 1),
+              year: parseInt(year), 
             };
           });
 
-          // Combine with parsedData
+          
           const updatedParsedData = combineParsedData(parsedData, formattedData);
           setParsedData(updatedParsedData);
 
-          // Log the formatted data for debugging
-          console.log("Combined Data:", updatedParsedData);
+          
+          // console.log("Combined Data:", updatedParsedData);
         } catch (error) {
           console.error("Error fetching demand prediction data:", error);
         }

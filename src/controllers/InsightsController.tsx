@@ -51,7 +51,7 @@ export const useInsightsController = () => {
           setProductDemandPredictionData(sortedData);
         }
       } catch (error) {
-        console.error("Error fetching product demand prediction data:", error);
+        // console.error("Error fetching product demand prediction data:", error);
       } finally {
         setLoading(false);
       }

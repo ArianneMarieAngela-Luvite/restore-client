@@ -68,9 +68,9 @@ export const ImportController = () => {
       }
       
       
-      console.log("Upload successful:", response.data);
+      // console.log("Upload successful:", response.data);
     } catch (error) {
-      console.error("Error uploading file:", error);
+      // console.error("Error uploading file:", error);
     } finally {
       setIsUploading(false);
       setFile(null);
