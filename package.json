@@ -8,8 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "start": "react-scripts start",
-    "test": "react-scripts test"
+    "start": "vite preview",
+    "test": "vitest"
   },
   "dependencies": {
     "@fontsource/lato": "^5.0.22",
