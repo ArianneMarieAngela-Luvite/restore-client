@@ -223,7 +223,7 @@ export default function Insights() {
                   ) : (
                     <TableRow className=''>
                       <TableCell colSpan={3} className="text-sm lg:text-base text-gray-500 mx-4 text-center font-lato">
-                        No product demand prediction data available
+                        {/* No product demand prediction data available */}
                       </TableCell>
                         {/* <TableCell colSpan={3} rowSpan={10} className=" h-[450px] text-gray-500 text-center text-[14px] lg:text-base xl:text-base">
                         <ClipLoader size={50} color="gray" />
