@@ -5,10 +5,26 @@
     { "path": "./tsconfig.node.json" }
   ],
   "compilerOptions": {
-    "baseUrl": ".",
+    "target": "esnext",               
+    "module": "esnext",                
+    "strict": true,                    
+    "esModuleInterop": true,           
+    "skipLibCheck": true,              
+    "forceConsistentCasingInFileNames": true, 
+    "baseUrl": ".",                    
     "paths": {
-      "@/*": ["./src/*"]
-    }
+      "@/*": ["src/*"]               
+    },
+    "jsx": "react-jsx",                
+    "moduleResolution": "node"         
   },
-  "include": ["./**/.*{ts, tsx}"]
+  "include": [
+    "src/**/*.{ts,tsx}"                
+  ],
+  "exclude": [
+    "node_modules",                     
+    "dist",                             
+    "**/*.spec.ts"                     
+  ]
+
 }
