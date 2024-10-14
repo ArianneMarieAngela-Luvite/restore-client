@@ -212,6 +212,9 @@ interface ParsedData {
   [key: string]: any;
 }
 
+type MonthNames = "January" | "February" | "March" | "April" | "May" | "June" | 
+                  "July" | "August" | "September" | "October" | "November" | "December";
+                  
 export function SalesGraphController() {
   const username = localStorage.getItem("username");
   const [parsedData, setParsedData] = useState<ParsedData[]>([]);
@@ -220,6 +223,72 @@ export function SalesGraphController() {
   const [isLoading, setIsLoading] = useState(true);
   const [salesPredictionData, setSalesPredictionData] = useState<SalesPrediction[]>([]);
   const chartRef = useRef<HTMLDivElement>(null);
+
+  const monthsFull = {
+    January: "January",
+    February: "February",
+    March: "March",
+    April: "April",
+    May: "May",
+    June: "June",
+    July: "July",
+    August: "August",
+    September: "September",
+    October: "October",
+    November: "November",
+    December: "December",
+  };
+
+  const monthsShort = {
+    January: "Jan",
+    February: "Feb",
+    March: "Mar",
+    April: "Apr",
+    May: "May",
+    June: "Jun",
+    July: "Jul",
+    August: "Aug",
+    September: "Sep",
+    October: "Oct",
+    November: "Nov",
+    December: "Dec",
+  };
+
+  const monthsInitial = {
+    January: "J",
+    February: "F",
+    March: "M",
+    April: "A",
+    May: "M",
+    June: "J",
+    July: "J",
+    August: "A",
+    September: "S",
+    October: "O",
+    November: "N",
+    December: "D",
+  };
+
+  const [tickFormatter, setTickFormatter] = useState<(month: MonthNames) => string>(() => {
+    return (month: MonthNames) => monthsShort[month]; // Default formatter
+  });
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.matchMedia("(min-width: 1024px)").matches) {
+        setTickFormatter(() => (month: MonthNames) => monthsFull[month]); // Full name for lg and up
+      } else if (window.matchMedia("(min-width: 768px)").matches) {
+        setTickFormatter(() => (month: MonthNames) => monthsShort[month]); // First 3 letters for md
+      } else {
+        setTickFormatter(() => (month: MonthNames) => monthsInitial[month]); // First letter for sm and below
+      }
+    };
+
+    // Initial check and add event listener
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     const fetchSalesData = async () => {
@@ -391,6 +460,7 @@ export function SalesGraphController() {
     isLoading,
     exportToPDF,
     chartRef,
-    salesPredictionData
+    salesPredictionData,
+    tickFormatter
   };
 }

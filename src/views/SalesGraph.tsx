@@ -22,6 +22,7 @@ export default function SalesGraph() {
     isLoading,
     exportToPDF,
     chartRef,
+    tickFormatter
   } = SalesGraphController();
 
   const yearColors = [
@@ -91,8 +92,8 @@ export default function SalesGraph() {
                     margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
                   >
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="month" className="md:text-sm text-xs" tickMargin={10} />
-                    <YAxis tickFormatter={formatYAxis} tickMargin={10} className="md:text-sm text-xs" />
+                    <XAxis dataKey="month" className="md:text-sm text-xs" tickFormatter={tickFormatter} tickMargin={10} />
+                    <YAxis tickFormatter={formatYAxis} tickMargin={10}  className="md:text-sm text-xs" />
                     <Tooltip
                       formatter={(value) => [`$${Number(value).toLocaleString()}`, "Sales"]}
                       labelFormatter={(label) => `Month: ${label}`}
