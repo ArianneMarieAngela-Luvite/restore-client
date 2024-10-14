@@ -39,7 +39,7 @@ export const ProductGraphController = () => {
   const [selectedProductID, setSelectedProductID] = useState("");
   const [selectedYears, setSelectedYears] = useState(1);
   const [isLoading, setIsLoading] = useState(true); 
-  const [predictedDemandData, setPredictedDemandData] = useState([]);
+  // const [predictedDemandData, setPredictedDemandData] = useState([]);
   const [tickFormatter, setTickFormatter] = useState(() => (month : MonthNames) => monthsShort[month]);
   const chartRef = useRef<HTMLDivElement>(null);
 
@@ -350,7 +350,6 @@ const combineParsedData = (parsedData: ParsedData[], predictedDemandData: any[])
     monthsFull,
     monthsShort,
     monthsInitial,
-    predictedDemandData,
     tickFormatter,
     handleProductChange,
     setSelectedYears,
