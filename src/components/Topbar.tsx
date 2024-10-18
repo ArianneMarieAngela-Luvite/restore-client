@@ -110,7 +110,7 @@
 
 // export default Topbar;
 
-import restore from "../assets/logo_restore.png";
+import restore from "../assets/restore-logo.png";
 import { Separator } from "./ui/separator";
 import LogoutController from "../controllers/LogoutController";
 import { Link } from "react-router-dom";
@@ -133,7 +133,7 @@ const Topbar = () => {
       <div className="flex justify-between w-screen items-center pb-7 pt-7 lg:py-8  shadow-md px-10 my-3 mt-0  border">
         <div className="flex items-center ">
           <div className="ml-3 mr-12 lg:mx-12 xl:mx-12">
-            <img src={restore} alt="Restore Logo" />
+            <img src={restore} className="h-11 w-12" alt="Restore Logo" />
           </div>
           <div className="hidden lg:block mr-10">
             <ul className="text-customTextColor flex gap-6">

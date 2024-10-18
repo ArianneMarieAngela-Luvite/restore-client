@@ -70,6 +70,8 @@ export const useInsightsController = () => {
     }
   };
 
+
+
   useEffect(() => {
     fetchSalesPredictionData();
     fetchProductDemandPredictionData();
@@ -81,6 +83,6 @@ export const useInsightsController = () => {
     salesPredictionData,
     nextMonthName,
     insights,
-    loading
+    loading,
   };
 };

@@ -2,11 +2,11 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription } from "@/components/ui/card";
 import { ImportController } from "../controllers/ImportController"; 
 import { ClipLoader } from "react-spinners";
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "../components/ui/select";
 
 export const Import = () => {
   const {
     pickFiles,
-    selectedFile,
     file,
     isUploading,
     handlePickFileChange,
@@ -38,24 +38,24 @@ export const Import = () => {
             </CardDescription>
 
             <CardContent className="
-            flex gap-4 items-center flex-col 
+            flex items-center flex-col 
             sm:flex-row ">
-              <select
-                className="border rounded-lg p-2 h-10 font-lato text-sm cursor-pointer"
-                value={selectedFile?.id || ""}
-                onChange={handlePickFileChange}
-                disabled={isUploading}
-              >
-                <option value="" disabled hidden>
-                  Select File
-                </option>
-                {pickFiles.map((pickFile) => (
-                  <option key={pickFile.id} value={pickFile.id}>
-                    {pickFile.value}
-                  </option>
-                ))}
-              </select>
+              <div className="flex items-center rounded-lg">
 
+              <Select disabled={isUploading} onValueChange={handlePickFileChange}>
+                <SelectTrigger className='w-[110px] bg-white border'>
+                  <SelectValue placeholder="Select file" />
+                </SelectTrigger>
+                <SelectContent>
+                  {pickFiles.map((pickFile) => (
+                    <SelectItem key={pickFile.id} value={pickFile.id} className='text-left'>
+                      {pickFile.value}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+
+              
               <input
                 type="file"
                 id="fileInput"
@@ -65,13 +65,17 @@ export const Import = () => {
                 disabled={isUploading}
               />
 
-              {file && (
-                <div className="text-sm font-lato text-gray-700">
-                  <span className="font-semibold">
-                    {truncateFileName(file.name)}
-                  </span>
+              <div className="text-sm font-lato p-2 px-4 text-gray-700">
+                <div className="font-semibold">
+                  {file ? truncateFileName(file.name) : "No file chosen"}
                 </div>
-              )}
+              </div>
+
+
+
+              </div>
+             
+              
 
               <Button onClick={handleUpload} disabled={isUploading} className="font-lato">
                 {isUploading ? (

@@ -4,14 +4,14 @@ import { toast } from "../hooks/use-toast";
 import { useNavigate } from "react-router-dom"; 
 
 interface PickFile {
-  id: number;
+  id: string;
   value: string;
   api: string;
 }
 
 const pickFiles: PickFile[] = [
-  { id: 1, value: "Sales", api: "/api/Sales/upload/sales" },
-  { id: 2, value: "Demand", api: "/api/Demand/upload/demand" },
+  { id: "1", value: "Sales", api: "/api/Sales/upload/sales" },
+  { id: "2", value: "Demand", api: "/api/Demand/upload/demand" },
 ];
 
 export const ImportController = () => {
@@ -20,15 +20,26 @@ export const ImportController = () => {
   const [isUploading, setIsUploading] = useState(false);
   const navigate = useNavigate(); 
 
-  const handlePickFileChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedId = parseInt(event.target.value, 10);
-    const selectedOption = pickFiles.find((option) => option.id === selectedId);
-    if (selectedOption) {
-      setSelectedFile(selectedOption);
-      document.getElementById("fileInput")?.click();
+  // const handlePickFileChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  //   const selectedId = parseInt(event.target.value, 10);
+  //   const selectedOption = pickFiles.find((option) => option.id === selectedId.toString());
+  //   if (selectedOption) {
+  //     setSelectedFile(selectedOption);
+  //     document.getElementById("fileInput")?.click();
+  //   }
+  // };
+  const handlePickFileChange = async (value: string) => {
+    const selected = pickFiles.find((pickFile) => pickFile.id === value) || null;
+    setSelectedFile(selected);
+    
+    // Trigger file selection
+    if (selected) {
+      const fileInput = document.getElementById("fileInput") as HTMLInputElement;
+      if (fileInput) {
+        fileInput.click(); // Simulate a click on the hidden file input
+      }
     }
   };
-
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
       setFile(event.target.files[0]);
@@ -80,7 +91,6 @@ export const ImportController = () => {
 
   return {
     pickFiles,
-    selectedFile,
     file,
     isUploading,
     handlePickFileChange,

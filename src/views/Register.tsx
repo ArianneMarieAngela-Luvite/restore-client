@@ -1,13 +1,14 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+// import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { RegisterController } from "../controllers/RegisterController";
-import backIcon from "../assets/icons8-back-48.png";
+// import backIcon from "../assets/icons8-back-48.png";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
 import { ClipLoader } from "react-spinners";
+import restoreLogo from "../assets/restore-logo.png";
 
 export function Register() {
   const { formData, handleChange, handleSubmit, loading, errorMessage } = RegisterController();
@@ -29,32 +30,36 @@ export function Register() {
         "
         >
         <CardHeader className="px-10">
-          <Link to="/" className="flex hover:underline cursor-pointer">
-              <img className="h-[15px] w-[22px]" src={backIcon} alt="Back icon"/>
+        <Link to="/" aria-label="Go back to home" className="flex flex-row items-center gap-1 hover:underline cursor-pointer">
+               <svg className="w-4 h-4 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m15 19-7-7 7-7"/>
+              </svg>
+
               <span className="text-xs">Go back</span>
             </Link>
-            
+
           <CardTitle className="
-          text-2xl font-bold
+          text-2xl font-bold py-5 items-center flex justify-center
           xl:text-3xl 
           lg:text-3xl 
-          md:text-3xl
-          "
-          >
-            ReStore
+          md:text-3xl  
+          ">
+            <img src={restoreLogo} className="h-14 w-14" />
           </CardTitle>
 
-          <CardDescription className="text-sm">
-            Enter your details to create a new account
+          <CardDescription
+          className="flex flex-col text-normal font-base gap-2 pb-2 text-center items-center">
+            <span className="font-bold text-2xl">Join us! </span>
+            Be a part of ReStore's success journey
           </CardDescription>
 
         </CardHeader>
         <CardContent className="px-10">
           <form onSubmit={handleSubmit} className="grid gap-4 ">
-            <Input
+            <input
               id="email"
               type="email"
-              className="bg-customGreen text-sm"
+              className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
               placeholder="Email"
               value={formData.email}
               onChange={handleChange}
@@ -62,10 +67,10 @@ export function Register() {
               disabled={loading}
             />
 
-            <Input
+            <input
               id="name"
               type="text"
-              className="bg-customGreen text-sm"
+                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
               placeholder="Name"
               value={formData.name}
               onChange={handleChange}
@@ -73,10 +78,10 @@ export function Register() {
               disabled={loading}
             />
 
-            <Input
+            <input
               id="username"
               type="text"
-              className="bg-customGreen text-sm"
+              className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
               placeholder="Username"
               value={formData.username}
               onChange={handleChange}
@@ -84,10 +89,10 @@ export function Register() {
               disabled={loading}
             />
 
-            <Input
+            <input
               id="phoneNumber"
-              type="number"
-              className="bg-customGreen text-sm"
+              type="text"
+              className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
               placeholder="Phone Number"
               value={formData.phoneNumber}
               onChange={handleChange}
@@ -95,10 +100,10 @@ export function Register() {
               disabled={loading}
             />
 
-            <Input
+            <input
               id="password"
               type="password"
-              className="bg-customGreen text-sm"
+              className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
               placeholder="Password"
               value={formData.password}
               onChange={handleChange}
@@ -106,10 +111,10 @@ export function Register() {
               disabled={loading}
             />
 
-            <Input
+            <input
               id="verifyPassword"
               type="password"
-              className="bg-customGreen text-sm"
+              className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
               placeholder="Verify Password"
               value={formData.verifyPassword}
               onChange={handleChange}
