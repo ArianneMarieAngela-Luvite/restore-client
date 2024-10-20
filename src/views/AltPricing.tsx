@@ -4,7 +4,7 @@ const tiers = [
     {
         name: 'Pay-Per-Use',
         id: 'pay-per-use',
-        to: '',
+        to: '/billing-information',
         // price: '--',
         description:"Ideal for businesses that need flexibility and control over their usage.",
         features: ['No Subscription Required', 'On-Demand Forecasting', 'Exportable Data', 'Easy-to-Use Interface', 'Scalable'],
