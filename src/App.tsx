@@ -16,6 +16,7 @@ import AltPricing from "./views/AltPricing";
 // import PredictedDemand from "./views/PredictedDemandTable";
 import Team from "./views/Team";
 import About from "./views/About";
+import BillingInformation from "./views/BillingInformation";
 
 function App() {
   return (
@@ -27,11 +28,11 @@ function App() {
           <Route path="/" element={<>
             <Header />
             <Landing />
-            {/* <About /> */}
-            <Team />
+            <About />
+             <Team />
             <AltPricing />
             <ContactUs />
-            <Footer />
+            <Footer /> 
             
           </>}
         />
@@ -54,6 +55,7 @@ function App() {
           {/* <Route path="/text" element={<PredictedDemand />} /> */}
           <Route path="/about" element={<About />} />
           <Route path="/team" element={<Team />} />
+          <Route path="/billing-information" element={<BillingInformation/>} />
         </Routes>
       </BrowserRouter>
     </div>
