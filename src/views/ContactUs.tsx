@@ -117,7 +117,7 @@
 'use client'
 
 import { useState } from 'react';
-import emailjs from '@emailjs/browser'; // Import EmailJS
+import emailjs from '@emailjs/browser'; 
 import { toast } from '@/hooks/use-toast';
 import { motion } from 'framer-motion';
 
@@ -138,7 +138,7 @@ export default function ContactUs() {
         'service_7hus157', // Replace with your EmailJS Service ID
         'template_cligw9e', // Replace with your EmailJS Template ID
         {
-          from_name: formData.firstName + formData.lastName,
+          from_name: formData.firstName + ' ' + formData.lastName,
           user_email: formData.email,
           message: formData.message,
           reply_to: formData.email
@@ -146,7 +146,7 @@ export default function ContactUs() {
         'YxaLz6q1U1RTnT7eo' // Replace with your EmailJS User ID
       )
       .then(
-        (result) => {
+        (result: any) => {
           console.log('Email successfully sent!', result.text);
           // alert('Email sent successfully!');
           toast({
@@ -160,7 +160,7 @@ export default function ContactUs() {
             message: ''
           });
         },
-        (error) => {
+        (error: any) => {
           console.error('There was an error sending the email:', error);
           // alert('Failed to send email.');
           toast({

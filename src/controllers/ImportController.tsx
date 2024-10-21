@@ -91,9 +91,9 @@ export const ImportController = () => {
 
     try {
       const response = await axiosInstance.get(`/api/payment/customer-credits`, {
-        params: { email }, // Send email as query parameter
+        params: { email }, 
       });
-      setCredits(response.data.creditsRemaining); // Assuming API returns { credits: number }
+      setCredits(response.data.creditsRemaining); 
 
     } catch (error) {
       console.error("Error fetching customer credits:", error);
@@ -103,7 +103,7 @@ export const ImportController = () => {
     }
   };
 
-  // Fetch customer credits on component mount
+  
   useEffect(() => {
     fetchCustomerCredits();
   }, []);
