@@ -18,7 +18,7 @@ import restoreLogo from "../assets/restore-logo.png";
 
 
 export function Login() {
-  const { formData, handleChange, handleSubmit, loading, errorMessage } = LoginController();
+  const { formData, handleChange, handleSubmit, loading, message } = LoginController();
 
   return (
     <motion.div
@@ -90,10 +90,10 @@ export function Login() {
               />
             </div>
 
-            {errorMessage && <Alert className="pt-4" variant={"destructive"}>
+            {message && <Alert className="pt-4" variant={"destructive"}>
               <ExclamationTriangleIcon className="items-center" />
               <AlertDescription className="items-center">
-                {errorMessage}
+                {message}
               </AlertDescription>
             </Alert>
             }
