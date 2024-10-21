@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { axiosInstance } from "../services/axios";
 import { toast } from "../hooks/use-toast"; 
 import { useNavigate } from "react-router-dom"; 
@@ -18,16 +18,9 @@ export const ImportController = () => {
   const [selectedFile, setSelectedFile] = useState<PickFile | null>(null);
   const [file, setFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState(false);
+  const [credits, setCredits] = useState<number | null>(null);
   const navigate = useNavigate(); 
 
-  // const handlePickFileChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-  //   const selectedId = parseInt(event.target.value, 10);
-  //   const selectedOption = pickFiles.find((option) => option.id === selectedId.toString());
-  //   if (selectedOption) {
-  //     setSelectedFile(selectedOption);
-  //     document.getElementById("fileInput")?.click();
-  //   }
-  // };
   const handlePickFileChange = async (value: string) => {
     const selected = pickFiles.find((pickFile) => pickFile.id === value) || null;
     setSelectedFile(selected);
@@ -89,10 +82,36 @@ export const ImportController = () => {
     }
   };
 
+  const fetchCustomerCredits = async () => {
+    const email = localStorage.getItem("email");
+    if (!email) {
+      console.error("Email not found in localStorage.");
+      return;
+    }
+
+    try {
+      const response = await axiosInstance.get(`/api/payment/customer-credits`, {
+        params: { email }, // Send email as query parameter
+      });
+      setCredits(response.data.credits); // Assuming API returns { credits: number }
+    } catch (error) {
+      console.error("Error fetching customer credits:", error);
+      toast({
+        description: "Failed to fetch customer credits.",
+      });
+    }
+  };
+
+  // Fetch customer credits on component mount
+  useEffect(() => {
+    fetchCustomerCredits();
+  }, []);
+
   return {
     pickFiles,
     file,
     isUploading,
+    credits,
     handlePickFileChange,
     handleFileChange,
     handleUpload,

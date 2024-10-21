@@ -9,6 +9,7 @@ export const Import = () => {
     pickFiles,
     file,
     isUploading,
+    credits,
     handlePickFileChange,
     handleFileChange,
     handleUpload,
@@ -19,13 +20,17 @@ export const Import = () => {
     return name.length > maxLength ? name.slice(0, maxLength) + "..." : name;
   };
 
+
+
   return (
     <div className="flex flex-col items-center w-screen h-screen">
+      <div> Your balance is {credits}</div>
       <div className="flex sm:h-[176px] lg:w-3/4 xl:w-2/4 md:h-[176px] border-0 mt-16 mb-8 w-3/4 h-2/6">
         <Card className="
         h-64 flex w-full bg-primary border-0 mb-8 
         sm:h-44
         ">
+          
           <Card className="
           h-60 flex flex-col gap-5 bg-customCardColor w-full  justify-center items-center
           sm:h-40 
