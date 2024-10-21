@@ -17,9 +17,9 @@ export default {
   		fontFamily: {
   			lato: ['Lato', 'sans-serif'],
   			vujahday: ['Vujahday Script', 'cursive'],
-			rubik: ['Rubik', 'sans-serif'],
-			nunito: ['Nunito', 'sans-serif'],
-			barlow: ['Barlow', 'sans-serif']
+  			rubik: ['Rubik', 'sans-serif'],
+  			nunito: ['Nunito', 'sans-serif'],
+  			barlow: ['Barlow', 'sans-serif']
   		},
   		borderRadius: {
   			lg: 'var(--radius)',
@@ -81,7 +81,9 @@ export default {
   			pulse: 'pulse var(--duration) ease-out infinite',
   			rainbow: 'rainbow var(--speed, 2s) infinite linear',
   			'shimmer-slide': 'shimmer-slide var(--speed) ease-in-out infinite alternate',
-  			'spin-around': 'spin-around calc(var(--speed) * 2) infinite linear'
+  			'spin-around': 'spin-around calc(var(--speed) * 2) infinite linear',
+  			marquee: 'marquee var(--duration) infinite linear',
+  			'marquee-vertical': 'marquee-vertical var(--duration) linear infinite'
   		},
   		keyframes: {
   			pulse: {
@@ -117,6 +119,22 @@ export default {
   				},
   				'100%': {
   					transform: 'translateZ(0) rotate(360deg)'
+  				}
+  			},
+  			marquee: {
+  				from: {
+  					transform: 'translateX(0)'
+  				},
+  				to: {
+  					transform: 'translateX(calc(-100% - var(--gap)))'
+  				}
+  			},
+  			'marquee-vertical': {
+  				from: {
+  					transform: 'translateY(0)'
+  				},
+  				to: {
+  					transform: 'translateY(calc(-100% - var(--gap)))'
   				}
   			}
   		}

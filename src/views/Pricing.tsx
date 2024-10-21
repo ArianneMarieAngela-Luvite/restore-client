@@ -5,13 +5,18 @@ export function Pricing() {
 
   return (
   <motion.div 
-    className="container border my-10 mb-14 mx-auto"
+    className="container my-10 mb-14 mx-auto"
     id="pricing-alt"
-      initial={{ opacity: 0, y: 50 }} 
-      animate={{ opacity: 1, y: 0 }} 
-      transition={{ duration: 0.8 }} 
+    animate={{x:0}}
+    initial={{ opacity: 0 }}
+    whileInView={{ opacity: 1 }}
+    transition={{
+        ease: "linear",
+        duration: 2,
+        x: { duration: 1 }
+    }}
   >
-    <div className="flex flex-col justify-center items-center p-5 gap-3 w-full text-customTextColor">
+    <div className="flex flex-col justify-center items-center gap-3 w-full text-customTextColor">
       <div className="font-lato font-semibold text-5xl ">
         Choose what's best for you
       </div>

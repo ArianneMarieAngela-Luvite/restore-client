@@ -261,8 +261,12 @@ if (productDemandPredictionData.length === 0) {
             </div>
           ) : (
             <CardContent className="text-customBackground text-2xl md:text-4xl lg:text-4xl xl:text-4xl font-bold font-lato p-0 mt-2 w-fit">
-          PHP {salesPredictionData.length > 0 ? parseFloat(salesPredictionData[0].prediction).toFixed(2) : "No prediction data available"}
-          </CardContent>
+              PHP{" "}
+              {salesPredictionData.length > 0
+                ? parseFloat(salesPredictionData[0].prediction)
+                    .toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+                : "No prediction data available"}
+            </CardContent>
           )}
           
         </div>
@@ -296,7 +300,8 @@ if (productDemandPredictionData.length === 0) {
                       salesPredictionData.map((salesData, index) => (
                         <TableRow key={index}>
                           <TableCell className="text-sm md:text-base">{nextMonthName}</TableCell>
-                          <TableCell className="text-sm md:text-base">{parseFloat(salesData.prediction).toFixed(2)}</TableCell>
+                          <TableCell className="text-sm md:text-base">{parseFloat(salesPredictionData[0].prediction)
+                    .toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2})}</TableCell>
                           <TableCell className="text-sm md:text-base">{salesData.percentage_increase}%</TableCell>
                         </TableRow>
                       ))

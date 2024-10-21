@@ -93,7 +93,8 @@ export const ImportController = () => {
       const response = await axiosInstance.get(`/api/payment/customer-credits`, {
         params: { email }, // Send email as query parameter
       });
-      setCredits(response.data.credits); // Assuming API returns { credits: number }
+      setCredits(response.data.creditsRemaining); // Assuming API returns { credits: number }
+
     } catch (error) {
       console.error("Error fetching customer credits:", error);
       toast({
