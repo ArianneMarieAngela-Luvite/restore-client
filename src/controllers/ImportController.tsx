@@ -44,7 +44,7 @@ export const ImportController = () => {
 
     setIsUploading(true);
     const email = localStorage.getItem("email") || "";
-    const username = localStorage.getItem("username");
+    // const uname = localStorage.getItem("username");
 
     const formData = new FormData();
     formData.append("file", file);
