@@ -43,11 +43,13 @@ export const ImportController = () => {
     if (!file || !selectedFile) return;
 
     setIsUploading(true);
-    const username = localStorage.getItem("username") || "";
+    const email = localStorage.getItem("email") || "";
+    const username = localStorage.getItem("username");
 
     const formData = new FormData();
-    formData.append("username", username);
     formData.append("file", file);
+    formData.append("email", email);
+    
 
     try {
       await axiosInstance.post(selectedFile.api, formData, {
@@ -108,11 +110,45 @@ export const ImportController = () => {
     fetchCustomerCredits();
   }, []);
 
+
+  const handlePaymentWebhook = async () => {
+    const sessionId = localStorage.getItem("sessionId");
+    
+    if (!sessionId) {
+      console.error("Session ID not found in localStorage.");
+      return;
+    }
+  
+    try {
+      await axiosInstance.post("/api/payment/paymongo-webhook", {
+        sessionId, // Payload containing the session ID
+      }, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+  
+      toast({
+        description: "Payment confirmation received. Credits have been updated.",
+      });
+  
+      // Refresh customer credits after payment
+      fetchCustomerCredits();
+      
+    } catch (error) {
+      console.error("Error handling payment webhook:", error);
+      toast({
+        description: "Failed to process payment confirmation.",
+      });
+    }
+  };
+  
   return {
     pickFiles,
     file,
     isUploading,
     credits,
+    handlePaymentWebhook,
     handlePickFileChange,
     handleFileChange,
     handleUpload,

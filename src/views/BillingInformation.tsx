@@ -40,6 +40,7 @@ const BillingInformation = () => {
       if (response.status === 200) {
         const { message, checkout_url, id } = response.data;
         console.log(message, checkout_url, id);
+        localStorage.setItem("sessionID", response.data.id);
         // console.log(response.data);
   
         window.location.href = checkout_url;
