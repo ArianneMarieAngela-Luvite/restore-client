@@ -47,7 +47,8 @@ export function RegisterController() {
 
       if (response.status === 200) {
         // console.log(response.data.message);
-        navigate("/login");
+        localStorage.setItem("email", formData.email);
+        navigate("/email-verification");
       } else {
         throw new Error("Registration failed.");
       }

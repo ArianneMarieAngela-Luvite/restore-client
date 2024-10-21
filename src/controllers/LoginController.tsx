@@ -10,6 +10,8 @@ interface LoginFormData {
 interface LoginResponse {
   token: string;
   username: string;
+  email: string;
+  message: string;
 }
 
 export function LoginController() {
@@ -18,7 +20,7 @@ export function LoginController() {
     password: "",
   });
   const [loading, setLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [message, setMessage] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,7 +34,7 @@ export function LoginController() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    setErrorMessage(null);
+    setMessage(null);
   
     try {
       const response = await axiosInstance.post<LoginResponse>("/login", {
@@ -43,7 +45,10 @@ export function LoginController() {
       if (response.status === 200) {
         localStorage.setItem("authToken", response.data.token);
         // console.log(response.data.username);
+        setMessage(response.data.message);
         localStorage.setItem("username", response.data.username);
+        localStorage.setItem("email", response.data.email);
+        console.log(response.data.email);
         navigate("/import");
       }
     } catch (err: any) {
@@ -52,11 +57,11 @@ export function LoginController() {
         // // console.log(errMessage);
       }
       // console.log("Error: ", err.message);
-      setErrorMessage("Login failed. Please check your credentials.");
+      setMessage("Login failed. Please check your credentials.");
     } finally {
       setLoading(false);
     }
   };
 
-  return { formData, handleChange, handleSubmit, loading, errorMessage };
+  return { formData, handleChange, handleSubmit, loading, message };
 }
