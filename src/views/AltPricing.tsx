@@ -28,8 +28,8 @@ function classNames(...classes: any[]) {
   }
 const AltPricing = () => {
   return (
-  <div id="pricing"   className="h-screen isolate w-full  "> 
-    <div className="relative container mx-auto   py-10">
+  <div id="pricing"   className="h-100vh w-full  "> 
+    <div className="container mx-auto border  py-10">
       {/* <div aria-hidden="true" className="absolute inset-x-0 -top-3 -z-10 transform-gpu overflow-hidden px-36 blur-3xl">
         <div
           style={{
@@ -41,11 +41,11 @@ const AltPricing = () => {
       </div> */}
       <div className="mx-auto max-w-2xl text-center lg:max-w-4xl">
         {/* <h2 className="text-base font-semibold leading-7 text-indigo-600">Pricing</h2> */}
-        <p className="text-4xl font-bold font-rubik tracking-tight text-gray-900 sm:text-4xl">
+        <p className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
         Choose what's best for you
         </p>
       </div>
-      <p className="mx-auto text-center mt-6 max-w-2xl text-lg font-rubik leading-8 text-gray-600 ">
+      <p className="mx-auto text-center mt-6 max-w-2xl text-lg leading-8 mb-5 sm:mt-0 text-gray-600 ">
         Your trusted partner for freelancers, startups, micro, small, and medium enterprises all over the world
 
       </p>

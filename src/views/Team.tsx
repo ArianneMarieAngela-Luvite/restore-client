@@ -41,11 +41,11 @@ const Team = () => {
   return (
 
 
-    <div id="team" className=" w-full  bg-background text-customTextColor">
+    <div id="team" className=" bg-background ">
         <div
         
 
-        className="container mx-auto text-white">
+        className="container border mx-auto ">
             <motion.div 
             variants={containerVariant}
             // initial="hidden"
@@ -58,7 +58,7 @@ const Team = () => {
                 duration: 2,
                 x: { duration: 1 }
             }}
-                className="flex flex-col py-12  px-20 gap-14 text-customTextColor "
+                className="flex flex-col py-12   md:px-20  md:gap-14 "
                 
                 >
                 <motion.div
@@ -66,26 +66,38 @@ const Team = () => {
                 // initial={{ opacity: 0, y: -50 }}
                 // animate={{ opacity: 1, y:0 }}
                 // transition={{ duration: 0.5, ease: "easeOut", delay: 0.8}}
-                className="flex flex-col w-full  justify-center items-center gap-3  px-10 ">
+                className="flex flex-col w-full  justify-center items-center px-5 md:px-10 ">
                     
-                    <div className="text-4xl font-rubik  font-bold text-customTextColor leading-snug">
+                    {/* <div className="text-3xl w-full font-bold text-center leading-snug">
                         About the team
                     </div>
-                    <p className=" font-rubik text-customTextColor leading-7 text-lg w-3/4 text-center">
+                    <p className=" leading-8 text-lg w-full text-center">
                         We are a team of passionate 4th-year Computer Science students driven by a shared goal
                         to empower MSMEs with the tools they need to succeed.  We believe 
                         in the power of innovation to transform businesses, and we're committed 
                         to providing smart, data-driven solutions that help small and medium 
                         enterprises thrive.
-                    </p>
+                    </p> */}
+                    <div className="mx-auto max-w-2xl lg:text-center">
+                        <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl text-center">
+                            About the team
+                        </p>
+                        <p className="mt-6 text-lg leading-8 text-gray-600 text-center">
+                            We are a team of passionate 4th-year Computer Science students driven by a shared goal
+                            to empower MSMEs with the tools they need to succeed.  We believe 
+                            in the power of innovation to transform businesses, and we're committed 
+                            to providing smart, data-driven solutions that help small and medium 
+                            enterprises thrive.
+                        </p>
+                    </div>
 
                 </motion.div>
                 
                 <motion.div 
                 
-                className="flex flex-row  w-full  gap-8 font-lato justify-center">
+                className="flex flex-col border text-center mt-6 md:mt-0 lg:flex-row  lg:pt-0 items-center w-full  gap-8 font-lato justify-center">
                     
-                    <motion.div className="flex flex-col w-1/4 shadow-lg items-center py-9 gap-6 bg-gray-100 text-black rounded-lg "
+                    <motion.div className="flex flex-col w-80 md:w-1/4 shadow-primary/70 bg-primary/10 rounded-lg shadow-lg bg-gray-100 text-black items-center py-9 gap-6 "
                     variants={cardVariant}
                     // initial= {{ opacity: 0 }}
                     // animate={{ opacity: 1}}
@@ -93,10 +105,10 @@ const Team = () => {
 
                     >
                         
-                        <div className="flex flex-col items-center">
+                        <div className="flex flex-col w-80  items-center">
                             
                             <img src={idul} className="h-48 w-48 rounded-full shadow-lg mb-5"/>
-                            <span className="font-bold text-xl">John Christian Idul</span>
+                            <span className="font-bold text-xl text-center">John Christian Idul</span>
                             <span className="text-lg">Co-founder</span>
                             
                             <div className="mt-5 flex gap-3">
@@ -148,7 +160,7 @@ const Team = () => {
                     {/* <Separator /> */}
                     <motion.div 
                     variants={cardVariant}
-                    className="flex flex-col w-1/4 rounded-lg shadow-lg bg-gray-100 text-black items-center py-9 gap-6">
+                    className="flex flex-col w-80 md:w-1/4 shadow-primary/70 bg-primary/10 rounded-lg shadow-lg bg-gray-100 text-black items-center py-9 gap-6">
                         
                         <div className="flex flex-col items-center">
                             <img src={amara} className="h-48 w-48 rounded-full mb-4 shadow-lg"/>
@@ -198,7 +210,7 @@ const Team = () => {
                     {/* <Separator /> */}
                     <motion.div 
                     variants={cardVariant}
-                    className="flex flex-col w-1/4 bg-gray-100 text-black items-center py-11 gap-6 shadow-lg rounded-lg">
+                    className="flex flex-col w-80 md:w-1/4 text-black items-center py-9 gap-6 shadow-lg shadow-primary/70 bg-primary/10 rounded-lg">
                         
                         <div className="flex flex-col items-center">
                             <img src={hermi} className="h-48 w-48 mb-4 rounded-full shadow-lg"/>

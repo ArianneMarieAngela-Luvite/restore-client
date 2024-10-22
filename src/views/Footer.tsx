@@ -4,10 +4,10 @@ import { Link } from "react-router-dom"
 
 const Footer = () => {
   return (
-    <div className="container w-full  bg-white">
-        <div className="container pt-32 mx-auto">
+    <div className="container mx-auto  ">
+        <div className="container pt-20 border mx-auto">
         <div className="flex flex-col justify-center  w-full items-center gap-2 mb-10">
-            <div className="font-lato font-bold text-3xl pb-5">
+            <div className="font-lato font-bold text-3xl pb-5 text-center">
                 Feel connected anytime, anywhere
             </div>
             <div className="flex flex-row gap-2 mb-2">
@@ -20,10 +20,10 @@ const Footer = () => {
             </div>
         </div>
         <Separator />
-      <div className="flex justify-between border  items-center p-5 sm:flex sm:items-center sm:justify-between pt-5">
-            <span className="text-sm font-lato text-gray-500 sm:text-center dark:text-gray-400">© 2024 <Link to="https://restore-test.netlify.app/" className="hover:underline">ReStore™</Link>. All Rights Reserved.
+      <div className="flex justify-center border  items-center p-5 sm:flex sm:items-center sm:justify-center pt-5">
+            <span className="text-sm font-lato text-gray-500 sm:text-center dark:text-gray-400">© 2024 <Link to="https://restore-test.netlify.app/" className="hover:underline">ReStore™. </Link> All Rights Reserved.
             </span>
-            <div className="flex mt-4 space-x-6 sm:justify-center sm:mt-0">
+            {/* <div className="flex mt-4 space-x-6 sm:justify-center sm:mt-0">
                 <Link to="/" className="text-gray-500 hover:text-gray-900 dark:hover:text-white">
                 <svg 
                         className="w-6 h-6 text-customTextColor hover:text-gray-500  dark:text-white" 
@@ -53,7 +53,7 @@ const Footer = () => {
                 </Link>
                 
                 
-            </div>
+            </div> */}
         </div>
     </div>
     </div>

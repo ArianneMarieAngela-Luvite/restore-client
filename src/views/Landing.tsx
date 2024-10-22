@@ -13,15 +13,15 @@ const Landing = () => {
   return (
     <div
     id="hero"
-      className="h-100vh  border-primary"
-      // style={{ backgroundImage: `url(${bg})` }}
+      className="h-screen w-full bg-contain md:bg-cover bg-no-repeat bg-center"
+      style={{ backgroundImage: `url(${bg})` }}
     >
     <div
       // style={{ backgroundImage: `url(${bg})` }}
-      className="container  pt-20 h-screen ">
+      className="container border mx-auto pt-20 h-screen ">
         <div 
-        style={{ backgroundImage: `url(${bg})` }}
-        className="h-full bg-cover flex flex-col  items-center gap-1 text-white md:py-0 font-rubik">
+        // style={{ backgroundImage: `url(${bg})` }}
+        className="h-full  bg-cover flex flex-col  items-center gap-1 text-white md:py-0 font-rubik">
           
           <motion.h1 
             className="

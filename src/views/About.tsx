@@ -178,14 +178,14 @@ export function About() {
       <div
       // style={{ backgroundImage: `url(${bg})` }}
       id="about"  className='isolate w-full '>
-       <div  className="container mx-auto ">
+       <div  className="container border mx-auto ">
          <div className="pt-16 pb-5">
            <div className="mx-auto max-w-7xl px-6 lg:px-8">
              <div className="mx-auto max-w-2xl lg:text-center">
-               <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+               <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl text-center">
                What's in Store with ReStore?
               </p>
-              <p className="mt-6 text-lg leading-8 text-gray-600">
+              <p className="mt-6 text-lg leading-8 text-gray-600 text-center">
                Whether you’re a small store or a growing business, ReStore equips you with the right tools to make smarter 
                decisions and uncover new opportunities.
                </p>
