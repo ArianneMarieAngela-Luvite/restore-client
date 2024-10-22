@@ -48,7 +48,7 @@ export function LoginController() {
         setMessage(response.data.message);
         localStorage.setItem("username", response.data.username);
         localStorage.setItem("email", response.data.email);
-        console.log(response.data.email);
+        // console.log(response.data.email);
         navigate("/import");
       }
     } catch (err: any) {

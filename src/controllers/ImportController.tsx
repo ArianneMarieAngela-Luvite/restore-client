@@ -389,10 +389,10 @@ export const ImportController = () => {
   
   const handlePaymentWebhook = async () => {
     const sessionId = localStorage.getItem("sessionId");
-    console.log(sessionId, "intro");
+    // console.log(sessionId, "intro");
   
     if (!sessionId) {
-      console.error("Session ID is missing");
+      // console.error("Session ID is missing");
       return;
     }
   
