@@ -411,7 +411,8 @@ export const ImportController = () => {
         }
       );
       // cs_nYQMNvEn8vV8EycFBkb2jW8q
-      // const { message } = response.data; 
+      const { message } = response.data.status;
+      if ( message) 
       // console.log("Webhook message:", message);
       localStorage.removeItem("sessionId");
   
@@ -420,7 +421,7 @@ export const ImportController = () => {
     }
   };
   const fetchCustomerCredits = async () => {
-    await handlePaymentWebhook();
+    // await handlePaymentWebhook();
 
     const email = localStorage.getItem("email");
     if (!email) {
