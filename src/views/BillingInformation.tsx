@@ -40,10 +40,12 @@ const BillingInformation = () => {
       if (response.status === 200) {
         const { message, checkout_url, id } = response.data;
         console.log(message, checkout_url, id);
-        localStorage.setItem("sessionID", response.data.id);
-        // console.log(response.data);
+        localStorage.setItem("sessionId", response.data.id);
+        // console.log(sesh, "sesh");
+        console.log(response.data.id);
   
         window.location.href = checkout_url;
+        // window.open(checkout_url, "_blank");
       }
     } catch (err: any) {
       if (err.response) {
@@ -56,6 +58,39 @@ const BillingInformation = () => {
       setLoading(false);
     }
   };
+
+  // const handlePaymentWebhook = async () => {
+  //   const sessionId = localStorage.getItem("sessionId");
+  //   console.log(sessionId, "intro");
+  
+  //   if (!sessionId) {
+  //     console.error("Session ID is missing");
+  //     return;
+  //   }
+  
+  //   try {
+  //     // Create FormData and append the sessionId
+  //     const formData = new FormData();
+  //     formData.append("sessionId", sessionId);
+  
+  //     const response = await axiosInstance.post(
+  //       "/api/payment/paymongo-webhook",
+  //       formData, 
+  //       {
+  //         headers: {
+  //           "Content-Type": "multipart/form-data", 
+  //         },
+  //       }
+  //     );
+  //     // cs_nYQMNvEn8vV8EycFBkb2jW8q
+  //     const { message } = response.data; 
+  //     console.log("Webhook message:", message);
+  //     // localStorage.removeItem("sessionId");
+  
+  //   } catch (error) {
+  //     // console.error("Error fetching webhook:", error.response ? error.response.data : error.message);
+  //   }
+  // };
   
 
   return (

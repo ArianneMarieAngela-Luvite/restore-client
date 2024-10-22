@@ -389,10 +389,10 @@ export const ImportController = () => {
   
   const handlePaymentWebhook = async () => {
     const sessionId = localStorage.getItem("sessionId");
-    // console.log(sessionId, "intro");
+    console.log(sessionId, "intro");
   
     if (!sessionId) {
-      // console.error("Session ID is missing");
+      console.error("Session ID is missing");
       return;
     }
   
@@ -406,14 +406,14 @@ export const ImportController = () => {
         formData, 
         {
           headers: {
-            "Content-Type": "multipart/form-data", // Optional, axios will handle it
+            "Content-Type": "multipart/form-data", 
           },
         }
       );
-      // cs_ic6QAsgtVD5fRi4smbwAFtMJ
-      const { message } = response.data; // Extract the message from the response data
-      console.log("Webhook message:", message); // Log the message or handle it as needed
-      localStorage.removeItem("sessionId");
+      // cs_TrmQ5sBSCGCkvRgdUSwd2Rrf
+      const { message } = response.data; 
+      console.log("Webhook message:", message);
+      // localStorage.removeItem("sessionId");
   
     } catch (error) {
       // console.error("Error fetching webhook:", error.response ? error.response.data : error.message);

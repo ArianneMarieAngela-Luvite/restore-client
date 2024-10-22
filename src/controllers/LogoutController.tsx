@@ -6,6 +6,7 @@ const LogoutController = () => {
   const handleLogout = () => {
     localStorage.removeItem("authToken");
     localStorage.removeItem("username");
+    localStorage.removeItem("sessionId");
     navigate("/"); 
   };
 
