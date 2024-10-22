@@ -59,7 +59,7 @@ export const Import = () => {
             <CardContent className="
             flex items-center flex-col 
             sm:flex-row ">
-              <div className="flex items-center rounded-lg">
+              <div className="flex flex-col gap-1 sm:gap-0 sm:flex-row items-center rounded-lg">
 
               <Select disabled={isUploading} onValueChange={handlePickFileChange}>
                 <SelectTrigger className='w-[110px] bg-white border'>
@@ -84,7 +84,7 @@ export const Import = () => {
                 disabled={isUploading}
               />
 
-              <div className="text-sm font-lato p-2 px-4 text-gray-700">
+              <div className="text-sm font-lato p-2 px-4 mb-1 text-gray-700">
                 <div className="font-semibold">
                   {file ? truncateFileName(file.name) : "No file chosen"}
                 </div>

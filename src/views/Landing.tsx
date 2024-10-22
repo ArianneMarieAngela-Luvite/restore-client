@@ -16,12 +16,8 @@ const Landing = () => {
       className="h-screen w-full bg-contain md:bg-cover bg-no-repeat bg-center"
       style={{ backgroundImage: `url(${bg})` }}
     >
-    <div
-      // style={{ backgroundImage: `url(${bg})` }}
-      className="container border mx-auto pt-20 h-screen ">
-        <div 
-        // style={{ backgroundImage: `url(${bg})` }}
-        className="h-full  bg-cover flex flex-col  items-center gap-1 text-white md:py-0 font-rubik">
+    <div  className="container  mx-auto pt-20 h-screen ">
+        <div  className="h-full  bg-cover flex flex-col  items-center gap-1 text-white md:py-0 font-rubik">
           
           <motion.h1 
             className="

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 const Footer = () => {
   return (
     <div className="container mx-auto  ">
-        <div className="container pt-20 border mx-auto">
+        <div className="container pt-20  mx-auto">
         <div className="flex flex-col justify-center  w-full items-center gap-2 mb-10">
             <div className="font-lato font-bold text-3xl pb-5 text-center">
                 Feel connected anytime, anywhere
@@ -20,7 +20,7 @@ const Footer = () => {
             </div>
         </div>
         <Separator />
-      <div className="flex justify-center border  items-center p-5 sm:flex sm:items-center sm:justify-center pt-5">
+      <div className="flex justify-center  items-center p-5 sm:flex sm:items-center sm:justify-center pt-5">
             <span className="text-sm font-lato text-gray-500 sm:text-center dark:text-gray-400">© 2024 <Link to="https://restore-test.netlify.app/" className="hover:underline">ReStore™. </Link> All Rights Reserved.
             </span>
             {/* <div className="flex mt-4 space-x-6 sm:justify-center sm:mt-0">
