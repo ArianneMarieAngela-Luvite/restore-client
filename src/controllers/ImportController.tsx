@@ -389,7 +389,7 @@ export const ImportController = () => {
   
   const handlePaymentWebhook = async () => {
     const sessionId = localStorage.getItem("sessionId");
-    console.log(sessionId, "intro");
+    // console.log(sessionId, "intro");
   
     if (!sessionId) {
       console.error("Session ID is missing");
@@ -410,10 +410,10 @@ export const ImportController = () => {
           },
         }
       );
-      // cs_TrmQ5sBSCGCkvRgdUSwd2Rrf
-      const { message } = response.data; 
-      console.log("Webhook message:", message);
-      // localStorage.removeItem("sessionId");
+      // cs_nYQMNvEn8vV8EycFBkb2jW8q
+      // const { message } = response.data; 
+      // console.log("Webhook message:", message);
+      localStorage.removeItem("sessionId");
   
     } catch (error) {
       // console.error("Error fetching webhook:", error.response ? error.response.data : error.message);

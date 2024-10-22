@@ -38,11 +38,11 @@ const BillingInformation = () => {
   
       
       if (response.status === 200) {
-        const { message, checkout_url, id } = response.data;
-        console.log(message, checkout_url, id);
+        const { checkout_url } = response.data;
+        // console.log(message, checkout_url, id);
         localStorage.setItem("sessionId", response.data.id);
         // console.log(sesh, "sesh");
-        console.log(response.data.id);
+        // console.log(response.data.id);
   
         window.location.href = checkout_url;
         // window.open(checkout_url, "_blank");
