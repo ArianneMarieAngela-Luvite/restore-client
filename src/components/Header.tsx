@@ -65,7 +65,7 @@ const Header = () => {
 
   return (
     <nav className="fixed top-0 w-full bg-white z-50 shadow-md border font-rubik">
-      <div className="flex justify-between w-full items-center py-4 px-10 my-3 md:pt-4">
+      <div className="flex container mx-auto justify-between w-full items-center py-4 px-10 my-3 md:pt-4">
         <div className="lg:mx-10 xl:mx-10 md:mx-10 cursor-pointer">
           <Link to="/" onClick={() => scrollToSection("hero")}>
             <img src={restore} className="h-11 w-11" alt="Restore Logo" />
@@ -95,7 +95,7 @@ const Header = () => {
               Contact Us
             </li>
             <li className="inline-block px-2">
-              <Button onClick={handleLoginButton} className="bg-primary h-9 w-16 font-rubik">
+              <Button onClick={handleLoginButton} className="bg-primary h-9 w-16 font-rubik text-sm">
                 Login
               </Button>
             </li>
