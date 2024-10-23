@@ -92,7 +92,7 @@ export function About() {
       // style={{ backgroundImage: `url(${bg})` }}
       id="about"  className='isolate w-full '>
        <div  className="container mx-auto ">
-         <div className="pt-16 pb-5">
+         <div className="pt-0 sm:pt-16 pb-5">
            <div className="mx-auto max-w-7xl px-6 lg:px-8">
              <div className="mx-auto max-w-2xl lg:text-center">
                <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl text-center">

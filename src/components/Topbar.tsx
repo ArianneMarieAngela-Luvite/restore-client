@@ -129,7 +129,7 @@ const Topbar = () => {
   };
 
   return (
-    <nav className="z-10 relative w-full ">
+    <nav className="z-10 relative w-full font-rubik">
       <div className="flex justify-between w-screen items-center pb-7 pt-7 lg:py-8  shadow-md px-10 my-3 mt-0  border">
         <div className="flex items-center ">
           <div className="ml-3 mr-12 lg:mx-12 xl:mx-12">

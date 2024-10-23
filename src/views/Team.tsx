@@ -93,7 +93,7 @@ const Team = () => {
                 
                 <motion.div 
                 
-                className="flex flex-col border text-center mt-6 md:mt-0 lg:flex-row  lg:pt-0 items-center w-full  gap-8 font-lato justify-center">
+                className="flex flex-col text-center mt-6 md:mt-0 lg:flex-row  lg:pt-0 items-center w-full  gap-8 font-lato justify-center">
                     
                     <motion.div className="flex flex-col w-80 md:w-1/4 shadow-primary/70 bg-primary/10 rounded-lg shadow-lg bg-gray-100 text-black items-center py-9 gap-6 "
                     variants={cardVariant}

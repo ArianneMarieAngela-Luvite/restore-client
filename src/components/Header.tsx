@@ -64,7 +64,7 @@ const Header = () => {
   const isActive = (section: string) => activeSection === section;
 
   return (
-    <nav className="fixed top-0 w-full bg-white z-50 shadow-md border">
+    <nav className="fixed top-0 w-full bg-white z-50 shadow-md border font-rubik">
       <div className="flex justify-between w-full items-center py-4 px-10 my-3 md:pt-4">
         <div className="lg:mx-10 xl:mx-10 md:mx-10 cursor-pointer">
           <Link to="/" onClick={() => scrollToSection("hero")}>
@@ -95,7 +95,7 @@ const Header = () => {
               Contact Us
             </li>
             <li className="inline-block px-2">
-              <Button onClick={handleLoginButton} className="bg-primary h-9 w-16">
+              <Button onClick={handleLoginButton} className="bg-primary h-9 w-16 font-rubik">
                 Login
               </Button>
             </li>
