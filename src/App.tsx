@@ -29,7 +29,7 @@ function App() {
 
         <Routes>
           <Route path="/" element={<>
-            <Header />
+            {/* <Header /> */}
             <Landing />
             <About/> 
             {/* <InfiniteMovingCardsDemo /> */}
