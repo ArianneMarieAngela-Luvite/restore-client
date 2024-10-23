@@ -113,7 +113,7 @@
 import React, { useEffect, useState } from 'react';
 import { Table, Spin } from 'antd';
 import type { TableColumnsType, TableProps } from 'antd';
-import { ScrollArea } from '@/components/ui/scroll-area'; // Ensure you import ScrollArea or replace with your scrollable component
+import { ScrollArea } from '@/components/ui/scroll-area'; 
 import "../index.css";
 
 interface ProductData {
@@ -157,18 +157,18 @@ const PredictedDemand: React.FC = () => {
   const [data, setData] = useState<ProductData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
-  // Fetch data from the API
+  
   useEffect(() => {
     const fetchPredicted = async () => {
         const username = localStorage.getItem("username");
       try {
-        const response = await fetch(`https://restore-backend.onrender.com/api/DemandPrediction/prediction/${username}`); // Replace with your API endpoint
+        const response = await fetch(`https://restore-backend.onrender.com/api/DemandPrediction/prediction/${username}`); 
         const result = await response.json();
-        // Map the result to match the table data structure
+        
         const mappedData = result.map((item: any, index: number) => ({
           key: index,
           ProductID: item.ProductID,
-          Product: item.Product, // Assuming this comes from the response
+          Product: item.Product, 
           PredictedDemand: item.PredictedDemand,
         }));
         setData(mappedData);
@@ -200,8 +200,8 @@ const PredictedDemand: React.FC = () => {
           onChange={onChange}
           pagination={{ pageSize: 10 }}  
           className="text-base font-lato"
-          rowClassName={() => 'text-sm md:text-base'}  // Custom row styling
-          showSorterTooltip={{ target: 'sorter-icon' }}  // Tooltip for sorters
+          rowClassName={() => 'text-sm md:text-base'}  
+          showSorterTooltip={{ target: 'sorter-icon' }}  
         />
       )}
     </ScrollArea>

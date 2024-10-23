@@ -84,7 +84,7 @@ export function SalesGraphController() {
       }
     };
 
-    // Initial check and add event listener
+    
     handleResize();
     window.addEventListener("resize", handleResize);
 
@@ -113,7 +113,7 @@ export function SalesGraphController() {
     fetchSalesData();
   }, [username]);
 
-  // Fetch sales prediction data
+  
   useEffect(() => {
     if (username) {
       axiosInstance.get(`/api/SalesPrediction/prediction`, {

@@ -152,12 +152,12 @@ export const ProductGraphController = () => {
     const [month, , year] = record.Month.split("/");
     const monthIndex = parseInt(month) - 1;
 
-    // Initialize the year array if it doesn't exist
+    
     if (!salesDataByMonthAndYear[year]) {
       salesDataByMonthAndYear[year] = Array(12).fill(0);
     }
 
-    // Sum the units sold for the given month and year
+    
     salesDataByMonthAndYear[year][monthIndex] += parseInt(record.UnitsSold);
   });
 
