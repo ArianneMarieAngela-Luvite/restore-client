@@ -13,7 +13,7 @@ const Landing = () => {
   return (
     <div
     id="hero"
-      className="h-screen w-full bg-contain md:bg-cover bg-no-repeat bg-center bg-[url('/src/assets/m3.png')] md:bg-[url('/src/assets/m1.png')] xl:bg-[url('/src/assets/b18.png')]"
+      className="h-screen w-full bg-contain md:bg-cover bg-no-repeat bg-center bg-[url('/src/assets/m2.png')] md:bg-[url('/src/assets/m1.png')] xl:bg-[url('/src/assets/b18.png')]"
       // style={{ backgroundImage: `url(${bg})` }}
     >
     <div  className="container  mx-auto pt-20 h-screen ">
