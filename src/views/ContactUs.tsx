@@ -76,7 +76,7 @@ export default function ContactUs() {
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-4xl">Get in touch</h2>
           <p className="mt-2 text-lg leading-8 text-gray-600">
-            Have questions or want to learn more about how ReStore can support your business? We’re here to help.
+            Have questions or want to learn more about how ReStore can support your business? We're here to help.
           </p>
         </div>
         <form onSubmit={sendEmail} className="mx-auto mt-5 max-w-xl sm:mt-20">
