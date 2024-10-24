@@ -198,7 +198,7 @@ const PredictedDemand: React.FC = () => {
           columns={columns}
           dataSource={data}
           onChange={onChange}
-          pagination={{ pageSize: 10 }}  
+          pagination={{ pageSize: 12 }}  
           className="text-base font-lato"
           rowClassName={() => 'text-sm md:text-base'}  
           showSorterTooltip={{ target: 'sorter-icon' }}  

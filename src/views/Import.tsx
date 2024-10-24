@@ -124,7 +124,7 @@ export const Import = () => {
           <li>Accepted file formats: CSV (.csv), Excel (.xlsx)</li>
           <li>Data entry must not exceed 35,000 rows.</li>
           <li>
-            To import files successfully, files must have column names (header). e.g. (product_Name, productSales, product_price)
+            To import files successfully, files must have column names (header). e.g. (Product, ProductID, UnitsSold, Month, Sales)
           </li>
         </ul>
       </div>
