@@ -43,7 +43,7 @@ const Team = () => {
 
     <div id="team" className=" bg-background ">
         <div
-        className="container border mx-auto ">
+        className="container mx-auto ">
             <motion.div 
             variants={containerVariant}
             // initial="hidden"

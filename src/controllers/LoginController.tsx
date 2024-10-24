@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { axiosInstance } from "../services/axios"; 
-import { useAuth } from "../hooks/use-auth";
+import { useAuth } from "../context/AuthProvider";
 
 interface LoginFormData {
   email: string;
