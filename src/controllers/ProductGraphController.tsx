@@ -127,7 +127,9 @@ export const ProductGraphController = () => {
       setIsLoading(true);
       if(username) {
         try {
-          const response = await axiosInstance.get(`/api/Demand/demand/${username}`);
+          const response = await axiosInstance.get(`/api/Demand/demand/`, {
+            params: { username: username }
+          });
           const data = response.data;
           setProducts(data);
           // console.log(data[0].Records, "real");

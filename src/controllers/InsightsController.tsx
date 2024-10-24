@@ -61,7 +61,10 @@ export const useInsightsController = () => {
   const fetchInsightsData = () => {
     if (username) {
       setLoading(true);
-      axiosInstance.get(`/api/Insight/${username}`, { headers: { "Content-Type": "application/json" } })
+      axiosInstance.get(`/api/Insight/`, {
+        params: { username: username },
+        headers: { "Content-Type": "application/json" } 
+      })
         .then(response => {
           if (response.data.length > 0) setInsights(response.data[0].InsightData);
         })

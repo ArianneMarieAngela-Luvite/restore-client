@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { axiosInstance } from "../services/axios"; 
-import { useAuth } from "../context/AuthProvider";
+// import { useAuth } from "../context/AuthProvider";
 
 interface LoginFormData {
   email: string;
@@ -23,7 +23,7 @@ export function LoginController() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const navigate = useNavigate();
-  const { loginUser } = useAuth();
+  // const { loginUser } = useAuth();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -51,7 +51,7 @@ export function LoginController() {
         localStorage.setItem("username", response.data.username);
         localStorage.setItem("email", response.data.email);
         // console.log(response.data.email);
-        loginUser();
+        // loginUser();
         navigate("/import");
       }
     } catch (err: any) {

@@ -47,7 +47,9 @@ export function ComboboxDemo({ onSelect }: ComboboxDemoProps) {
       const username = localStorage.getItem("username");
       setLoading(true);
       try {
-        const response = await axiosInstance.get(`/api/Demand/demand/${username}`);
+        const response = await axiosInstance.get(`/api/Demand/demand/`, {
+          params: { username: username }
+        });
         if (response.data && Array.isArray(response.data)) {
           // Use a Set to track unique product names
           const seenProducts = new Set();
@@ -60,7 +62,7 @@ export function ComboboxDemo({ onSelect }: ComboboxDemoProps) {
             }
             return false;
           }).map(product => ({
-            value: product.ProductID.toString(), // Ensure value is a string or adjust as needed
+            value: product.ProductID.toString(), 
             label: product.Records[0]?.Product,
           }));
           

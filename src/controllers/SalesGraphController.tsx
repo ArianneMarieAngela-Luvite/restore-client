@@ -100,7 +100,9 @@ export function SalesGraphController() {
       }
 
       try {
-        const response = await axiosInstance.get(`/api/Sales/sales/${username}`);
+        const response = await axiosInstance.get(`/api/Sales/sales/`, {
+          params: { username: username }
+        });
         const salesData = JSON.parse(response.data.data);
         handleParsedData(salesData.data);
       } catch (err) {

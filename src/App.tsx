@@ -17,12 +17,12 @@ import BillingInformation from "./views/BillingInformation";
 import { About } from "./views/About";
 import EmailVerification from "./views/EmailVerification";
 import ConfirmEmail from "./views/ConfirmEmail";
-import  AuthProvider  from "./context/AuthProvider";
-import PrivateRoute from "./components/PrivateRoute";
+// import  AuthProvider  from "./context/AuthProvider";
+// import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   return (
-    <AuthProvider>
+    // <AuthProvider>
       <BrowserRouter>
         <Toaster />
 
@@ -53,15 +53,15 @@ function App() {
           <Route path="/email-confirmation" element={<ConfirmEmail />} />
 
           {/* Private Routes (require authentication) */}
-          <Route path="/" element={<PrivateRoute />}>
+          {/* <Route path="/" element={<PrivateRoute />}> */}
             <Route path="/sales-forecast" element={<><Topbar /><SalesGraph /></>} />
             <Route path="/products-forecast" element={<><Topbar /><ProductGraph /></>} />
             <Route path="/insights" element={<><Topbar /><Insights /></>} />
             <Route path="/import" element={<><Topbar /><Import /></>} />
-          </Route>
+          {/* </Route> */}
         </Routes>
       </BrowserRouter>
-    </AuthProvider>
+    // </AuthProvider>
   );
 }
 
