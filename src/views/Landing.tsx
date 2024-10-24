@@ -42,17 +42,17 @@ const Landing = () => {
               sm:text-6xl sm:leading-relaxed
               text-center md:text-left text-5xl text-primary leading-relaxed font-lato "
               text="FORECASTING"
-              duration={50}
+              duration={80}
               />
 
               <span className="
-              text-center  md:text-left text-5xl font-bold leading-relaxed text-black
+              text-center   md:text-left text-5xl font-bold leading-relaxed text-black
               lg:text-7xl lg:leading-relaxed
               sm:text-6xl sm:leading-relaxed">
                 YOUR WAY FORWARD</span>
             </motion.h1>
             <motion.p  
-              className="text-center md:text-left   text-base justify-start text-black lg:text-lg pl-1 font-rubik"
+              className="text-center md:text-left   text-base justify-start text-black lg:text-lg pl-1 md:pl-4 font-rubik"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5, duration: 0.8 }}
@@ -61,7 +61,7 @@ const Landing = () => {
               */}
                Is your business prepared for tomorrow's market demand?
             </motion.p>
-            <PulsatingButton onClick={handleLoginButton} pulseColor="#38bd69" className="my-5 mr-5 ml-1 font-rubik rounded-lg bg-primary text-sm">Start Now</PulsatingButton>
+            <PulsatingButton onClick={handleLoginButton} pulseColor="#38bd69" className="my-5 mr-5 ml-1 md:ml-4 font-rubik rounded-lg bg-primary text-sm">Start Now</PulsatingButton>
 
         </motion.div>  
           </div>
