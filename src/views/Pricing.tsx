@@ -6,7 +6,7 @@ export function Pricing() {
   return (
     <div className="h-100vh bg-background">
       <motion.div 
-        className="container mx-auto"
+        className="container mx-auto border"
         id="pricing-alt"
         animate={{x:0}}
         initial={{ opacity: 0 }}
