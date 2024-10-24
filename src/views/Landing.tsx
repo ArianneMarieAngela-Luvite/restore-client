@@ -21,11 +21,11 @@ const Landing = () => {
           <motion.div  initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }} 
-            className="h-full px-5 md:px-20  bg-cover flex flex-col items-start gap-1 text-white md:py-0 font-rubik ">
+            className="h-full px-5 md:px-20  bg-cover flex flex-col items-center justify-center md:items-start gap-1 text-white md:py-0 font-rubik ">
           
             <motion.h1 
               className=" 
-              text-left text-5xl font-bold leading-relaxed pb-3  text-primary font-rubik mt-16
+              text-center md:text-left text-5xl font-bold leading-relaxed pb-3  text-primary font-rubik mt-16
               xl:text-7xl xl:leading-normal
               lg:text-7xl
               md:text-6xl md:mt-32
@@ -40,19 +40,19 @@ const Landing = () => {
               className="
               lg:text-7xl lg:leading-relaxed
               sm:text-6xl sm:leading-relaxed
-              text-left text-5xl text-primary leading-relaxed font-lato "
+              text-center md:text-left text-5xl text-primary leading-relaxed font-lato "
               text="FORECASTING"
               duration={200}
               />
 
               <span className="
-              text-left text-5xl font-bold leading-relaxed text-black
+              text-center border md:text-left text-5xl font-bold leading-relaxed text-black
               lg:text-7xl lg:leading-relaxed
               sm:text-6xl sm:leading-relaxed">
                 YOUR WAY FORWARD</span>
             </motion.h1>
             <motion.p  
-              className="text-left  text-base justify-start text-black lg:text-lg pl-1 font-rubik"
+              className="text-center md:text-left   text-base justify-start text-black lg:text-lg pl-1 font-rubik"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5, duration: 0.8 }}
