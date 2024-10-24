@@ -36,7 +36,7 @@ function App() {
                  {/* <Landing /> */}
                 {/* <About /> */}
                 {/* <Team /> */}
-                {/* <AltPricing /> */}
+                <AltPricing />
                 <ContactUs />
                 <Footer /> 
               </>
