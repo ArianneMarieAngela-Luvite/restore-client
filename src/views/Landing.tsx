@@ -16,7 +16,7 @@ const Landing = () => {
       className=""
       // style={{ backgroundImage: `url(${bg})` }}
     >
-    <div  className="container mx-auto pt-20  ">
+    <div  className="container  mx-auto pt-20 md:pt-0  ">
         <div className="flex items-center justify-center pb-10 md:h-screen">
           <motion.div  initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}
@@ -42,11 +42,11 @@ const Landing = () => {
               sm:text-6xl sm:leading-relaxed
               text-center md:text-left text-5xl text-primary leading-relaxed font-lato "
               text="FORECASTING"
-              duration={200}
+              duration={50}
               />
 
               <span className="
-              text-center border md:text-left text-5xl font-bold leading-relaxed text-black
+              text-center  md:text-left text-5xl font-bold leading-relaxed text-black
               lg:text-7xl lg:leading-relaxed
               sm:text-6xl sm:leading-relaxed">
                 YOUR WAY FORWARD</span>
