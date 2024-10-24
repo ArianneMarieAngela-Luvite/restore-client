@@ -9,7 +9,7 @@ import { Import } from "./views/Import";
 import SalesGraph from "./views/SalesGraph";
 import { Toaster } from "@/components/ui/toaster";
 import Insights from "./views/Insights";
-// import Footer from "./views/Footer";
+import Footer from "./views/Footer";
 import ContactUs from "./views/ContactUs";
 import AltPricing from "./views/AltPricing";
 import Team from "./views/Team";
@@ -38,7 +38,7 @@ function App() {
                 {/* <Team /> */}
                 {/* <AltPricing /> */}
                 {/* <ContactUs /> */}
-                {/* <Footer />  */}
+                <Footer /> 
               </>
             }
           />
