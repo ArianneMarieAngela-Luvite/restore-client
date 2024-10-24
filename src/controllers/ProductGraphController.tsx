@@ -262,7 +262,7 @@ const combineParsedData = (parsedData: ParsedData[], predictedDemandData: any[])
     };
 
     fetchDemandPrediction();
-}, [username, parsedData]);
+}, []);
 
   const handleProductChange = (selectedID: string) => {
     const selectedProduct = products.find((product) => product.ProductID === selectedID);

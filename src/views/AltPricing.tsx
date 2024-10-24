@@ -29,7 +29,7 @@ function classNames(...classes: any[]) {
 const AltPricing = () => {
   return (
   <div id="pricing"   className="h-100vh w-full  "> 
-    <div className="container border  mx-auto px-10 xs:px-5 py-10">
+    <div className="container  mx-auto px-10 xs:px-5 py-10">
       {/* <div aria-hidden="true" className="absolute inset-x-0 -top-3 -z-10 transform-gpu overflow-hidden px-36 blur-3xl">
         <div
           style={{

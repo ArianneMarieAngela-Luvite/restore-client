@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 const Footer = () => {
   return (
     <div className="">
-        <div className="container border pt-16  mx-auto">
+        <div className="container pt-16  mx-auto">
         <div className="flex flex-col justify-center items-center gap-2 mb-10">
             <div className="font-lato font-bold text-3xl pb-5 text-center">
                 Feel connected anytime, anywhere
