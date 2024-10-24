@@ -28,8 +28,8 @@ export const Import = () => {
   }
 
   return (
-    <div className="flex flex-col items-center h-screen">
-      <div className="flex ml-auto mx-10 mt-3 md:ml-auto md:mx-24 md:mt-3 font-rubik font-bold bg-customCardColor p-3 rounded-lg gap-1 "> 
+    <div className="flex flex-col  items-center h-screen">
+      <div className="flex ml-auto mx-5 mt-3 md:ml-auto md:mx-24 md:mt-3 font-rubik font-bold bg-customCardColor p-3 rounded-lg gap-1 "> 
         Credits: 
         <span className="font-bold px-2 ">{credits}</span>
         <svg 
@@ -38,9 +38,9 @@ export const Import = () => {
           <path fill-rule="evenodd" d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm11-4.243a1 1 0 1 0-2 0V11H7.757a1 1 0 1 0 0 2H11v3.243a1 1 0 1 0 2 0V13h3.243a1 1 0 1 0 0-2H13V7.757Z" clip-rule="evenodd"/>
         </svg>
 
-        </div>
+      </div>
 
-      <div className="flex sm:h-[176px] lg:w-3/4 xl:w-2/4 md:h-[176px] border-0 mt-9 md:mt-16 mb-8 w-3/4 h-2/6">
+      <div className="flex sm:h-[176px] lg:w-3/4 xl:w-2/4 md:h-[176px] border-0 mt-9 md:mt-16 mb-8 w-full px-5 h-2/6">
         <Card className="
         h-64 flex w-full bg-primary border-0 mb-8 
         sm:h-44
@@ -113,7 +113,7 @@ export const Import = () => {
       </div>
 
       <div className="
-        p-2 w-3/4 h-48 justify-center items-center border-none
+        p-2  h-48 justify-center items-center border-none w-full px-8
         xl:w-2/4
       ">
         <span className="text-primary font-semibold">Note:</span>
