@@ -37,7 +37,7 @@ export default function ProductGraph() {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.2, delay: 0.2 }}
     >
-      <div className="flex gap-4 items-center justify-center md:justify-start font-lato xs:w-screen">
+        <div className="flex gap-4 mx-5 items-center justify-center md:justify-start font-lato xs:w-screen px-5">
           <p className="mr-5 font-lato">Year/s</p>
           {[1, 3, 5].map((year) => (
             <button
@@ -51,7 +51,7 @@ export default function ProductGraph() {
           ))}
         </div>
 
-        <div className="flex gap-3 md:ml-auto xs:w-screen justify-center md:justify-end xs:justify-center"
+        <div className="flex gap-3 px-5 md:ml-auto xs:w-screen justify-center md:justify-end xs:justify-center"
         >
           <ComboboxDemo
             items={products}

@@ -28,8 +28,8 @@ export const Import = () => {
   }
 
   return (
-    <div className="flex flex-col items-center w-screen h-screen">
-      <div className="flex flex-row gap-2m mt-2 bg-customCardColor ml-auto mx-24 rounded-lg p-3 font-rubik font-bold"> 
+    <div className="flex flex-col items-center h-screen">
+      <div className="flex ml-auto mx-10 mt-3 md:ml-auto md:mx-24 md:mt-3 font-rubik font-bold bg-customCardColor p-3 rounded-lg gap-1 "> 
         Credits: 
         <span className="font-bold px-2 ">{credits}</span>
         <svg 
@@ -39,7 +39,8 @@ export const Import = () => {
         </svg>
 
         </div>
-      <div className="flex sm:h-[176px] lg:w-3/4 xl:w-2/4 md:h-[176px] border-0 mt-16 mb-8 w-3/4 h-2/6">
+
+      <div className="flex sm:h-[176px] lg:w-3/4 xl:w-2/4 md:h-[176px] border-0 mt-9 md:mt-16 mb-8 w-3/4 h-2/6">
         <Card className="
         h-64 flex w-full bg-primary border-0 mb-8 
         sm:h-44

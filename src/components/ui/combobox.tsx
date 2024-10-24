@@ -87,13 +87,13 @@ export function ComboboxDemo({ onSelect }: ComboboxDemoProps) {
             variant="outline"
             role="combobox"
             aria-expanded={open}
-            className="w-[250px] xs:w-[300px] justify-between bg-white"
+            className="w-[190px] md:w-[250px] justify-between bg-white"
           >
             {value ? items.find((item) => item.value === value)?.label : "Select product..."}
             <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-[250px] xs:w-[300px] p-0">
+        <PopoverContent className="md:w-[250px] w-[190px] p-0">
           <Command>
             <CommandInput placeholder="Search product..." className="h-9" />
             {loading ? (
