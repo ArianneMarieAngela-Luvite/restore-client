@@ -101,6 +101,8 @@ const BillingInformation = () => {
         if (response.status === 200) {
           clearInterval(interval); 
           localStorage.removeItem("sessionId");
+
+          
           window.location.href = "/import"; 
         } else {
           console.error('Unexpected response status:', response.status);

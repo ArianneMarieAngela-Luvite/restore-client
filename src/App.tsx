@@ -33,7 +33,7 @@ function App() {
             element={
               <>
                 <Header />
-                 <Landing />
+                 {/* <Landing /> */}
                 {/* <About /> */}
                 {/* <Team /> */}
                 {/* <AltPricing /> */}
