@@ -113,7 +113,7 @@ export const Import = () => {
       </div>
 
       <div className="
-        p-2  h-48 justify-center items-center border-none w-full px-8
+        p-3  h-48 justify-center items-center border-none w-full px-8
         xl:w-2/4
       ">
         <span className="text-primary font-semibold">Note:</span>
