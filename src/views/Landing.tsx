@@ -42,7 +42,7 @@ const Landing = () => {
               sm:text-6xl sm:leading-relaxed
               text-left text-5xl text-primary leading-relaxed font-lato "
               text="FORECASTING"
-              duration={1000}
+              duration={200}
               />
 
               <span className="

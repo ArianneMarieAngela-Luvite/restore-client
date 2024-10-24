@@ -4,9 +4,9 @@ import { Link } from "react-router-dom"
 
 const Footer = () => {
   return (
-    <div className="flex w-[400px] justify-center items-center border-2 border-primary ">
+    <div className="border-2 border-primary ">
         <div className="container border pt-20  mx-auto">
-        <div className="flex flex-col justify-center  w-full items-center gap-2 mb-10">
+        <div className="flex flex-col justify-center items-center gap-2 mb-10">
             <div className="font-lato font-bold text-3xl pb-5 text-center">
                 Feel connected anytime, anywhere
             </div>
