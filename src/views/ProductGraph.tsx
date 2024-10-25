@@ -7,7 +7,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { Card, CardContent, CardHeader } from "../components/ui/card"; 
+import { Card, CardContent, CardFooter, CardHeader } from "../components/ui/card"; 
 import { ComboboxDemo } from "@/components/ui/combobox";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
@@ -79,7 +79,9 @@ export default function ProductGraph() {
             ) : (
               <ResponsiveContainer width="100%" height={400}>
                 {parsedData.length > 0 ? (
-                  <LineChart data={parsedData}>
+                  <LineChart 
+                    data={parsedData}
+                    margin={{ top: 5, right: 5, left: 20, bottom: 5 }}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="month" className="md:text-sm text-xs" tickFormatter={tickFormatter} />
                     <YAxis className="md:text-sm text-xs" />
@@ -102,17 +104,18 @@ export default function ProductGraph() {
               </ResponsiveContainer>
             )}
           </CardContent>
-          <div className="flex justify-center items-center pb-4 md:text-base text-xs">
-          {getLatestYears().map((year, index) => (
-              <div key={year} className="flex items-center justify-center mr-4">
+          <CardFooter className="flex flex-wrap px-5 w-screen justify-center items-center pb-4 md:text-base text-xs">
+            {getLatestYears().map((year, index) => (
+              <div key={year} className="flex items-center mr-4 mb-2">
                 <div
                   className="md:w-4 md:h-4 w-2 h-2 rounded-full"
                   style={{ backgroundColor: yearColors[index % yearColors.length] }}
                 />
-                <span className="ml-2">{year}</span> 
+                <span className="ml-2">{year}</span>
               </div>
             ))}
-          </div>
+          </CardFooter>
+          
         </Card>
       </motion.div>
       </>

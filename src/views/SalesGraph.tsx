@@ -89,7 +89,7 @@ export default function SalesGraph() {
                 {parsedData.length > 0 ? (
                   <LineChart
                     data={parsedData}
-                    margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+                    margin={{ top: 5, right: 5, left: 20, bottom: 5 }}
                   >
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="month" className="md:text-sm text-xs" tickFormatter={tickFormatter} tickMargin={10} />
@@ -119,9 +119,9 @@ export default function SalesGraph() {
               </ResponsiveContainer>
             )}
           </CardContent>
-          <CardFooter className="flex justify-center items-center pb-4 md:text-base text-xs">
+            <CardFooter className="flex flex-wrap px-5 w-screen justify-center items-center pb-4 md:text-base text-xs">
             {getLatestYears().map((year, index) => (
-              <div key={year} className="flex items-center mr-4">
+              <div key={year} className="flex items-center mr-4 mb-2">
                 <div
                   className="md:w-4 md:h-4 w-2 h-2 rounded-full"
                   style={{ backgroundColor: yearColors[index % yearColors.length] }}
@@ -131,6 +131,7 @@ export default function SalesGraph() {
             ))}
           </CardFooter>
         </Card>
+
       </motion.div>
     </>
   );
