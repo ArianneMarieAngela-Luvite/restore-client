@@ -244,7 +244,7 @@ if (productDemandPredictionData.length === 0) {
       <div className="flex gap-3 justify-end my-10">
         <Select onValueChange={(value) => setFileType(value)}>
           <SelectTrigger className='w-[180px]'>
-          {/* <Button className='rounded-md text-black text-start w-44 bg-white border shadow-none font-normal hover:bg-gray-100' >Select file type</Button> */}z
+          {/* <Button className='rounded-md text-black text-start w-44 bg-white border shadow-none font-normal hover:bg-gray-100' >Select file type</Button> */}
           <SelectValue placeholder="Select file type" />
           </SelectTrigger>
           <SelectContent>
