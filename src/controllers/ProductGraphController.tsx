@@ -283,30 +283,71 @@ const combineParsedData = (parsedData: ParsedData[], predictedDemandData: any[])
     return Object.keys(parsedData[0]).filter(key => key !== "month");
   };
 
+  // const exportToPDF = async () => {
+  //   if (chartRef.current) {
+  //     const canvas = await html2canvas(chartRef.current, { scale: 0.75 });
+  //     const imgData = canvas.toDataURL("image/png", 0.75);
+  //     const pdf = new jsPDF({
+  //       orientation: "portrait",
+  //       unit: "pt",
+  //       format: [612, 792],
+  //     });
+  //     const margin = 36;
+  //     const imgWidth = pdf.internal.pageSize.getWidth() - margin * 2;
+  //     const imgHeight = (canvas.height * imgWidth) / canvas.width;
+  //     const textX = margin;
+  //     const textY = margin;
+
+      
+  //       pdf.setFontSize(8);
+  //       pdf.text(`Exported by: ${username}`, textX + 20, textY + 40);
+  //       pdf.text(`${selectedYears} Year/s Trend `, textX + 20, textY + 65);
+  //       pdf.addImage(imgData, "PNG", margin, textY + 80, imgWidth, imgHeight);
+  //       pdf.save("product_graph_forecast.pdf");
+            
+  //   }
+  // };
+
   const exportToPDF = async () => {
     if (chartRef.current) {
-      const canvas = await html2canvas(chartRef.current, { scale: 0.75 });
-      const imgData = canvas.toDataURL("image/png", 0.75);
+      // Determine if the device is mobile based on screen width
+      const isMobile = window.innerWidth <= 768;
+  
+      // Set scale, PDF dimensions, and font size based on device type
+      const canvasScale = isMobile ? 1.5 : 0.75; // Higher scale for better clarity on mobile
+      const pdfFormat = isMobile ? [450, 640] : [612, 792]; // Smaller format for mobile
+      const fontSize = isMobile ? 10 : 8;
+  
+      // Capture canvas with adjusted scale for clarity
+      const canvas = await html2canvas(chartRef.current, { scale: canvasScale });
+      const imgData = canvas.toDataURL("image/png", canvasScale);
+  
       const pdf = new jsPDF({
         orientation: "portrait",
         unit: "pt",
-        format: [612, 792],
+        format: pdfFormat,
       });
-      const margin = 36;
+  
+      const margin = isMobile ? 24 : 36; // Smaller margins for mobile
       const imgWidth = pdf.internal.pageSize.getWidth() - margin * 2;
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
+  
       const textX = margin;
       const textY = margin;
-
-      
-        pdf.setFontSize(8);
-        pdf.text(`Exported by: ${username}`, textX + 20, textY + 40);
-        pdf.text(`${selectedYears} Year/s Trend `, textX + 20, textY + 65);
-        pdf.addImage(imgData, "PNG", margin, textY + 80, imgWidth, imgHeight);
-        pdf.save("product_graph_forecast.pdf");
-            
+  
+      // Set font size and add text for mobile or desktop
+      pdf.setFontSize(fontSize);
+      pdf.text(`Exported by: ${username}`, textX + 10, textY + 30);
+      pdf.text(`${selectedYears} Year/s Trend`, textX + 10, textY + 50);
+  
+      // Add image to PDF and adjust positioning based on text
+      pdf.addImage(imgData, "PNG", margin, textY + 60, imgWidth, imgHeight);
+  
+      // Save the PDF with an appropriate name
+      pdf.save("product_graph_forecast.pdf");
     }
   };
+  
   return {
     products,
     parsedData,

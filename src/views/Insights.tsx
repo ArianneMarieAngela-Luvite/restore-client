@@ -145,6 +145,22 @@ export default function Insights() {
       doc.text(item.next_month, 100, y);
       doc.text(item.percentage_increase.toString(), 150, y);
     });
+
+    doc.setFontSize(16);
+    doc.text("Insights Data", 14,  100); // Title
+
+    doc.setFontSize(12);
+
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const margin = 14;
+    const maxWidth = pageWidth - 2 * margin;  // Define the max width for text wrapping
+
+    if (insights) {
+      doc.text(insights, margin, 110, { maxWidth: maxWidth });
+    } else {
+      doc.text("No insights available", margin, 30, { maxWidth: maxWidth });
+    }
+
   
     // // Product Demand Prediction Data
     // doc.addPage();
@@ -163,63 +179,63 @@ export default function Insights() {
     // });
 
     doc.addPage();
-doc.setFontSize(16);
-doc.text("Product Demand Prediction Data", 14, 20);
-doc.setFontSize(12);
-
-// Define the starting position for the table
-const startY = 30;
-const cellHeight = 10;
-const tableColumn = ["Rank", "Product ID", "Product Name", "Projected Demand"];
-const columnWidths = [20, 40, 80, 40]; // Define widths for each column
-
-// Draw the table header
-tableColumn.forEach((header, index) => {
-  const x = 14 + columnWidths.slice(0, index).reduce((a, b) => a + b, 0); // Calculate x position
-  doc.text(header, x, startY);
-});
-
-// Draw a line under the header
-doc.line(14, startY + 2, 14 + columnWidths.reduce((a, b) => a + b, 0), startY + 2);
-
-// Draw the table rows
-productDemandPredictionData.forEach((item, index) => {
-  const y = startY + cellHeight + (index * cellHeight);
-
-  // Draw the rank (index + 1)
-  doc.text((index + 1).toString(), 14, y); // Rank Column
-  doc.text(item.ProductID.toString(), 14 + columnWidths[0], y); // Product ID
-  doc.text(item.Product, 14 + columnWidths[0] + columnWidths[1], y); // Product Name
-  doc.text(item.PredictedDemand.toString(), 14 + columnWidths[0] + columnWidths[1] + columnWidths[2], y); // Projected Demand
-});
-
-// Optional: Draw lines for each row
-for (let i = 0; i < productDemandPredictionData.length; i++) {
-  const y = startY + cellHeight + (i * cellHeight);
-  doc.line(14, y + 2, 14 + columnWidths.reduce((a, b) => a + b, 0), y + 2); // Draw row line
-}
-
-// Optional: Draw a footer if no data available
-if (productDemandPredictionData.length === 0) {
-  doc.text("No product demand prediction data available", 14, startY + cellHeight + 10);
-}
-
-  
-    doc.addPage();
     doc.setFontSize(16);
-    doc.text("Insights Data", 14, 20); // Title
-
+    doc.text("Product Demand Prediction Data", 14, 20);
     doc.setFontSize(12);
 
-    const pageWidth = doc.internal.pageSize.getWidth();
-    const margin = 14;
-    const maxWidth = pageWidth - 2 * margin;  // Define the max width for text wrapping
+    // Define the starting position for the table
+    const startY = 30;
+    const cellHeight = 10;
+    const tableColumn = ["Rank", "Product ID", "Product Name", "Projected Demand"];
+    const columnWidths = [20, 40, 80, 40]; // Define widths for each column
 
-    if (insights) {
-      doc.text(insights, margin, 30, { maxWidth: maxWidth });
-    } else {
-      doc.text("No insights available", margin, 30, { maxWidth: maxWidth });
+    // Draw the table header
+    tableColumn.forEach((header, index) => {
+      const x = 14 + columnWidths.slice(0, index).reduce((a, b) => a + b, 0); // Calculate x position
+      doc.text(header, x, startY);
+    });
+
+    // Draw a line under the header
+    doc.line(14, startY + 2, 14 + columnWidths.reduce((a, b) => a + b, 0), startY + 2);
+
+    // Draw the table rows
+    productDemandPredictionData.forEach((item, index) => {
+      const y = startY + cellHeight + (index * cellHeight);
+
+      // Draw the rank (index + 1)
+      doc.text((index + 1).toString(), 14, y); // Rank Column
+      doc.text(item.ProductID.toString(), 14 + columnWidths[0], y); // Product ID
+      doc.text(item.Product, 14 + columnWidths[0] + columnWidths[1], y); // Product Name
+      doc.text(item.PredictedDemand.toString(), 14 + columnWidths[0] + columnWidths[1] + columnWidths[2], y); // Projected Demand
+    });
+
+    // Optional: Draw lines for each row
+    for (let i = 0; i < productDemandPredictionData.length; i++) {
+      const y = startY + cellHeight + (i * cellHeight);
+      doc.line(14, y + 2, 14 + columnWidths.reduce((a, b) => a + b, 0), y + 2); // Draw row line
     }
+
+    // Optional: Draw a footer if no data available
+    if (productDemandPredictionData.length === 0) {
+      doc.text("No product demand prediction data available", 14, startY + cellHeight + 10);
+    }
+
+  
+    // doc.addPage();
+    // doc.setFontSize(16);
+    // doc.text("Insights Data", 14, 20); // Title
+
+    // doc.setFontSize(12);
+
+    // const pageWidth = doc.internal.pageSize.getWidth();
+    // const margin = 14;
+    // const maxWidth = pageWidth - 2 * margin;  // Define the max width for text wrapping
+
+    // if (insights) {
+    //   doc.text(insights, margin, 30, { maxWidth: maxWidth });
+    // } else {
+    //   doc.text("No insights available", margin, 30, { maxWidth: maxWidth });
+    // }
   
     // Save the PDF
     const pdfFileName = "insights_data.pdf";

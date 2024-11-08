@@ -117,6 +117,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import "../index.css";
 import customTheme from "../constants/customTheme"
 import ConfigProvider from 'antd/es/config-provider';
+import { Audio } from "react-loader-spinner";
 
 interface ProductData {
   key: React.Key;
@@ -207,6 +208,7 @@ const PredictedDemand: React.FC = () => {
       {loading ? (
         <div className="flex justify-center items-center h-full">
           {/* <Spin className='custom-spinner '  size="large"/> */}
+          <Audio color="#30a75f" height={50} width={50} ariaLabel="loading" />
         </div>
       ) : (
         <Table<ProductData>
@@ -217,6 +219,7 @@ const PredictedDemand: React.FC = () => {
           onChange={onChange}
           pagination={{ pageSize: 12 }}  
           className="text-base font-lato"
+          scroll={{ x:375}}
           rowClassName={() => 'text-sm md:text-base'}  
           showSorterTooltip={{ target: 'sorter-icon' }}  
         />
