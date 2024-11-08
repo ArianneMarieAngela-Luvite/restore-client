@@ -10,10 +10,12 @@ import {
 import { motion } from "framer-motion";
 import { Card, CardContent, CardFooter, CardHeader } from "../components/ui/card";
 import { Button } from "../components/ui/button";
-import { ClipLoader } from "react-spinners";
+// import { ClipLoader } from "react-spinners";
+import { Audio } from "react-loader-spinner";
 import { SalesGraphController } from "../controllers/SalesGraphController"; 
+import transition from "@/constants/transition";
 
-export default function SalesGraph() {
+function SalesGraph() {
   const {
     parsedData,
     selectedYears,
@@ -82,7 +84,7 @@ export default function SalesGraph() {
           <CardContent>
             {isLoading ? (
               <div className="flex justify-center items-center h-96">
-                <ClipLoader color="#4A90E2" size={50} />
+                <Audio color="#30a75f" height={70} width={70} ariaLabel="loading" />
               </div>
             ) : (
               <ResponsiveContainer width="100%" height={400}>
@@ -136,4 +138,4 @@ export default function SalesGraph() {
     </>
   );
 }
-
+export default transition(SalesGraph);

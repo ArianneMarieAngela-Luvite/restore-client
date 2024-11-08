@@ -110,7 +110,7 @@
 // export default PredictedDemand;
 
 
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Table, Spin } from 'antd';
 import type { TableColumnsType, TableProps } from 'antd';
 import { ScrollArea } from '@/components/ui/scroll-area'; 
@@ -158,29 +158,67 @@ const PredictedDemand: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
 
   
-  useEffect(() => {
-    const fetchPredicted = async () => {
-        const username = localStorage.getItem("username");
-      try {
-        const response = await fetch(`https://restore-backend.onrender.com/api/DemandPrediction/prediction/${username}`); 
-        const result = await response.json();
+  // useEffect(() => {
+  //   const fetchPredicted = async () => {
+  //       const username = localStorage.getItem("username");
+  //     try {
+  //       const response = await fetch(`https://restore-backend.onrender.com/api/DemandPrediction/prediction/${username}`); 
+  //       const result = await response.json();
         
-        const mappedData = result.map((item: any, index: number) => ({
-          key: index,
-          ProductID: item.ProductID,
-          Product: item.Product, 
-          PredictedDemand: item.PredictedDemand,
-        }));
-        setData(mappedData);
-      } catch (error) {
-        console.error('Failed to fetch predicted data:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  //       const mappedData = result.map((item: any, index: number) => ({
+  //         key: index,
+  //         ProductID: item.ProductID,
+  //         Product: item.Product, 
+  //         PredictedDemand: item.PredictedDemand,
+  //       }));
+  //       setData(mappedData);
+  //     } catch (error) {
+  //       console.error('Failed to fetch predicted data:', error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
 
-    fetchPredicted();
+  //   fetchPredicted();
+  // }, []);
+
+  const fetchPredictedData = useCallback(async () => {
+    const username = localStorage.getItem("username");
+    if (!username) return;
+
+    try {
+      const cachedData = sessionStorage.getItem(`predictedData_${username}`);
+      if (cachedData) {
+        setData(JSON.parse(cachedData));
+        setLoading(false);
+        return;
+      }
+
+      const response = await fetch(
+        `https://restore-backend.onrender.com/api/DemandPrediction/prediction/${username}`
+      );
+      const result = await response.json();
+
+      const mappedData = result.map((item: any, index: number) => ({
+        key: index,
+        ProductID: item.ProductID,
+        Product: item.Product,
+        PredictedDemand: item.PredictedDemand,
+      }));
+
+      setData(mappedData);
+      sessionStorage.setItem(`predictedData_${username}`, JSON.stringify(mappedData));
+    } catch (error) {
+      console.error("Failed to fetch predicted data:", error);
+    } finally {
+      setLoading(false);
+    }
   }, []);
+
+  useEffect(() => {
+    fetchPredictedData();
+  }, [fetchPredictedData]);
+
 
   const onChange: TableProps<ProductData>['onChange'] = (pagination, filters, sorter, extra) => {
     console.log('params', pagination, filters, sorter, extra);
