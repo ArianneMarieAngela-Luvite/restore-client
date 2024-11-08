@@ -5,7 +5,8 @@ import { Register } from "./views/Register";
 import Landing from "./views/Landing";
 import ProductGraph from "./views/ProductGraph";
 import Topbar from "./components/Topbar";
-import  Import  from "./views/Import";
+import { Import } from "./views/Import";
+import { Upload } from "./views/Upload";
 import SalesGraph from "./views/SalesGraph";
 import { Toaster } from "@/components/ui/toaster";
 import Insights from "./views/Insights";
@@ -53,6 +54,7 @@ function App() {
           <Route path="/billing-information" element={<BillingInformation />} />
           <Route path="/email-verification" element={<EmailVerification />} />
           <Route path="/email-confirmation" element={<ConfirmEmail />} />
+          <Route path="/upload" element={<Upload />} />
 
           {/* Private Routes (require authentication) */}
           {/* <Route path="/" element={<PrivateRoute />}> */}
@@ -60,6 +62,7 @@ function App() {
             <Route path="/products-forecast" element={<><Topbar /><ProductGraph /></>} />
             <Route path="/insights" element={<><Topbar /><Insights /></>} />
             <Route path="/import" element={<><Topbar /><Import /></>} />
+            
           {/* </Route> */}
         </Routes>
       </BrowserRouter>
