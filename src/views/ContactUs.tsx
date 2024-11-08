@@ -79,7 +79,7 @@ export default function ContactUs() {
             Have questions or want to learn more about how ReStore can support your business? We're here to help.
           </p>
         </div>
-        <form onSubmit={sendEmail} className="mx-auto mt-5 max-w-xl sm:mt-20">
+        <form onSubmit={sendEmail} className="mx-auto mt-5 max-w-xl sm:mt-10">
           <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
             <div>
               <label htmlFor="first-name" className="block text-sm font-semibold leading-6 text-gray-900">

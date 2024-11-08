@@ -75,7 +75,7 @@ const ReviewCard = ({
           style={{ height: '52px', width: '52px', borderRadius: '10px' }}
         >
         </Player>
-          <div className="text-base font-rubik  w-64 mt-2 text-center font-bold dark:text-white">
+          <div className="text-base font-rubik text-primary   w-64 mt-2 text-center font-bold dark:text-white">
             {name}
           </div>
           {/* <p className="text-xs font-medium dark:text-white/40">{name}</p> */}
