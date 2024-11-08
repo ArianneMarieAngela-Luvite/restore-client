@@ -211,18 +211,32 @@ const PredictedDemand: React.FC = () => {
           <Audio color="#30a75f" height={50} width={50} ariaLabel="loading" />
         </div>
       ) : (
-        <Table<ProductData>
-          id="productDemand"
+        // <Table<ProductData>
+        //   id="productDemand"
           
-          columns={columns}
-          dataSource={data}
-          onChange={onChange}
-          pagination={{ pageSize: 12 }}  
-          className="text-base font-lato"
-          scroll={{ x:375}}
-          rowClassName={() => 'text-sm md:text-base'}  
-          showSorterTooltip={{ target: 'sorter-icon' }}  
-        />
+        //   columns={columns}
+        //   dataSource={data}
+        //   onChange={onChange}
+        //   pagination={{ pageSize: 12 }}  
+        //   className="text-base font-lato"
+        //   // scroll={{ x:375}}
+        //   scroll={{ x: '100%' }}  // Enables horizontal scrolling
+        //   rowClassName={() => 'text-sm md:text-base'}  
+        //   showSorterTooltip={{ target: 'sorter-icon' }}  
+        // />
+        <div className="overflow-x-auto">
+            <Table<ProductData>
+              id="productDemand"
+              columns={columns}
+              dataSource={data}
+              onChange={onChange}
+              pagination={{ pageSize: 12 }}
+              className="text-base font-lato"
+              scroll={{ x: '100%' }}  // Enables horizontal scrolling
+              rowClassName={() => 'text-sm md:text-base'}
+              showSorterTooltip={{ target: 'sorter-icon' }}
+            />
+          </div>
       )}
     </ScrollArea>
     </ConfigProvider>
