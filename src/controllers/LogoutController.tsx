@@ -10,6 +10,7 @@ const LogoutController = () => {
     localStorage.removeItem("username");
     localStorage.removeItem("sessionId");
     localStorage.removeItem("email");
+    localStorage.removeItem("authToken");
     navigate("/"); 
   };
 

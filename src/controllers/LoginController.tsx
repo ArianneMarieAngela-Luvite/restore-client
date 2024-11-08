@@ -49,7 +49,7 @@ export function LoginController() {
         setMessage(response.data.message);
         localStorage.setItem("username", response.data.username);
         localStorage.setItem("email", response.data.email);
-        
+        // navigate("/import");
         // Navigate based on username comparison
         const queryParams = new URLSearchParams(location.search);
         const queryUsername = queryParams.get("username");

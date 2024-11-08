@@ -7,7 +7,8 @@ import { RegisterController } from "../controllers/RegisterController";
 // import backIcon from "../assets/icons8-back-48.png";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
-import { ClipLoader } from "react-spinners";
+// import { ClipLoader } from "react-spinners";
+import { Audio } from "react-loader-spinner";
 import restoreLogo from "../assets/restore-logo.png";
 
 export function Register() {
@@ -20,6 +21,17 @@ export function Register() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.3 }}
     >
+            {loading && (
+            <motion.div
+              // initial={{ x: "100%" }}
+              // animate={{ x: 0 }}
+              // exit={{ opacity: "100%" }}
+              // transition={{ duration: 1 }}
+              className="fixed inset-0 z-50 flex items-center justify-center bg-customBackground"
+            >
+              <Audio color="#30a75f" height={100} width={100} ariaLabel="loading" />
+            </motion.div>
+      )}
       <Card className="
         max-w-sm w-full h-3/4 
         xl:shadow
@@ -134,8 +146,8 @@ export function Register() {
             <Button type="submit" className="w-full text-sm" disabled={loading}>
               {loading ?  (
                 <div className="flex items-center">
-                  <span className="mr-2">Register </span>
-                  <ClipLoader  size={18} color="white"/>                
+                  {/* <span className="mr-2">Register </span>
+                  <ClipLoader  size={18} color="white"/>                 */}
                 </div> ) : (
                 "Register"
                 ) }

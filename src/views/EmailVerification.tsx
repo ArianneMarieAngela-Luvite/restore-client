@@ -11,13 +11,13 @@ const EmailVerification = () => {
   const email = localStorage.getItem("email");
   return (
     <motion.div
-      className="min-h-screen bg-background flex justify-center items-center shadow-xl"
+      className="min-h-screen  bg-background flex justify-center items-center shadow-xl"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.3 }}
     >
       <Card className="
-        max-w-sm w-full h-3/4  p-5 
+        max-w-sm w-full border h-3/4  p-4 
         xl:shadow
         lg:shadow 
         md:shadow
@@ -45,7 +45,7 @@ const EmailVerification = () => {
 
         </CardHeader>
         <CardContent className="flex flex-col text-base leading-6" >
-        We've sent an email to <span className="font-bold font-rubik text-base">{email}</span>.
+        We've sent an email to <span className="font-bold text-base">{email}.</span> 
         Please check your inbox to activate your account. If you don't see the confirmation email there, be sure to check your Spam folder. Thank you!
 
             {/* <Button  className="w-full text-sm" >

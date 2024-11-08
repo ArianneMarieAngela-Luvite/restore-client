@@ -3,6 +3,7 @@ import { axiosInstance } from "@/services/axios";
 import {  useState } from "react";
 import { Link } from "react-router-dom";
 import { Audio } from "react-loader-spinner";
+import { motion } from "framer-motion";
 
 const BillingInformation = () => {
   const [loading, setLoading] = useState(false);
@@ -118,6 +119,7 @@ const BillingInformation = () => {
 
   return (
     <div className="h-screen flex items-center justify-center">
+
       <div className="container mx-auto p-6 max-w-lg bg-white shadow-lg rounded-lg">
         <div className="flex flex-col gap-2 mb-3">
           <p className="text-lg font-bold">Billing Information</p>
@@ -260,14 +262,18 @@ const BillingInformation = () => {
 
         {/* Loading Modal */}
         {modalVisible && (
-          <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
-            <div className="flex flex-col gap-5 justify-center items-center bg-white rounded-lg p-6 shadow-lg text-center">
-              <Audio height={70} width={70} color={"#30a75f"} />
-              <p className="text-lg font-bold">Processing Payment</p>
-              {/* <ClipLoader className="mt-4" /> */}
-            </div>
-          </div>
+          <motion.div
+          // initial={{ x: "100%" }}
+          // animate={{ x: 0 }}
+          // exit={{ opacity: "100%" }}
+          // transition={{ duration: 1 }}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-customBackground"
+        >
+
+          <Audio color="#30a75f" height={100} width={100} ariaLabel="loading" />
+        </motion.div>
         )}
+
       </div>
     </div>
   );

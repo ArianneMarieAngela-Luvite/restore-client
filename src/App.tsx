@@ -19,12 +19,12 @@ import { About } from "./views/About";
 import EmailVerification from "./views/EmailVerification";
 import ConfirmEmail from "./views/ConfirmEmail";
 import { AnimatePresence } from "framer-motion";
-// import  AuthProvider  from "./context/AuthProvider";
-// import PrivateRoute from "./components/PrivateRoute";
+import  AuthProvider  from "./context/AuthProvider";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   return (
-    // <AuthProvider>
+    <AuthProvider>
     <AnimatePresence mode="wait">
       <BrowserRouter>
         <Toaster />
@@ -57,17 +57,17 @@ function App() {
           <Route path="/upload" element={<Upload />} />
 
           {/* Private Routes (require authentication) */}
-          {/* <Route path="/" element={<PrivateRoute />}> */}
+          <Route path="/" element={<PrivateRoute />}>
+            <Route path="/import" element={<><Topbar /><Import /></>} />
             <Route path="/sales-forecast" element={<><Topbar /><SalesGraph /></>} />
             <Route path="/products-forecast" element={<><Topbar /><ProductGraph /></>} />
             <Route path="/insights" element={<><Topbar /><Insights /></>} />
-            <Route path="/import" element={<><Topbar /><Import /></>} />
             
-          {/* </Route> */}
+          </Route>
         </Routes>
       </BrowserRouter>
       </AnimatePresence>
-    // </AuthProvider>
+    </AuthProvider>
   );
 }
 
