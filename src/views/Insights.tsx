@@ -5,13 +5,15 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { ScrollArea } from "@/components/ui/scroll-area";
 import * as XLSX from "xlsx";
 import timeline from "../assets/Vertical Timeline.png";
-import { ClipLoader } from "react-spinners";
+// import { ClipLoader } from "react-spinners";
+import { Audio } from "react-loader-spinner";
 // import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 // import { useEffect, useState } from 'react';
 import { useState } from 'react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import jsPDF from 'jspdf';
 import PredictedDemand from './PredictedDemandTable';
+import { motion } from 'framer-motion';
 
 
 export default function Insights() {
@@ -235,7 +237,10 @@ if (productDemandPredictionData.length === 0) {
     }
   };
   return (
-    <div className="px-5 md:px-20 lg:px-20 xl:px-20 mb-8">
+    <motion.div className="px-5 md:px-20 lg:px-20 xl:px-20 mb-8"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.2, delay: 0.2 }}>
       <div className="flex gap-3 justify-end my-10">
         <Select onValueChange={(value) => setFileType(value)}>
           <SelectTrigger className='w-[180px]'>
@@ -257,7 +262,8 @@ if (productDemandPredictionData.length === 0) {
           {loading ? (
             <div className='flex items-center pt-5 gap-2'>
               <span className='text-white text-base font-lato'>Fetching data </span>
-              <ClipLoader size={25} color='white'/>
+              {/* <ClipLoader size={25} color='white'/> */}
+              <Audio color="#30a75f" height={30} width={30} ariaLabel="loading" />
             </div>
           ) : (
             <CardContent className="text-customBackground text-2xl md:text-4xl lg:text-4xl xl:text-4xl font-bold font-lato p-0 mt-2 w-fit">
@@ -284,7 +290,7 @@ if (productDemandPredictionData.length === 0) {
             <div className="px-2 ">
               {loading ? (
                 <div className='flex h-[50px] justify-center items-center gap-2'>
-                  <ClipLoader size={25} color='gray' />
+                  <Audio color="#30a75f" height={30} width={30} ariaLabel="loading" />
                 </div>
               ) : (
               <Table>
@@ -324,7 +330,7 @@ if (productDemandPredictionData.length === 0) {
             <ScrollArea className="h-[85%] px-4">
               {loading ? (
                 <div className="flex justify-center items-center h-[300px]">
-                  <ClipLoader size={50} color="gray" />
+                  <Audio color="#30a75f" height={30} width={30} ariaLabel="loading" />
                 </div>
               ) : (
                 insights ? (
@@ -360,8 +366,8 @@ if (productDemandPredictionData.length === 0) {
             
           </div>
           {loading ? (
-            <div className="flex justify-center items-center h-[300px]">
-              <ClipLoader size={50} color="gray" />
+            <div className="flex justify-center items-center h-[500px]">
+              <Audio color="#30a75f" height={50} width={50} ariaLabel="loading" />
             </div>
             ) : (
             // <ScrollArea className="h-[90%] px-8">
@@ -402,7 +408,7 @@ if (productDemandPredictionData.length === 0) {
           )}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 

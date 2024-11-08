@@ -110,11 +110,13 @@
 // export default PredictedDemand;
 
 
-import React, { useEffect, useState } from 'react';
-import { Table, Spin } from 'antd';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Table } from 'antd';
 import type { TableColumnsType, TableProps } from 'antd';
 import { ScrollArea } from '@/components/ui/scroll-area'; 
 import "../index.css";
+import customTheme from "../constants/customTheme"
+import ConfigProvider from 'antd/es/config-provider';
 
 interface ProductData {
   key: React.Key;
@@ -157,44 +159,59 @@ const PredictedDemand: React.FC = () => {
   const [data, setData] = useState<ProductData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
-  
-  useEffect(() => {
-    const fetchPredicted = async () => {
-        const username = localStorage.getItem("username");
-      try {
-        const response = await fetch(`https://restore-backend.onrender.com/api/DemandPrediction/prediction/${username}`); 
-        const result = await response.json();
-        
-        const mappedData = result.map((item: any, index: number) => ({
-          key: index,
-          ProductID: item.ProductID,
-          Product: item.Product, 
-          PredictedDemand: item.PredictedDemand,
-        }));
-        setData(mappedData);
-      } catch (error) {
-        console.error('Failed to fetch predicted data:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchPredictedData = useCallback(async () => {
+    const username = localStorage.getItem("username");
+    if (!username) return;
 
-    fetchPredicted();
+    try {
+      const cachedData = sessionStorage.getItem(`predictedData_${username}`);
+      if (cachedData) {
+        setData(JSON.parse(cachedData));
+        setLoading(false);
+        return;
+      }
+
+      const response = await fetch(
+        `https://restore-backend.onrender.com/api/DemandPrediction/prediction/${username}`
+      );
+      const result = await response.json();
+
+      const mappedData = result.map((item: any, index: number) => ({
+        key: index,
+        ProductID: item.ProductID,
+        Product: item.Product,
+        PredictedDemand: item.PredictedDemand,
+      }));
+
+      setData(mappedData);
+      sessionStorage.setItem(`predictedData_${username}`, JSON.stringify(mappedData));
+    } catch (error) {
+      console.error("Failed to fetch predicted data:", error);
+    } finally {
+      setLoading(false);
+    }
   }, []);
+
+  useEffect(() => {
+    fetchPredictedData();
+  }, [fetchPredictedData]);
+
 
   const onChange: TableProps<ProductData>['onChange'] = (pagination, filters, sorter, extra) => {
     console.log('params', pagination, filters, sorter, extra);
   };
 
   return (
+    <ConfigProvider theme={customTheme}>
     <ScrollArea className="h-[90%] px-8">
       {loading ? (
         <div className="flex justify-center items-center h-full">
-          <Spin className='custom-spinner' size="large"/>
+          {/* <Spin className='custom-spinner '  size="large"/> */}
         </div>
       ) : (
         <Table<ProductData>
           id="productDemand"
+          
           columns={columns}
           dataSource={data}
           onChange={onChange}
@@ -205,10 +222,123 @@ const PredictedDemand: React.FC = () => {
         />
       )}
     </ScrollArea>
+    </ConfigProvider>
   );
 };
 
 export default PredictedDemand;
+
+// import React, { useCallback, useEffect, useState } from 'react';
+// import { Table, ConfigProvider } from 'antd';
+// import type { TableColumnsType, TableProps } from 'antd';
+// import { ScrollArea } from '@/components/ui/scroll-area';
+// import "../index.css";
+// import customTheme from "../constants/customTheme"
+
+// interface ProductData {
+//   key: React.Key;
+//   ProductID: string;
+//   Product: string;
+//   PredictedDemand: number;
+// }
+
+// const columns: TableColumnsType<ProductData> = [
+//   {
+//     title: 'Rank',
+//     dataIndex: 'rank',
+//     render: (_, __, index) => index + 1,
+//     width: '10%',
+//   },
+//   {
+//     title: 'Product ID',
+//     dataIndex: 'ProductID',
+//     width: '20%',
+//   },
+//   {
+//     title: 'Product Name',
+//     dataIndex: 'Product',
+//     width: '40%',
+//   },
+//   {
+//     title: 'Projected Demand',
+//     dataIndex: 'PredictedDemand',
+//     sorter: (a, b) => a.PredictedDemand - b.PredictedDemand,
+//     defaultSortOrder: 'descend',
+//     width: '30%',
+//   },
+// ];
+
+// const PredictedDemand: React.FC = () => {
+//   const [data, setData] = useState<ProductData[]>([]);
+//   const [loading, setLoading] = useState<boolean>(true);
+
+//   const fetchPredictedData = useCallback(async () => {
+//     const username = localStorage.getItem("username");
+//     if (!username) return;
+
+//     try {
+//       const cachedData = sessionStorage.getItem(`predictedData_${username}`);
+//       if (cachedData) {
+//         setData(JSON.parse(cachedData));
+//         setLoading(false);
+//         return;
+//       }
+
+//       const response = await fetch(
+//         `https://restore-backend.onrender.com/api/DemandPrediction/prediction/${username}`
+//       );
+//       const result = await response.json();
+
+//       const mappedData = result.map((item: any, index: number) => ({
+//         key: index,
+//         ProductID: item.ProductID,
+//         Product: item.Product,
+//         PredictedDemand: item.PredictedDemand,
+//       }));
+
+//       setData(mappedData);
+//       sessionStorage.setItem(`predictedData_${username}`, JSON.stringify(mappedData));
+//     } catch (error) {
+//       console.error("Failed to fetch predicted data:", error);
+//     } finally {
+//       setLoading(false);
+//     }
+//   }, []);
+
+//   useEffect(() => {
+//     fetchPredictedData();
+//   }, [fetchPredictedData]);
+
+//   const onChange: TableProps<ProductData>['onChange'] = (pagination, filters, sorter, extra) => {
+//     console.log('params', pagination, filters, sorter, extra);
+//   };
+
+//   return (
+//     <ConfigProvider theme={customTheme}>
+//       <ScrollArea className="h-[90%] px-8">
+//         {loading ? (
+//           <div className="flex justify-center items-center h-full">
+//             {/* <Spin className='custom-spinner '  size="large"/> */}
+//           </div>
+//         ) : (
+//           <Table<ProductData>
+//             id="productDemand"
+//             columns={columns}
+//             dataSource={data}
+//             onChange={onChange}
+//             pagination={{ pageSize: 12 }}  
+//             className="text-base font-lato"
+//             rowClassName={() => 'text-sm md:text-base'}  
+//             showSorterTooltip={{ target: 'sorter-icon' }}  
+//           />
+//         )}
+//       </ScrollArea>
+//     </ConfigProvider>
+//   );
+// };
+
+// export default PredictedDemand;
+
 
 
 

@@ -11,7 +11,8 @@ import { Card, CardContent, CardFooter, CardHeader } from "../components/ui/card
 import { ComboboxDemo } from "@/components/ui/combobox";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { ClipLoader } from "react-spinners";
+// import { ClipLoader } from "react-spinners";
+import { Audio } from "react-loader-spinner";
 import { ProductGraphController } from "../controllers/ProductGraphController";
 
 export default function ProductGraph() {
@@ -74,7 +75,7 @@ export default function ProductGraph() {
         <CardContent>
         {isLoading ? (
               <div className="flex justify-center items-center h-96">
-                <ClipLoader color="#4A90E2" size={50} />
+                <Audio color="#30a75f" height={70} width={70} ariaLabel="loading" />
               </div>
             ) : (
               <ResponsiveContainer width="100%" height={400}>

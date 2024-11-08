@@ -18,12 +18,14 @@ import BillingInformation from "./views/BillingInformation";
 import { About } from "./views/About";
 import EmailVerification from "./views/EmailVerification";
 import ConfirmEmail from "./views/ConfirmEmail";
+import { AnimatePresence } from "framer-motion";
 // import  AuthProvider  from "./context/AuthProvider";
 // import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   return (
     // <AuthProvider>
+    <AnimatePresence mode="wait">
       <BrowserRouter>
         <Toaster />
 
@@ -64,6 +66,7 @@ function App() {
           {/* </Route> */}
         </Routes>
       </BrowserRouter>
+      </AnimatePresence>
     // </AuthProvider>
   );
 }
