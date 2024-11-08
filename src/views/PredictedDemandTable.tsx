@@ -111,7 +111,7 @@
 
 
 import React, { useCallback, useEffect, useState } from 'react';
-import { Table, Spin } from 'antd';
+import { Table } from 'antd';
 import type { TableColumnsType, TableProps } from 'antd';
 import { ScrollArea } from '@/components/ui/scroll-area'; 
 import "../index.css";
@@ -228,7 +228,7 @@ const PredictedDemand: React.FC = () => {
     <ScrollArea className="h-[90%] px-8">
       {loading ? (
         <div className="flex justify-center items-center h-full">
-          <Spin className='custom-spinner' size="large"/>
+          {/* <Spin className='custom-spinner '  size="large"/> */}
         </div>
       ) : (
         <Table<ProductData>
@@ -236,8 +236,9 @@ const PredictedDemand: React.FC = () => {
           columns={columns}
           dataSource={data}
           onChange={onChange}
+          
           pagination={{ pageSize: 12 }}  
-          className="text-base font-lato"
+          className="text-base font-lato bg-primary"
           rowClassName={() => 'text-sm md:text-base'}  
           showSorterTooltip={{ target: 'sorter-icon' }}  
         />
