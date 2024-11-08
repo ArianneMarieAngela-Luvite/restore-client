@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { axiosInstance } from "../services/axios"; 
-// import { useAuth } from "../context/AuthProvider";
+import { useLocation } from "react-router-dom"; // Import useLocation to access query parameters
 
 interface LoginFormData {
   email: string;
@@ -23,7 +23,7 @@ export function LoginController() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const navigate = useNavigate();
-  // const { loginUser } = useAuth();
+  const location = useLocation(); // Get the current location for query params
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -46,20 +46,25 @@ export function LoginController() {
   
       if (response.status === 200) {
         localStorage.setItem("authToken", response.data.token);
-        // console.log(response.data.username);
         setMessage(response.data.message);
         localStorage.setItem("username", response.data.username);
         localStorage.setItem("email", response.data.email);
-        // console.log(response.data.email);
-        // loginUser();
-        navigate("/import");
+        
+        // Navigate based on username comparison
+        const queryParams = new URLSearchParams(location.search);
+        const queryUsername = queryParams.get("username");
+
+        // Compare the logged-in username with the username from query params
+        if (queryUsername !== response.data.username) {
+          navigate("/import");
+        } else {
+          navigate("/upload");
+        }
       }
     } catch (err: any) {
-      if(err.response) {
-        // const errMessage = err.response.data?.message || err.response.data.message || "Unknown error";
-        // // console.log(errMessage);
+      if (err.response) {
+        // Handle response error if necessary
       }
-      // console.log("Error: ", err.message);
       setMessage("Login failed. Please check your credentials.");
     } finally {
       setLoading(false);

@@ -1,0 +1,12 @@
+specVersion: "v1beta"
+serviceId: "restore-client"
+location: "asia-east1"
+schema:
+  source: "./schema"
+  datasource:
+    postgresql:
+      database: "fdcdb"
+      cloudSql:
+        instanceId: "restore-client-fdc"
+      # schemaValidation: "COMPATIBLE"
+connectorDirs: ["./connector"]
