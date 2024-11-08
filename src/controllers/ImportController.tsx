@@ -19,9 +19,7 @@ export const ImportController = () => {
   const [file, setFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   const [credits, setCredits] = useState<number | null>(null);
-  const [modalVisible, setModalVisible] = useState(false); 
   const navigate = useNavigate();
-  
 
   const handlePickFileChange = async (value: string) => {
     const selected = pickFiles.find((pickFile) => pickFile.id === value) || null;
@@ -55,8 +53,6 @@ export const ImportController = () => {
     }
 
     setIsUploading(true);
-    setModalVisible(true);
-    
 
     const formData = new FormData();
     formData.append("file", file);
@@ -124,7 +120,6 @@ export const ImportController = () => {
     file,
     isUploading,
     credits,
-    modalVisible,
     handlePickFileChange,
     handleFileChange,
     handleUpload,

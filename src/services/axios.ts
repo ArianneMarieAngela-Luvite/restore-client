@@ -3,5 +3,5 @@ import axios from "axios";
 
 export const axiosInstance = axios.create({
   baseURL: API_BASE_URL,
-  timeout: 100000,
+  timeout: 250000,
 });
