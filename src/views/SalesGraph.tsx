@@ -13,7 +13,7 @@ import { Button } from "../components/ui/button";
 // import { ClipLoader } from "react-spinners";
 import { Audio } from "react-loader-spinner";
 import { SalesGraphController } from "../controllers/SalesGraphController"; 
-import transition from "@/constants/transition";
+import transition from "@/transition";
 
 function SalesGraph() {
   const {

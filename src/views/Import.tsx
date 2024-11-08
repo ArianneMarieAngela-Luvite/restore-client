@@ -299,7 +299,7 @@ import { Audio } from 'react-loader-spinner';
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "../components/ui/select";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import transition from "@/constants/transition";
+import transition from "@/transition";
 
 const Import = () => {
   const navigate = useNavigate();

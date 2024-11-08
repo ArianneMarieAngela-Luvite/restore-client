@@ -1,17 +1,3 @@
-// const customTheme = {
-//     token: {
-//       wireframe: false,
-//       colorBgBase: "#d8ffe5",
-//       colorPrimary: "gray",
-//       colorInfo: "#d8ffe5",
-//     },
-//     components: {
-
-//     }
-//   };
-  
-//   export default customTheme;
-  
 const customTheme = {
   token: {
     wireframe: false,
