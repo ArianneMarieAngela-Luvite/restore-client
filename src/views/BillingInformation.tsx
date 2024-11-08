@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { axiosInstance } from "@/services/axios";
 import {  useState } from "react";
 import { Link } from "react-router-dom";
-import { ClipLoader } from "react-spinners";
+import { Audio } from "react-loader-spinner";
 
 const BillingInformation = () => {
   const [loading, setLoading] = useState(false);
@@ -127,7 +127,8 @@ const BillingInformation = () => {
         </div>
 
         {loading ? (
-          <ClipLoader />
+          <div>
+            </div>
         ) : (
           <form className="grid gap-4" onSubmit={handleSubmit}>
             {/* Form Fields */}
@@ -260,9 +261,10 @@ const BillingInformation = () => {
         {/* Loading Modal */}
         {modalVisible && (
           <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
-            <div className="bg-white rounded-lg p-6 shadow-lg text-center">
+            <div className="flex flex-col gap-5 justify-center items-center bg-white rounded-lg p-6 shadow-lg text-center">
+              <Audio height={70} width={70} color={"#30a75f"} />
               <p className="text-lg font-bold">Processing Payment</p>
-              <ClipLoader className="mt-4" />
+              {/* <ClipLoader className="mt-4" /> */}
             </div>
           </div>
         )}

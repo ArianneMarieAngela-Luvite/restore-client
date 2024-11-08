@@ -4,7 +4,7 @@ import {
   Command,
   CommandEmpty,
   CommandGroup,
-  CommandInput,
+  // CommandInput,
   CommandItem,
   CommandList,
 } from "@/components/ui/command"
@@ -97,7 +97,7 @@ export function ComboboxDemo({ onSelect }: ComboboxDemoProps) {
         </PopoverTrigger>
         <PopoverContent className="md:w-[250px] w-[190px] p-0">
           <Command>
-            <CommandInput placeholder="Search product..." className="h-9" />
+            {/* <CommandInput placeholder="Search product..." className="h-9" /> */}
             {loading ? (
               <div>Loading products...</div>
             ) : (

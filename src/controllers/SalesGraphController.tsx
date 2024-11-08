@@ -142,16 +142,7 @@ export function SalesGraphController() {
       // console.log("Missing data: parsedData or salesPredictionData is not available");
       return;
     }
-
-   
-    // console.log("parsedData before combining:", parsedData);
-    // console.log("salesPredictionData:", salesPredictionData);
-
-
     const combinedDataMap = parsedData.map(entry => ({ ...entry }));
-
-    // console.log("combi before prediction", combinedDataMap);
-
     
     salesPredictionData.forEach((prediction) => {
       const [year, month] = prediction.next_month.split('-'); 
@@ -162,24 +153,15 @@ export function SalesGraphController() {
       const existingMonthEntry = combinedDataMap.find(entry => entry.month === monthName);
 
       if (existingMonthEntry) {
-        
-        // console.log(`Adding prediction for year ${year} in month ${monthName}`);
         existingMonthEntry[year] = predictionSales;
       } else {
-        
-        // console.log(`Creating new entry for month ${monthName} with prediction for year ${year}`);
         combinedDataMap.push({
           month: monthName,
           [year]: predictionSales
         });
       }
     });
-
-    // console.log("combi after prediction", combinedDataMap);
-
-    
     setParsedData(combinedDataMap);
-    // console.log("Final Combined data", combinedDataMap);
   };
 
   
@@ -207,9 +189,7 @@ export function SalesGraphController() {
     const sortedYears = Array.from(yearsSet).sort((a, b) => b - a);
 
     setParsedData(formattedDataArray);
-    // console.log("formatted", formattedDataArray);
     setAllYears(sortedYears);
-    // console.log("year", sortedYears);
   };
 
 
