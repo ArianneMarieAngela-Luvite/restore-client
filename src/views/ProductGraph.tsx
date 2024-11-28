@@ -70,7 +70,7 @@ export default function ProductGraph() {
       >
         <Card className="md:mx-20 md:mt-5 md:mb-20 " ref={chartRef}>
         <CardHeader className="p-4">
-        <h2 className="md:text-lg text-base font-semibold px-6 py-3">Product Demand</h2>
+        <h2 className="md:text-lg text-base font-semibold px-6 py-3">Product Demands</h2>
           </CardHeader>
         <CardContent>
         {isLoading ? (

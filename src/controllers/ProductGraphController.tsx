@@ -7,11 +7,11 @@ type MonthNames =
   "January" | "February" | "March" | "April" | "May" | "June" | 
   "July" | "August" | "September" | "October" | "November" | "December";
 
-const monthNames: MonthNames[] = [
-  "January", "February", "March", "April", "May",
-  "June", "July", "August", "September", "October",
-  "November", "December"
-];
+// const monthNames: MonthNames[] = [
+//   "January", "February", "March", "April", "May",
+//   "June", "July", "August", "September", "October",
+//   "November", "December"
+// ];
 interface ParsedData {
   month: string;
   [key: string]: number | string; 
@@ -25,12 +25,29 @@ interface Record {
   Month: string; 
   UnitsSold: number; 
 }
-interface Product {
-  ProductID: string;
-  Records: Record[]; 
-  Product: string;
-  Month: string;
+
+interface Prediction {
+  Month: string; // "2030-01"
+  ProductID: number; // Product ID
+  Product: string; // Product name
+  PredictedDemand: number; // Predicted demand for that product
 }
+
+
+interface Product {
+  ProductID: string; 
+  Product: string; 
+  Month: string; 
+  Records: Record[]; 
+}
+
+// interface FormattedPrediction {
+//   Month: string; // The month string, such as "January"
+//   YearPredictions: { [year: string]: number }; // Map of year to predicted demand
+// }
+
+
+
 
 export const ProductGraphController = () => {
   const username = localStorage.getItem("username");
@@ -43,7 +60,7 @@ export const ProductGraphController = () => {
   const [tickFormatter, setTickFormatter] = useState(() => (month : MonthNames) => monthsShort[month]);
   const chartRef = useRef<HTMLDivElement>(null);
 
-  const getMonthName = (index: number): MonthNames => monthNames[index];
+  // const getMonthName = (index: number): MonthNames => monthNames[index];
 
   const monthsFull = {
     January: "January",
@@ -122,30 +139,34 @@ export const ProductGraphController = () => {
   }, []);
 
   
-  useEffect(() => {
-    const fetchProductData = async () => {
-      setIsLoading(true);
-      if(username) {
-        try {
-          const response = await axiosInstance.get(`/api/Demand/demand/`, {
-            params: { username: username }
-          });
-          const data = response.data;
-          setProducts(data);
-          // console.log(data[0].Records, "real");
-          if (data.length > 0) {
-            setSelectedProductID(data[0].ProductID);
-            updateParsedData(data[0].Records);
-          }
-        } catch (error) {
-          console.error("Error fetching product data:", error);
-        } finally {
-          setIsLoading(false); 
-        }
-      };
-    }
-    fetchProductData();
-  }, []);
+  // useEffect(() => {
+  //   const fetchProductData = async () => {
+  //     setIsLoading(true);
+  //     if(username) {
+  //       try {
+  //         const response = await axiosInstance.get(`/api/Demand/demand/`, {
+  //           params: { username: username }
+  //         });
+  //         const data = response.data;
+  //         console.log("Data: ", data);
+  //         setProducts(data);
+  //         console.log("products ", data);
+  //         // console.log(data[0].Records, "real");
+  //         if (data.length > 0) {
+  //           setSelectedProductID(data[0].ProductID);
+  //           console.log("selectedProductID ", data[0].ProductID);
+  //           updateParsedData(data[0].Records);
+  //           console.log("records",data[0].Records);
+  //         }
+  //       } catch (error) {
+  //         console.error("Error fetching product data:", error);
+  //       } finally {
+  //         setIsLoading(false); 
+  //       }
+  //     };
+  //   }
+  //   fetchProductData();
+  // }, []);
   
   const updateParsedData = (records: any[]) => {
     const salesDataByMonthAndYear: { [year: string]: number[] } = {}; 
@@ -193,76 +214,146 @@ export const ProductGraphController = () => {
   });
 
   setParsedData(finalData); 
+  console.log('Data ', finalData);
   // console.log("final", finalData);
 };
-      
-const combineParsedData = (parsedData: ParsedData[], predictedDemandData: any[]): ParsedData[] => {
-  
-  const predictedMap: { [key: string]: number } = {};
 
-  
-  predictedDemandData.forEach(item => {
-    const [year, monthIndex] = item.month.split("-");
-    const monthName = getMonthName(parseInt(monthIndex) - 1); 
-    const key = `${monthName}-${year}`; 
-    predictedMap[key] = item.PredictedDemand; 
-  });
-
-  
-  const combinedData: ParsedData[] = parsedData.map(data => {
-    const combinedPoint: ParsedData = { month: data.month }; 
-
-    const yearKeys = Object.keys(data).filter(key => key !== "month");
-    yearKeys.forEach(year => {
-      
-      const existingValue = data[year] as number || 0; 
-      const key = `${data.month}-${year}`; 
-      
-      
-      combinedPoint[year] = existingValue + (predictedMap[key] || 0); 
-    });
-
-    return combinedPoint; 
-  });
-
-  return combinedData; 
-};
+useEffect(() => {
+  const fetchProductData = async () => {
+    setIsLoading(true);
+    if (username) {
+      try {
+        const productResponse = await axiosInstance.get<Product[]>(`/api/Demand/demand/`, {
+          params: { username: username },
+        });
+        const productData = productResponse.data;
 
 
+        const predictionResponse = await axiosInstance.get<Prediction[]>(
+          `/api/DemandPrediction/prediction/${username}`
+        );
+        const predictionData = predictionResponse.data;
+        console.log(predictionData);
+        const updatedParsedData = productData.map((product) => {
+          const matchingPredictions = predictionData.filter(
+            (prediction) => prediction.ProductID === parseInt(product.ProductID, 10)
+          );
 
-  useEffect(() => {
-    const fetchDemandPrediction = async () => {
-      if (username) {
-        try {
-          const response = await axiosInstance.get(`/api/DemandPrediction/prediction/${username}`);
-          const data = response.data; 
+          setProducts(productData);
 
-          // console.log(response.data, "hmm");
-
+        if (productData.length > 0) {
+          const firstProduct = productData[0];
+          setSelectedProductID(firstProduct.ProductID);
           
-          const formattedData = data.map((item: { Month: string; ProductID: string; PredictedDemand: number; }) => {
-            const [year, monthIndex] = item.Month.split("-"); 
-            return {
-              [item.ProductID]: item.PredictedDemand, 
-              month: getMonthName(parseInt(monthIndex) - 1),
-              year: parseInt(year), 
-            };
-          });
-
-          
-          const updatedParsedData = combineParsedData(parsedData, formattedData);
-          setParsedData(updatedParsedData);
-
-          
-          // console.log("Combined Data:", updatedParsedData);
-        } catch (error) {
-          console.error("Error fetching demand prediction data:", error);
         }
-      }
-    };
+        
+          if (matchingPredictions.length > 0) {
+            const formattedPredictions = matchingPredictions.map((prediction) => {
+              // Split the prediction 'Month' (YYYY-MM) into year and month
+              const [year, month] = prediction.Month.split("-");
+        
+              // Create the MM/DD/YYYY format for the Month as requested
+              const formattedMonth = `${month.padStart(2, "0")}/01/${year}`; // Convert to MM/DD/YYYY
+        
+              // Return the formatted data (Month, ProductID, Product, and UnitsSold)
+              return {
+                Month: formattedMonth, // Formatted Month as MM/DD/YYYY
+                ProductID: prediction.ProductID.toString(), // Ensure ProductID is a string
+                Product: prediction.Product, // Product name
+                UnitsSold: prediction.PredictedDemand.toString(), // Predicted demand as string
+              };
+            });
+        
+            return {
+              ...product,
+              Records: [...product.Records, ...formattedPredictions], // Append formatted predictions to the existing records
+            };
+          }
+        
+          return product;
+        });
+        
+        console.log("Updated Parsed Data:", updatedParsedData);
 
-    fetchDemandPrediction();
-}, []);
+        setProducts(updatedParsedData as Product[]);
+        if (updatedParsedData.length > 0) {
+          updateParsedData(updatedParsedData[0].Records);
+        }
+      } catch (error) {
+        console.error("Error fetching product or prediction data:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  };
+
+  fetchProductData();
+}, [username]);
+
+
+
+      
+// const combineParsedData = (parsedData: ParsedData[], predictedDemandData: any[]): ParsedData[] => {
+  
+//   const predictedMap: { [key: string]: number } = {};
+
+  
+//   predictedDemandData.forEach(item => {
+//     const [year, monthIndex] = item.month.split("-");
+//     const monthName = getMonthName(parseInt(monthIndex) - 1); 
+//     const key = `${monthName}-${year}`; 
+//     predictedMap[key] = item.PredictedDemand; 
+//   });
+
+  
+//   const combinedData: ParsedData[] = parsedData.map(data => {
+//     const combinedPoint: ParsedData = { month: data.month }; 
+
+//     const yearKeys = Object.keys(data).filter(key => key !== "month");
+//     yearKeys.forEach(year => {
+      
+//       const existingValue = data[year] as number || 0; 
+//       const key = `${data.month}-${year}`; 
+      
+      
+//       combinedPoint[year] = existingValue + (predictedMap[key] || 0); 
+//     });
+
+//     return combinedPoint; 
+//   });
+
+//   return combinedData; 
+// };
+
+
+
+//   useEffect(() => {
+//     const fetchDemandPrediction = async () => {
+//       if (username) {
+//         try {
+//           const response = await axiosInstance.get(`/api/DemandPrediction/prediction/${username}`);
+//           const data = response.data; 
+
+
+          
+//           // const updatedParsedData = combineParsedData(parsedData, data);
+//           console.log('Original data ', parsedData);
+//           console.log('new data ', data);
+//           // console.log('combined data ', updatedParsedData);
+//           // setParsedData(updatedParsedData);
+
+          
+//           // console.log("Combined Data:", updatedParsedData);
+//         } catch (error) {
+//           console.error("Error fetching demand prediction data:", error);
+//         }
+//       }
+//     };
+
+//     fetchDemandPrediction();
+// }, []);
+
+
 
   const handleProductChange = (selectedID: string) => {
     const selectedProduct = products.find((product) => product.ProductID === selectedID);
