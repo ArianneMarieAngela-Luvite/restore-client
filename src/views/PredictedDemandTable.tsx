@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Table } from 'antd';
-import type { TableColumnsType, TableProps } from 'antd';
+import type { TableColumnsType} from 'antd';
 import { ScrollArea } from '@/components/ui/scroll-area'; 
 import "../index.css";
 import customTheme from "../constants/customTheme"
