@@ -68,7 +68,7 @@ function SalesGraph() {
           ))}
         </div>
         <div className="hidden justify-end px-5 md:px-10 lg:ml-auto lg:justify-end sm:flex md:visible xs:w-screen xs:justify-center">
-          <Button onClick={exportToPDF}>Export to PDF</Button>
+          <Button onClick={exportToPDF} disabled={isLoading}>Export to PDF</Button>
         </div>
       </motion.div>
 

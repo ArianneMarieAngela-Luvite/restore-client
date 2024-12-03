@@ -59,7 +59,7 @@ export default function ProductGraph() {
             onSelect={handleProductChange}
             
           />
-          <Button onClick={exportToPDF}>Export to PDF</Button>
+          <Button onClick={exportToPDF} disabled={isLoading}>Export to PDF</Button>
         </div>
 
         </motion.div>

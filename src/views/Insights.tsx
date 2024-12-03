@@ -25,9 +25,12 @@ export default function Insights() {
     loading
   } = useInsightsController();
 
+
+
   // const [sortOrder, setSortOrder] = useState("ascending");
   // const [sortedData, setSortedData] = useState(productDemandPredictionData);
   const [fileType, setFileType] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   // useEffect(() => {
   //   const sortData = () => {
@@ -268,7 +271,7 @@ export default function Insights() {
             <SelectItem value="pdf" className='text-left'  >Export to PDF</SelectItem>
           </SelectContent>              
         </Select>
-        <Button className="" onClick={handleExport}>Export</Button>
+        <Button className="" onClick={handleExport} disabled={isLoading}>Export</Button>
       </div>
 
 
@@ -420,7 +423,7 @@ export default function Insights() {
             //     </TableBody>
             //   </Table>
             // </ScrollArea>
-            <PredictedDemand />
+            <PredictedDemand onLoadingChange={setIsLoading} />
           )}
         </div>
       </div>

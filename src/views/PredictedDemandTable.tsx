@@ -1,115 +1,3 @@
-// import React from 'react';
-// import { Table } from 'antd';
-// import type { TableColumnsType, TableProps } from 'antd';
-
-// interface DataType {
-//   key: React.Key;
-//   name: string;
-//   age: number;
-//   address: string;
-// }
-
-// const columns: TableColumnsType<DataType> = [
-//   {
-//     title: 'Name',
-//     dataIndex: 'name',
-//     showSorterTooltip: { target: 'full-header' },
-//     filters: [
-//       {
-//         text: 'Joe',
-//         value: 'Joe',
-//       },
-//       {
-//         text: 'Jim',
-//         value: 'Jim',
-//       },
-//       {
-//         text: 'Submenu',
-//         value: 'Submenu',
-//         children: [
-//           {
-//             text: 'Green',
-//             value: 'Green',
-//           },
-//           {
-//             text: 'Black',
-//             value: 'Black',
-//           },
-//         ],
-//       },
-//     ],
-//     // specify the condition of filtering result
-//     // here is that finding the name started with `value`
-//     onFilter: (value, record) => record.name.indexOf(value as string) === 0,
-//     sorter: (a, b) => a.name.length - b.name.length,
-//     sortDirections: ['descend'],
-//   },
-//   {
-//     title: 'Age',
-//     dataIndex: 'age',
-//     defaultSortOrder: 'descend',
-//     sorter: (a, b) => a.age - b.age,
-//   },
-//   {
-//     title: 'Address',
-//     dataIndex: 'address',
-//     filters: [
-//       {
-//         text: 'London',
-//         value: 'London',
-//       },
-//       {
-//         text: 'New York',
-//         value: 'New York',
-//       },
-//     ],
-//     onFilter: (value, record) => record.address.indexOf(value as string) === 0,
-//   },
-// ];
-
-// const data = [
-//   {
-//     key: '1',
-//     name: 'John Brown',
-//     age: 32,
-//     address: 'New York No. 1 Lake Park',
-//   },
-//   {
-//     key: '2',
-//     name: 'Jim Green',
-//     age: 42,
-//     address: 'London No. 1 Lake Park',
-//   },
-//   {
-//     key: '3',
-//     name: 'Joe Black',
-//     age: 32,
-//     address: 'Sydney No. 1 Lake Park',
-//   },
-//   {
-//     key: '4',
-//     name: 'Jim Red',
-//     age: 32,
-//     address: 'London No. 2 Lake Park',
-//   },
-// ];
-
-// const onChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter, extra) => {
-//   console.log('params', pagination, filters, sorter, extra);
-// };
-
-// const PredictedDemand: React.FC = () => (
-//   <Table<DataType>
-//     columns={columns}
-//     dataSource={data}
-//     onChange={onChange}
-//     showSorterTooltip={{ target: 'sorter-icon' }}
-//   />
-// );
-
-// export default PredictedDemand;
-
-
 import React, { useCallback, useEffect, useState } from 'react';
 import { Table } from 'antd';
 import type { TableColumnsType, TableProps } from 'antd';
@@ -126,12 +14,14 @@ interface ProductData {
   PredictedDemand: number;
 }
 
+interface PredictedDemandProps {
+  onLoadingChange?: (isLoading: boolean) => void;
+}
+
 const columns: TableColumnsType<ProductData> = [
   {
     title: 'Rank',
     dataIndex: 'rank',
-    // render: (text, record, index) => index + 1,
-    // render: (index) => index + 1,
     render: (_, __, index) => index + 1,
     width: '10%',
   },
@@ -154,9 +44,7 @@ const columns: TableColumnsType<ProductData> = [
   },
 ];
 
-
-
-const PredictedDemand: React.FC = () => {
+const PredictedDemand: React.FC<PredictedDemandProps> = ({ onLoadingChange }) => {
   const [data, setData] = useState<ProductData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -165,10 +53,14 @@ const PredictedDemand: React.FC = () => {
     if (!username) return;
 
     try {
+      setLoading(true);
+      onLoadingChange?.(true);
+
       const cachedData = sessionStorage.getItem(`predictedData_${username}`);
       if (cachedData) {
         setData(JSON.parse(cachedData));
         setLoading(false);
+        onLoadingChange?.(false);
         return;
       }
 
@@ -190,60 +82,178 @@ const PredictedDemand: React.FC = () => {
       console.error("Failed to fetch predicted data:", error);
     } finally {
       setLoading(false);
+      onLoadingChange?.(false);
     }
-  }, []);
+  }, [onLoadingChange]);
 
   useEffect(() => {
     fetchPredictedData();
   }, [fetchPredictedData]);
 
-
-  const onChange: TableProps<ProductData>['onChange'] = (pagination, filters, sorter, extra) => {
-    console.log('params', pagination, filters, sorter, extra);
-  };
-
   return (
     <ConfigProvider theme={customTheme}>
-    <ScrollArea className="h-[90%] px-8">
-      {loading ? (
-        <div className="flex justify-center items-center h-full">
-          {/* <Spin className='custom-spinner '  size="large"/> */}
-          <Audio color="#30a75f" height={50} width={50} ariaLabel="loading" />
-        </div>
-      ) : (
-        // <Table<ProductData>
-        //   id="productDemand"
-          
-        //   columns={columns}
-        //   dataSource={data}
-        //   onChange={onChange}
-        //   pagination={{ pageSize: 12 }}  
-        //   className="text-base font-lato"
-        //   // scroll={{ x:375}}
-        //   scroll={{ x: '100%' }}  // Enables horizontal scrolling
-        //   rowClassName={() => 'text-sm md:text-base'}  
-        //   showSorterTooltip={{ target: 'sorter-icon' }}  
-        // />
-        <div className="overflow-x-auto">
+      <ScrollArea className="h-[90%] px-8">
+        {loading ? (
+          <div className="flex justify-center items-center h-full">
+            <Audio color="#30a75f" height={50} width={50} ariaLabel="loading" />
+          </div>
+        ) : (
+          <div className="overflow-x-auto">
             <Table<ProductData>
               id="productDemand"
               columns={columns}
               dataSource={data}
-              onChange={onChange}
               pagination={{ pageSize: 12 }}
               className="text-base font-lato"
-              scroll={{ x: '100%' }}  // Enables horizontal scrolling
+              scroll={{ x: '100%' }}
               rowClassName={() => 'text-sm md:text-base'}
               showSorterTooltip={{ target: 'sorter-icon' }}
             />
           </div>
-      )}
-    </ScrollArea>
+        )}
+      </ScrollArea>
     </ConfigProvider>
   );
 };
 
 export default PredictedDemand;
+
+
+
+// import React, { useCallback, useEffect, useState } from 'react';
+// import { Table } from 'antd';
+// import type { TableColumnsType, TableProps } from 'antd';
+// import { ScrollArea } from '@/components/ui/scroll-area'; 
+// import "../index.css";
+// import customTheme from "../constants/customTheme"
+// import ConfigProvider from 'antd/es/config-provider';
+// import { Audio } from "react-loader-spinner";
+
+// interface ProductData {
+//   key: React.Key;
+//   ProductID: string;
+//   Product: string;
+//   PredictedDemand: number;
+// }
+
+// const columns: TableColumnsType<ProductData> = [
+//   {
+//     title: 'Rank',
+//     dataIndex: 'rank',
+//     // render: (text, record, index) => index + 1,
+//     // render: (index) => index + 1,
+//     render: (_, __, index) => index + 1,
+//     width: '10%',
+//   },
+//   {
+//     title: 'Product ID',
+//     dataIndex: 'ProductID',
+//     width: '20%',
+//   },
+//   {
+//     title: 'Product Name',
+//     dataIndex: 'Product',
+//     width: '40%',
+//   },
+//   {
+//     title: 'Projected Demand',
+//     dataIndex: 'PredictedDemand',
+//     sorter: (a, b) => a.PredictedDemand - b.PredictedDemand,
+//     defaultSortOrder: 'descend',
+//     width: '30%',
+//   },
+// ];
+
+
+
+// const PredictedDemand: React.FC = () => {
+//   const [data, setData] = useState<ProductData[]>([]);
+//   const [loading, setLoading] = useState<boolean>(true);
+
+//   const fetchPredictedData = useCallback(async () => {
+//     const username = localStorage.getItem("username");
+//     if (!username) return;
+
+//     try {
+//       const cachedData = sessionStorage.getItem(`predictedData_${username}`);
+//       if (cachedData) {
+//         setData(JSON.parse(cachedData));
+//         setLoading(false);
+//         return;
+//       }
+
+//       const response = await fetch(
+//         `https://restore-backend.onrender.com/api/DemandPrediction/prediction/${username}`
+//       );
+//       const result = await response.json();
+
+//       const mappedData = result.map((item: any, index: number) => ({
+//         key: index,
+//         ProductID: item.ProductID,
+//         Product: item.Product,
+//         PredictedDemand: item.PredictedDemand,
+//       }));
+
+//       setData(mappedData);
+//       sessionStorage.setItem(`predictedData_${username}`, JSON.stringify(mappedData));
+//     } catch (error) {
+//       console.error("Failed to fetch predicted data:", error);
+//     } finally {
+//       setLoading(false);
+//     }
+//   }, []);
+
+//   useEffect(() => {
+//     fetchPredictedData();
+//   }, [fetchPredictedData]);
+
+
+//   const onChange: TableProps<ProductData>['onChange'] = (pagination, filters, sorter, extra) => {
+//     console.log('params', pagination, filters, sorter, extra);
+//   };
+
+//   return (
+//     <ConfigProvider theme={customTheme}>
+//     <ScrollArea className="h-[90%] px-8">
+//       {loading ? (
+//         <div className="flex justify-center items-center h-full">
+//           {/* <Spin className='custom-spinner '  size="large"/> */}
+//           <Audio color="#30a75f" height={50} width={50} ariaLabel="loading" />
+//         </div>
+//       ) : (
+//         // <Table<ProductData>
+//         //   id="productDemand"
+          
+//         //   columns={columns}
+//         //   dataSource={data}
+//         //   onChange={onChange}
+//         //   pagination={{ pageSize: 12 }}  
+//         //   className="text-base font-lato"
+//         //   // scroll={{ x:375}}
+//         //   scroll={{ x: '100%' }}  // Enables horizontal scrolling
+//         //   rowClassName={() => 'text-sm md:text-base'}  
+//         //   showSorterTooltip={{ target: 'sorter-icon' }}  
+//         // />
+//         <div className="overflow-x-auto">
+//             <Table<ProductData>
+//               id="productDemand"
+//               columns={columns}
+//               dataSource={data}
+//               onChange={onChange}
+//               pagination={{ pageSize: 12 }}
+//               className="text-base font-lato"
+//               scroll={{ x: '100%' }}  // Enables horizontal scrolling
+//               rowClassName={() => 'text-sm md:text-base'}
+//               showSorterTooltip={{ target: 'sorter-icon' }}
+//             />
+//           </div>
+//       )}
+//     </ScrollArea>
+//     </ConfigProvider>
+//   );
+// };
+
+// export default PredictedDemand;
 
 // import React, { useCallback, useEffect, useState } from 'react';
 // import { Table, ConfigProvider } from 'antd';
