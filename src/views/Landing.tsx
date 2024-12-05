@@ -1,4 +1,3 @@
-// import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import PulsatingButton from "@/components/ui/pulsating-button";
@@ -72,22 +71,3 @@ const Landing = () => {
 };
 export default Landing;
 
-
-          //     <HyperText 
-          //     className="text-7xl font-bold leading-relaxed  text-primary font-lato "
-          //     text="FORECASTING"
-          //     duration={1000}
-          //     />
-
-          //     <span className="text-black">YOUR WAY FORWARD</span>
-          // </motion.h1>
-          // <div className="flex w-3/4 justify-start ">
-          //   <motion.p  
-          //     className="text-left border text-base text-black lg:text-lg pl-1 font-rubik"
-          //     initial={{ opacity: 0 }}
-          //     animate={{ opacity: 1 }}
-          //     transition={{ delay: 0.5, duration: 0.8 }}
-          //    >  
-          //      Is your business prepared for tomorrow's market demand?
-          // </motion.p>
-          // </div>

@@ -297,7 +297,7 @@ import { Card, CardContent, CardDescription } from "@/components/ui/card";
 import { ImportController } from "../controllers/ImportController"; 
 import { Audio } from 'react-loader-spinner';
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "../components/ui/select";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import transition from "@/transition";
 
@@ -413,7 +413,7 @@ const Import = () => {
                 <li>Accepted file formats: CSV (.csv), Excel (.xlsx)</li>
                 <li>Data entry must not exceed 35,000 rows.</li>
                 <li>To import files successfully, files must have column names (header). e.g. (Product, ProductID, UnitsSold, Month, Sales)</li>
-                <li><Link className="font-semibold underline" to="https://drive.google.com/drive/folders/1J0lqqwgFeFn3szwwRanc-Eo7ne1kankk?usp=sharing">Access sample data here </Link></li>
+                {/* <li><Link className="font-semibold underline" to="https://drive.google.com/drive/folders/1J0lqqwgFeFn3szwwRanc-Eo7ne1kankk?usp=sharing">Access sample data here </Link></li> */}
               </ul>
             </div>
           </motion.div>
