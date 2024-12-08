@@ -93,9 +93,9 @@ const Team = () => {
                 
                 <motion.div 
                 
-                className="flex flex-col text-center mt-6 md:mt-0 lg:flex-row  lg:pt-0 items-center w-full  gap-8 font-lato justify-center">
+                className="flex flex-col text-center  lg:flex-row  lg:pt-0 items-center w-full  gap-8 font-lato justify-center">
                     
-                    <motion.div className="flex flex-col w-80 md:w-1/4 shadow-primary/50 bg-primary/10 rounded-lg shadow-lg bg-gray-100 text-black items-center py-9 gap-6 "
+                    <motion.div className="flex flex-col w-80 md:w-1/4 shadow-primary/40 bg-customGreen rounded-lg shadow-lg  text-black items-center py-9 gap-6 "
                     variants={cardVariant}
                     // initial= {{ opacity: 0 }}
                     // animate={{ opacity: 1}}
@@ -105,7 +105,7 @@ const Team = () => {
                         
                         <div className="flex flex-col w-80  items-center">
                             
-                            <img src={idul} className="h-48 w-48 rounded-full shadow-lg mb-5"/>
+                            <img src={idul} className="h-40 w-40 rounded-full shadow-lg mb-5"/>
                             <span className="font-bold text-xl text-center">John Christian Idul</span>
                             <span className="text-lg">Co-founder</span>
                             
@@ -158,10 +158,10 @@ const Team = () => {
                     {/* <Separator /> */}
                     <motion.div 
                     variants={cardVariant}
-                    className="flex flex-col w-80 md:w-1/4 shadow-primary/50 bg-primary/10 rounded-lg shadow-lg bg-gray-100 text-black items-center py-9 gap-6">
+                    className="flex flex-col w-80 md:w-1/4 shadow-primary/40 bg-customGreen rounded-lg shadow-lg text-black items-center py-9 gap-6">
                         
                         <div className="flex flex-col items-center">
-                            <img src={amara} className="h-48 w-48 rounded-full mb-4 shadow-lg"/>
+                            <img src={amara} className="h-40 w-40 rounded-full mb-4 shadow-lg"/>
                             <span className="font-bold text-xl">Arianne Marie Angela Luvite</span>
                             <span className="text-lg">Co-founder</span>
                             <div className="mt-5 flex gap-3">
@@ -208,10 +208,10 @@ const Team = () => {
                     {/* <Separator /> */}
                     <motion.div 
                     variants={cardVariant}
-                    className="flex flex-col w-80 md:w-1/4 text-black items-center py-9 gap-6 shadow-lg shadow-primary/50 bg-primary/10 rounded-lg">
+                    className="flex flex-col w-80 md:w-1/4 text-black items-center py-9 gap-6 shadow-lg shadow-primary/40 bg-customGreen rounded-lg">
                         
                         <div className="flex flex-col items-center">
-                            <img src={hermi} className="h-48 w-48 mb-4 rounded-full shadow-lg"/>
+                            <img src={hermi} className="h-40 w-40 mb-4 rounded-full shadow-lg"/>
                             <span className="font-bold text-xl">Herminigildo Timtim Jr.</span>
                             <span className="text-lg">Co-founder</span>
                             <div className=" mt-5 flex gap-2">

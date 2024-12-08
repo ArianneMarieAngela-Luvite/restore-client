@@ -53,7 +53,7 @@ const AltPricing = () => {
           <div
             key={tier.id}
             className={classNames(
-              tier.featured ? 'relative bg-emerald-950 shadow-2xl' : 'bg-white/60 sm:mx-8 lg:mx-0',
+              tier.featured ? 'relative bg-customGreen shadow-2xl' : 'bg-white/60 sm:mx-8 lg:mx-0',
               tier.featured
                 ? ''
                 : tierIdx === 0
@@ -82,13 +82,13 @@ const AltPricing = () => {
               </span>
               <span className={classNames(tier.featured ? 'text-gray-400' : 'text-transparent', 'text-base')}>/per use</span>
             </p> */}
-            <p className={classNames(tier.featured ? 'text-gray-300' : 'text-gray-600', 'mt-6 text-base leading-7')}>
+            <p className={classNames(tier.featured ? 'text-gray-600' : 'text-gray-600', 'mt-6 text-base leading-7')}>
               {tier.description}
             </p>
             <ul
               role="list"
               className={classNames(
-                tier.featured ? 'text-gray-300' : 'text-gray-600',
+                tier.featured ? 'text-gray-600' : 'text-gray-600',
                 'mt-8 space-y-3 text-sm leading-6 sm:mt-10',
               )}
             >
