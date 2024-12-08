@@ -92,7 +92,7 @@ const PredictedDemand: React.FC<PredictedDemandProps> = ({ onLoadingChange }) =>
 
   return (
     <ConfigProvider theme={customTheme}>
-      <ScrollArea className="h-[90%] px-8">
+      <ScrollArea className="h-[90%] px-8 ">
         {loading ? (
           <div className="flex justify-center items-center h-full">
             <Audio color="#30a75f" height={50} width={50} ariaLabel="loading" />

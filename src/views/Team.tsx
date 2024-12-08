@@ -95,7 +95,7 @@ const Team = () => {
                 
                 className="flex flex-col text-center mt-6 md:mt-0 lg:flex-row  lg:pt-0 items-center w-full  gap-8 font-lato justify-center">
                     
-                    <motion.div className="flex flex-col w-80 md:w-1/4 shadow-primary/70 bg-primary/10 rounded-lg shadow-lg bg-gray-100 text-black items-center py-9 gap-6 "
+                    <motion.div className="flex flex-col w-80 md:w-1/4 shadow-primary/50 bg-primary/10 rounded-lg shadow-lg bg-gray-100 text-black items-center py-9 gap-6 "
                     variants={cardVariant}
                     // initial= {{ opacity: 0 }}
                     // animate={{ opacity: 1}}
@@ -158,7 +158,7 @@ const Team = () => {
                     {/* <Separator /> */}
                     <motion.div 
                     variants={cardVariant}
-                    className="flex flex-col w-80 md:w-1/4 shadow-primary/70 bg-primary/10 rounded-lg shadow-lg bg-gray-100 text-black items-center py-9 gap-6">
+                    className="flex flex-col w-80 md:w-1/4 shadow-primary/50 bg-primary/10 rounded-lg shadow-lg bg-gray-100 text-black items-center py-9 gap-6">
                         
                         <div className="flex flex-col items-center">
                             <img src={amara} className="h-48 w-48 rounded-full mb-4 shadow-lg"/>
@@ -208,7 +208,7 @@ const Team = () => {
                     {/* <Separator /> */}
                     <motion.div 
                     variants={cardVariant}
-                    className="flex flex-col w-80 md:w-1/4 text-black items-center py-9 gap-6 shadow-lg shadow-primary/70 bg-primary/10 rounded-lg">
+                    className="flex flex-col w-80 md:w-1/4 text-black items-center py-9 gap-6 shadow-lg shadow-primary/50 bg-primary/10 rounded-lg">
                         
                         <div className="flex flex-col items-center">
                             <img src={hermi} className="h-48 w-48 mb-4 rounded-full shadow-lg"/>

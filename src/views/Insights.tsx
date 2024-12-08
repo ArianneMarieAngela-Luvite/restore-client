@@ -275,8 +275,8 @@ export default function Insights() {
       </div>
 
 
-      <Card className="flex justify-between items-center w-full h-32 my-2 mb-5 bg-primary p-2 md:p-7 lg:p-7 xl:p-7">
-        <div className="ml-5">
+      <Card className="flex justify-between items-center w-full h-32 my-2 mb-5 bg-primary p-2 md:p-7 lg:p-7 xl:p-7 ">
+        <div className="ml-5 ">
           <CardTitle className="font-lato text-base text-customBackground font-thin md:text-base lg:text-base xl:text-base  w-fit">Forecasted Sales</CardTitle>
           {loading ? (
             <div className='flex items-center pt-5 gap-2'>
@@ -300,9 +300,9 @@ export default function Insights() {
         </div>
       </Card>
 
-      <div className="flex flex-col md:flex-row lg:flex-row xl:flex-row gap-5">
+      <div className="flex flex-col md:flex-row lg:flex-row xl:flex-row gap-5 ">
         <div className="flex flex-col md:w-2/5 lg:w-2/5 xl:w-2/5  gap-5">
-          <div className="bg-customCardColor px-5 py-3 rounded-md">
+          <div className="bg-customCardColor px-5 py-3 rounded-md shadow-xl">
             <h1 className="font-lato text-[14px] lg:text-base xl:text-base font-semibold text-gray-700 mx-2 mt-2 border-slate-300 border-b-[1px] pb-2">
               Next Month Forecast
             </h1>
@@ -343,7 +343,7 @@ export default function Insights() {
             </div>
           </div>
 
-          <div className="bg-customCardColor rounded-lg h-96 font-lato">
+          <div className="bg-customCardColor rounded-lg h-96 font-lato shadow-xl">
             <h1 className="font-lato text-base font-semibold text-gray-700 border-slate-300 border-b-[1px] mt-4 mx-7 mb-1 pb-1 w-auto">Forecast Insight</h1>
             
             <ScrollArea className="h-[85%] px-4">
@@ -366,63 +366,17 @@ export default function Insights() {
           </div>
         </div>
 
-        <div className="md:w-3/5 lg:w-3/5 xl:w-3/5 h-[552px] bg-customCardColor rounded-lg py-4">
+        <div className="md:w-3/5 lg:w-3/5 xl:w-3/5 h-[552px] bg-customCardColor rounded-lg py-4 shadow-xl">
           <div className="flex justify-between items-center px-4">
             <div className="font-lato items-center justify-between flex text-[14px] lg:text-base xl:text-base font-bold text-gray-700 border-slate-300 border-b-[1px] w-full mx-4 pb-2">
               Product Demand
-
-              {/* <DropdownMenu>
-              <DropdownMenuTrigger>
-              <Button className='h-8 rounded-lg  font-bold' >Sort</Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuItem onClick={() => setSortOrder("ascending")}>Ascending</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setSortOrder("descending")}>Descending</DropdownMenuItem>
-              </DropdownMenuContent>              
-            </DropdownMenu> */}
-
-            </div>
-            
+            </div>  
           </div>
           {loading ? (
-            <div className="flex justify-center items-center h-[500px]">
+            <div className="flex justify-center items-center h-[500px] ">
               <Audio color="#30a75f" height={50} width={50} ariaLabel="loading" />
             </div>
             ) : (
-            // <ScrollArea className="h-[90%] px-8">
-            //   <Table id="productDemand" className="h-[85%] text-base font-lato">
-            //     <TableHeader>
-            //       <TableRow className="font-bold">
-            //         <TableHead className="text-sm md:text-base font-semibold text-gray-500">Rank</TableHead>
-            //         <TableHead className="text-sm md:text-base font-semibold text-gray-500">Product ID</TableHead>
-            //         <TableHead className="text-sm md:text-base font-semibold text-gray-500">Product Name</TableHead>
-            //         <TableHead className="text-sm md:text-base font-semibold text-gray-500">Projected Demand</TableHead>
-            //       </TableRow>
-            //     </TableHeader>
-            //     <TableBody className="text-base">   
-            //       {sortedData.length > 0 ? (
-            //         sortedData.map((product, index) => (
-            //           <TableRow key={`${product.ProductID}-${index}`}>
-            //             <TableCell className="text-sm md:text-base font-bold">{index + 1}</TableCell>
-            //             <TableCell className="text-sm md:text-base">{product.ProductID}</TableCell>
-            //             <TableCell className="text-sm md:text-base">{product.Product}</TableCell>
-            //             <TableCell className="text-sm md:text-base">{product.PredictedDemand}</TableCell>
-            //           </TableRow>
-            //         ))
-            //       ) : (
-            //         <TableRow className=''>
-            //           <TableCell colSpan={3} className="text-sm lg:text-base text-gray-500 mx-4 text-center font-lato">
-            //             {/* No product demand prediction data available */}
-            //           </TableCell>
-            //             {/* <TableCell colSpan={3} rowSpan={10} className=" h-[450px] text-gray-500 text-center text-[14px] lg:text-base xl:text-base">
-            //             <ClipLoader size={50} color="gray" />
-            //             </TableCell> */}
-            //         </TableRow>
-                  
-            //       )}
-            //     </TableBody>
-            //   </Table>
-            // </ScrollArea>
             <PredictedDemand onLoadingChange={setIsLoading} />
           )}
         </div>
