@@ -21,7 +21,7 @@ import ConfirmEmail from "./views/ConfirmEmail";
 import { AnimatePresence } from "framer-motion";
 import  AuthProvider  from "./context/AuthProvider";
 import PrivateRoute from "./components/PrivateRoute";
-// import TestLanding from "./views/TestLanding";
+import TestLanding from "./views/TestLanding";
 
 function App() {
   return (
