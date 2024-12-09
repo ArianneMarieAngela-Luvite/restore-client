@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import { Login } from "./views/Login";
 import { Register } from "./views/Register";
-// import Landing from "./views/Landing";
+import Landing from "./views/Landing";
 import ProductGraph from "./views/ProductGraph";
 import Topbar from "./components/Topbar";
 import Import from "./views/Import";
@@ -21,7 +21,7 @@ import ConfirmEmail from "./views/ConfirmEmail";
 import { AnimatePresence } from "framer-motion";
 import  AuthProvider  from "./context/AuthProvider";
 import PrivateRoute from "./components/PrivateRoute";
-import TestLanding from "./views/TestLanding";
+// import TestLanding from "./views/TestLanding";
 
 function App() {
   return (
@@ -37,8 +37,8 @@ function App() {
             element={
               <>
                 <Header />
-                 {/* <Landing /> */}
-                <TestLanding />
+                 <Landing />
+                {/* <TestLanding /> */}
                 <About />
                 <Team />
                 <AltPricing />
