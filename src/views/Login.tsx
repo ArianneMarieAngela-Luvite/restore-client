@@ -6,11 +6,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-// import { Input } from "@/components/ui/input";
 import { motion } from "framer-motion";
 import { Alert, AlertDescription} from "@/components/ui/alert"
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
-// import { ClipLoader } from "react-spinners";
 import { Audio } from "react-loader-spinner";
 import { Link } from "react-router-dom";
 import { LoginController } from "../controllers/LoginController";

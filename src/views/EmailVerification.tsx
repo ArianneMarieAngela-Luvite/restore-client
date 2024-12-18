@@ -37,20 +37,10 @@ const EmailVerification = () => {
             <span className="font-bold text-2xl">Email Confirmation </span>
           </CardTitle>
 
-          {/* <CardDescription
-          className="flex flex-row text-normal font-base  items-center text-3xl font-bold font-rubik">
-            
-            
-          </CardDescription> */}
-
         </CardHeader>
         <CardContent className="flex flex-col text-base leading-6" >
         We've sent an email to <span className="font-bold text-base">{email}.</span> 
         Please check your inbox to activate your account. If you don't see the confirmation email there, be sure to check your Spam folder. Thank you!
-
-            {/* <Button  className="w-full text-sm" >
-                Login  
-            </Button> */}
 
         </CardContent>
       </Card>

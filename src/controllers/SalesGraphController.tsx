@@ -213,10 +213,9 @@ export function SalesGraphController() {
   
       // Set scale and PDF size based on device type
       const canvasScale = isMobile ? 1 : 0.75;
-      const pdfFormat = isMobile ? [360, 540] : [612, 792]; // Smaller format for mobile
+      const pdfFormat = isMobile ? [360, 540] : [612, 792]; 
       const fontSize = isMobile ? 10 : 8;
   
-      // Capture the canvas with adjusted scale
       const canvas = await html2canvas(chartRef.current, { scale: canvasScale });
       const imgData = canvas.toDataURL("image/png", canvasScale);
   
@@ -243,32 +242,6 @@ export function SalesGraphController() {
     }
   };
   
-  // const exportToPDF = async () => {
-  //   if (chartRef.current) {
-  //     const canvas = await html2canvas(chartRef.current, { scale: 0.75 });
-  //     const imgData = canvas.toDataURL("image/png", 0.75);
-
-  //     const pdf = new jsPDF({
-  //       orientation: "portrait",
-  //       unit: "pt",
-  //       format: [612, 792],
-  //     });
-
-  //     const margin = 36;
-  //     const imgWidth = pdf.internal.pageSize.getWidth() - margin * 2;
-  //     const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-  //     const textX = margin;
-  //     const textY = margin;
-  //     pdf.setFontSize(8);
-  //     pdf.text(`Exported by: ${username}`, textX + 20, textY + 40);
-  //     pdf.text(`${selectedYears} Year/s Trend`, textX + 20, textY + 56);
-
-  //     pdf.addImage(imgData, "PNG", margin, textY + 60, imgWidth, imgHeight);
-
-  //     pdf.save("sales_graph_forecast.pdf");
-  //   }
-  // };
 
   return {
     parsedData,

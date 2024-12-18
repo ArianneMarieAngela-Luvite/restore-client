@@ -5,10 +5,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { ScrollArea } from "@/components/ui/scroll-area";
 import * as XLSX from "xlsx";
 import timeline from "../assets/Vertical Timeline.png";
-// import { ClipLoader } from "react-spinners";
 import { Audio } from "react-loader-spinner";
-// import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-// import { useEffect, useState } from 'react';
 import { useState } from 'react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import jsPDF from 'jspdf';
@@ -26,25 +23,8 @@ export default function Insights() {
   } = useInsightsController();
 
 
-
-  // const [sortOrder, setSortOrder] = useState("ascending");
-  // const [sortedData, setSortedData] = useState(productDemandPredictionData);
   const [fileType, setFileType] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
-  // useEffect(() => {
-  //   const sortData = () => {
-  //     const sorted = [...productDemandPredictionData].sort((a, b) => {
-  //       const demandA = parseFloat(a.PredictedDemand);
-  //       const demandB = parseFloat(b.PredictedDemand);
-
-  //       return sortOrder === "ascending" ? demandA - demandB : demandB - demandA;
-  //     });
-  //     setSortedData(sorted);
-  //   };
-
-  //   sortData();
-  // }, [sortOrder, productDemandPredictionData]);
 
   const exportToExcel = () => {
     const workbook = XLSX.utils.book_new();
@@ -164,23 +144,6 @@ export default function Insights() {
       doc.text("No insights available", margin, 30, { maxWidth: maxWidth });
     }
 
-  
-    // // Product Demand Prediction Data
-    // doc.addPage();
-    // doc.setFontSize(16);
-    // doc.text("Product Demand Prediction Data", 14, 20);
-    // doc.setFontSize(12);
-    // doc.text("Product ID", 14, 30);
-    // doc.text("Product Name", 100, 30);
-    // doc.text("Projected Demand", 150, 30);
-    
-    // productDemandPredictionData.forEach((item, index) => {
-    //   const y = 40 + index * 10;
-    //   doc.text(item.ProductID.toString(), 14, y);
-    //   doc.text(item.Product, 100, y);
-    //   doc.text(item.PredictedDemand.toString(), 150, y);
-    // });
-
     doc.addPage();
     doc.setFontSize(16);
     doc.text("Product Demand Prediction Data", 14, 20);
@@ -222,23 +185,6 @@ export default function Insights() {
     if (productDemandPredictionData.length === 0) {
       doc.text("No product demand prediction data available", 14, startY + cellHeight + 10);
     }
-
-  
-    // doc.addPage();
-    // doc.setFontSize(16);
-    // doc.text("Insights Data", 14, 20); // Title
-
-    // doc.setFontSize(12);
-
-    // const pageWidth = doc.internal.pageSize.getWidth();
-    // const margin = 14;
-    // const maxWidth = pageWidth - 2 * margin;  // Define the max width for text wrapping
-
-    // if (insights) {
-    //   doc.text(insights, margin, 30, { maxWidth: maxWidth });
-    // } else {
-    //   doc.text("No insights available", margin, 30, { maxWidth: maxWidth });
-    // }
   
     // Save the PDF
     const pdfFileName = "insights_data.pdf";

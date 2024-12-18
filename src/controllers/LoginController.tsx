@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { axiosInstance } from "../services/axios"; 
-import { useLocation } from "react-router-dom"; // Import useLocation to access query parameters
+import { useLocation } from "react-router-dom"; 
 
 interface LoginFormData {
   email: string;
@@ -23,7 +23,7 @@ export function LoginController() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const navigate = useNavigate();
-  const location = useLocation(); // Get the current location for query params
+  const location = useLocation(); 
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -63,7 +63,6 @@ export function LoginController() {
       }
     } catch (err: any) {
       if (err.response) {
-        // Handle response error if necessary
       }
       setMessage("Login failed. Please check your credentials.");
     } finally {
