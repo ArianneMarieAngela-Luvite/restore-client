@@ -7,13 +7,14 @@ import { initializeApp } from "firebase/app";
 
 // Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyAPOvx6MahBdMOE7eLYVn72ZljZj6OkY4Y",
-  authDomain: "restore-db-98bee.firebaseapp.com",
-  projectId: "restore-db-98bee",
-  storageBucket: "restore-db-98bee",
-  messagingSenderId: "871713588544",
-  appId: "1:871713588544:web:6e5825ffc4212efa23e6a5",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
 };
+
 
 interface PickFile {
   id: string;
