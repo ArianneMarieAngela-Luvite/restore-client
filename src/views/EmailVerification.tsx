@@ -1,11 +1,6 @@
-
 import { CardHeader, Card, CardTitle, CardContent } from "@/components/ui/card"
 import restoreLogo from "../assets/restore-logo.png";
-
 import { motion } from "framer-motion"
-
-
-
 
 const EmailVerification = () => {
   const email = localStorage.getItem("email");
