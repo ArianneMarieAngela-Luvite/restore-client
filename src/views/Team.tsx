@@ -1,6 +1,6 @@
 // import { Separator } from "@/components/ui/separator";
-import idul from "../assets/i.jpg";
-import amara from "../assets/a.jpg";
+import idul from "../assets/id.jpg";
+import amara from "../assets/am.jpg";
 import hermi from "../assets/hermi.jpg";
 import { motion } from "framer-motion";
 // import { WobbleCard } from "@/components/ui/wobble-card";
