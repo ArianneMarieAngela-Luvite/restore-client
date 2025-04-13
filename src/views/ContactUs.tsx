@@ -1,5 +1,3 @@
-'use client'
-
 import { useState } from 'react';
 import emailjs from '@emailjs/browser'; 
 import { toast } from '@/hooks/use-toast';
